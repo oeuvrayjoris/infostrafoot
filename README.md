@@ -12,8 +12,8 @@ $ git clone https://github.com/oeuvrayjoris/lesinfostraweb.git
 
 ## Tech
 
-* [Lumen]()
-* [React]()
+* [Lumen](https://lumen.laravel.com)
+* [React](https://reactjs.org)
 
 ## Language
 
