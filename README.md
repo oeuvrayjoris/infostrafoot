@@ -18,3 +18,9 @@ $ git clone https://github.com/oeuvrayjoris/lesinfostraweb.git
 ## Language
 
 - PHP, Javascript
+
+## Presentation
+
+Babyboard est un dashboard permettant de voir et comparer ses performances au babyfoot.
+Il permet de créer des matchs de 4 joueurs et renseigner les informations du match pour alimenter ensuite le profil joueur.
+Les meilleurs joueurs seront mis en avant pour un petit instant de gloire !
