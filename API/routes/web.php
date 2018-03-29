@@ -14,3 +14,7 @@
 $router->get('/', function () use ($router) {
     return "API Babyfoot IMAC";
 });
+
+$router->get('/date', function () use ($router) {
+    return "Aujourd'hui : ".date('d-m-Y');
+});
