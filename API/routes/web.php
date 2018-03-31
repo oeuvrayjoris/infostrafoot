@@ -11,10 +11,30 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return "API Babyfoot IMAC";
+$router->get('/', function () {
+	return "API Infostrafoot";
 });
 
-$router->get('/date', function () use ($router) {
-    return "Aujourd'hui : ".date('d-m-Y');
+$router->get('/date', function () {
+	return "Aujourd'hui : " . date('d-m-Y');
 });
+
+/*
+|----------------
+| Player routes
+|----------------
+*/
+$router->get('players','PlayerController@index');
+$router->get('player/{id}','PlayerController@getPlayer');
+$router->post('player','PlayerController@createPlayer');
+// TODO : Authentification nécessaire pour les routes 'put' et 'delete' -> MiddleWare ? Vérification dans le Controller ?
+$router->put('player/{id}','PlayerController@updatePlayer');
+$router->delete('player/{id}','PlayerController@deletePlayer');
+
+
+/*
+|----------------
+| TODO : routes match
+|----------------
+*/
+
