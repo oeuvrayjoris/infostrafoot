@@ -31,10 +31,11 @@ $router->post('player','PlayerController@createPlayer');
 $router->put('player/{id}','PlayerController@updatePlayer');
 $router->delete('player/{id}','PlayerController@deletePlayer');
 
-
 /*
 |----------------
-| TODO : routes match
+| Match routes
 |----------------
 */
+$router->get('matches','MatchController@index');
+$router->post('match','MatchController@createMatch');
 
