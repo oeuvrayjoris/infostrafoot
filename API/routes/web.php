@@ -38,4 +38,4 @@ $router->delete('player/{id}','PlayerController@deletePlayer');
 */
 $router->get('matches','MatchController@index');
 $router->post('match','MatchController@createMatch');
-
+$router->delete('match/{id}','MatchController@deleteMatch');
