@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\User;
+use App\Player;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,10 +31,22 @@ class AuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
+        /* Code de base du Authprovider */
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+                return Player::where('api_token', $request->input('api_token'))->first();
             }
         });
+
+        /* $this->app['auth']->viaRequest('api', function ($request) {
+            if ($request->header('Authorization')) {
+                $key = explode(' ',$request->header('Authorization'));
+                $user = Player::where('api_token', $key[1])->first();
+                if(!empty($user)){
+                    $request->request->add(['userid' => $user->id]);
+                }
+                return $user;
+            }
+        }); */
     }
 }
