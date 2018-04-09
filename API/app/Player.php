@@ -9,6 +9,11 @@ class Player extends Model implements Authenticatable {
 
 	use AuthenticableTrait;
 
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
     	'username',
     	'firstname',
@@ -19,6 +24,15 @@ class Player extends Model implements Authenticatable {
     ];
     protected $hidden = [
     	'password'
+    ];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
     ];
 }
 ?>

@@ -40,6 +40,9 @@ $router->get('/post/{id}', ['middleware' => 'auth', function (Request $request, 
 
 /*
 |----------------
-| TODO : routes match
+| Match routes
 |----------------
 */
+$router->get('matches','MatchController@index');
+$router->post('match','MatchController@createMatch');
+$router->delete('match/{id}','MatchController@deleteMatch');
