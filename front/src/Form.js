@@ -27,9 +27,9 @@ class Form extends React.Component {
     })
  };
 
-checkFields = () => {
+ checkFields = () => {
     return true;
-};
+ };
 
  onSubmit = e => {
     e.preventDefault();
