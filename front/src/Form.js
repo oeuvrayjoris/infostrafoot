@@ -27,9 +27,14 @@ class Form extends React.Component {
     })
  };
 
+checkFields = () => {
+    return true;
+};
+
  onSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    (this.checkFields() && this.props.onSubmit(this.state));
+    // Transmitting state to App.onSubmit function
     this.clearState();
 };
 
