@@ -31,6 +31,21 @@ class Form extends React.Component {
     return true;
  };
 
+ loadPlayers = () => {
+    const myInit = { method: 'get',
+                   mode: 'no-cors'
+                    };
+
+    const url = 'https://www.floriantorres.fr/infostrafootapi/public/players'
+    fetch(url)
+    .then(function(response, myInit) {
+      return response.json();
+    })
+    .then(function(myBlob) {
+        console.log(myBlob)
+    });    
+ }
+
  onSubmit = e => {
     e.preventDefault();
     (this.checkFields() && this.props.onSubmit(this.state));
@@ -39,6 +54,7 @@ class Form extends React.Component {
 };
 
  render() {
+    this.loadPlayers()
      return (
         <form action="https://www.floriantorres.fr/infostrafootapi/public/player" method="post">
             <input
