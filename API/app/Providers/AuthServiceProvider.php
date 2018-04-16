@@ -33,20 +33,10 @@ class AuthServiceProvider extends ServiceProvider
 
         /* Code de base du Authprovider */
         $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return Player::where('api_token', $request->input('api_token'))->first();
+            if ($request->header('api_token')) {
+                return Player::where('api_token', $request->header('api_token'))->first();
             }
         });
-
-        /* $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->header('Authorization')) {
-                $key = explode(' ',$request->header('Authorization'));
-                $user = Player::where('api_token', $key[1])->first();
-                if(!empty($user)){
-                    $request->request->add(['userid' => $user->id]);
-                }
-                return $user;
-            }
-        }); */
+        
     }
 }
