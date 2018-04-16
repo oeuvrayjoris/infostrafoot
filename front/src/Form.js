@@ -50,7 +50,7 @@ class Form extends React.Component {
     e.preventDefault();
     (this.checkFields() && this.props.onSubmit(this.state));
     // Transmitting state to App.onSubmit function
-    this.clearState();
+    //this.clearState();
 };
 
  render() {
