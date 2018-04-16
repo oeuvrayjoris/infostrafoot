@@ -56,20 +56,13 @@ class SignInForm extends React.Component {
     console.log(JSON.stringify(this.state))
     console.log(this.state)
 
-    const testDatas = {
-                        name: 'peter@klaven',
-                        job: 'cityslicka'
-                    }
-    console.log(JSON.stringify(testDatas))
-
     const myInit = { method: 'post',
                      headers: {
                        'Accept': 'application/json'
                     },
-                    body: JSON.stringify(testDatas)
+                    body: JSON.stringify(this.state)
                   };
-//    const url = 'https://www.floriantorres.fr/infostrafootapi/public/player'
-    const url = 'https://reqres.in/api/api/users/2'
+    const url = 'https://www.floriantorres.fr/infostrafootapi/public/player'
 
     fetch(url, myInit)
       .then(function(response) {
@@ -82,7 +75,7 @@ class SignInForm extends React.Component {
         console.error(error)
       });
 
-    this.loadPlayers()
+    //this.loadPlayers()
 
     // Transmitting state to App.onSubmit function
     //this.clearState();

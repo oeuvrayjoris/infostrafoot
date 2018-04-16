@@ -6,6 +6,7 @@ import Header from './components/Header.js';
 import Menu from './components/Menu.js';
 import Footer from './components/Footer.js';
 import SignInForm from './components/SignInForm.js';
+import LoginForm from './components/LoginForm.js';
 
 class App extends Component {
 
@@ -23,6 +24,7 @@ class App extends Component {
         <Header/>
         <Menu/>
         <SignInForm onSubmit={fields => this.onSubmit(fields)} />
+        <LoginForm onSubmit={fields => this.onSubmit(fields)} />
         <p>
           {JSON.stringify(this.state.fields, null, 2)}
         </p>
