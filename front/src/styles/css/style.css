@@ -1,0 +1,199 @@
+/* COLORS */
+/* FONT */
+/* PLACEHOLDER */
+/* BOX-SHADOW */
+/* BACKGROUND */
+/* line 4, ../sass/style.scss */
+body {
+  font-family: Roboto;
+  background: #f5f6fa;
+}
+
+/* line 9, ../sass/style.scss */
+.flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 15, ../sass/style.scss */
+.clearfix {
+  clear: both;
+}
+
+/* line 19, ../sass/style.scss */
+.logo {
+  width: 200px;
+}
+
+/* line 23, ../sass/style.scss */
+.form-control {
+  height: 50px;
+  border-color: #bdc3d0;
+  color: #bdc3d0;
+  padding: 6px 15px;
+}
+/* line 4, ../sass/_mixins.scss */
+.form-control::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #bdc3d0;
+}
+/* line 8, ../sass/_mixins.scss */
+.form-control:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #bdc3d0;
+}
+/* line 12, ../sass/_mixins.scss */
+.form-control::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #bdc3d0;
+}
+/* line 16, ../sass/_mixins.scss */
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #bdc3d0;
+}
+/* line 30, ../sass/style.scss */
+.form-control:focus {
+  border-color: #3f79f0;
+  -webkit-box-shadow: 0px 0px 8px rgba(63, 121, 240, 0.3);
+  -moz-box-shadow: 0px 0px 8px rgba(63, 121, 240, 0.3);
+  box-shadow: 0px 0px 8px rgba(63, 121, 240, 0.3);
+}
+
+/* line 36, ../sass/style.scss */
+.btn-primary {
+  background-color: #3f79f0;
+  border-color: transparent;
+  text-transform: uppercase;
+  height: 50px;
+  padding: 0px 30px 0px 30px;
+  -webkit-box-shadow: 0px 7px 17px rgba(63, 121, 240, 0.3);
+  -moz-box-shadow: 0px 7px 17px rgba(63, 121, 240, 0.3);
+  box-shadow: 0px 7px 17px rgba(63, 121, 240, 0.3);
+}
+/* line 39, ../sass/style.scss */
+.btn-primary:hover {
+  background-color: #0f47ba;
+  border-color: transparent;
+}
+
+/* line 49, ../sass/style.scss */
+.btn-default {
+  height: 50px;
+  padding: 0px 30px 0px 30px;
+}
+
+/* line 54, ../sass/style.scss */
+a {
+  color: #3f79f0;
+}
+/* line 56, ../sass/style.scss */
+a:hover {
+  color: #0f47ba;
+  text-decoration: none;
+}
+
+/* line 62, ../sass/style.scss */
+#connexion {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  margin: 0;
+}
+/* line 69, ../sass/style.scss */
+#connexion #connexion-img {
+  background: url("../../img/babyfoot.jpg") no-repeat center center;
+  background-size: cover;
+  height: 100%;
+}
+/* line 74, ../sass/style.scss */
+#connexion #submit {
+  float: right;
+  margin-top: 20px;
+}
+/* line 79, ../sass/style.scss */
+#connexion .input-group {
+  margin-top: 15px;
+}
+/* line 83, ../sass/style.scss */
+#connexion .flexbox {
+  height: 100%;
+  flex-direction: column;
+  padding-left: 30px;
+}
+/* line 89, ../sass/style.scss */
+#connexion form {
+  margin-top: 50px;
+  padding: 0 100px 0 100px;
+}
+/* line 94, ../sass/style.scss */
+#connexion .input-group-addon {
+  background-color: #fff;
+  border-color: #bdc3d0;
+  color: #bdc3d0;
+  padding: 6px 15px;
+  font-size: 12px;
+}
+/* line 102, ../sass/style.scss */
+#connexion .lien {
+  display: block;
+  margin-top: 10px;
+  float: right;
+}
+
+/* line 111, ../sass/style.scss */
+#main .logo {
+  width: 100%;
+}
+/* line 115, ../sass/style.scss */
+#main .navbar-default {
+  background-color: #fff;
+  border-radius: 0;
+  text-align: center;
+}
+/* line 121, ../sass/style.scss */
+#main .height100 {
+  height: 100%;
+}
+/* line 125, ../sass/style.scss */
+#main .nav-pills > li > a {
+  border-radius: 0;
+}
+/* line 129, ../sass/style.scss */
+#main .nav > li > a {
+  padding: 30px 15px;
+  color: #bdc3d0;
+}
+/* line 134, ../sass/style.scss */
+#main .navbar-collapse {
+  padding: 0;
+}
+/* line 138, ../sass/style.scss */
+#main .navbar-header {
+  float: none;
+}
+/* line 142, ../sass/style.scss */
+#main .navbar-brand {
+  height: 100px;
+  padding: 30px 30px 30px 30px;
+}
+/* line 147, ../sass/style.scss */
+#main .nav-pills > li.active > a,
+#main .nav-pills > li.active > a:focus,
+#main .nav-pills > li.active > a:hover {
+  background-color: #fff;
+  color: #3f79f0;
+  border-right: 3px solid #3f79f0;
+}
+/* line 155, ../sass/style.scss */
+#main .section {
+  background: #fff;
+  height: 300px;
+  border: 1px solid #dbdee5;
+}
+/* line 161, ../sass/style.scss */
+#main #content {
+  padding-top: 10px;
+}
