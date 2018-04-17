@@ -36,7 +36,7 @@ class PlayerController extends Controller
 		$username = $request->input('username');
 		if (Player::isUsernameAvailable($username)) {
 			$player = Player::create($request->all());
-			$player->password = Hash::make($player->password);
+			$player->password = Hash::make($request->input('password'));
 			$player->api_token = base64_encode(str_random(40));
 			$player->save();
 			return response()->json($player);
