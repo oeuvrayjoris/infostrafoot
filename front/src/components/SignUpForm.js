@@ -1,6 +1,6 @@
 import React from 'react';
 
-class SignInForm extends React.Component {
+class SignUpForm extends React.Component {
   state = {
       mail: '',
       username: '',
@@ -146,4 +146,4 @@ class SignInForm extends React.Component {
   }
 }
 
-export default SignInForm;
+export default SignUpForm;
