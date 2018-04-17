@@ -54,11 +54,11 @@ class SignInForm extends React.Component {
     e.preventDefault();
     (this.checkFields() && this.props.onSubmit(this.state));
     console.log(JSON.stringify(this.state))
-    console.log(this.state)
 
     const myInit = { method: 'post',
                      headers: {
-                       'Accept': 'application/json'
+                       'Accept': 'application/json',
+                       'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(this.state)
                   };
@@ -75,7 +75,7 @@ class SignInForm extends React.Component {
         console.error(error)
       });
 
-    //this.loadPlayers()
+    this.loadPlayers()
 
     // Transmitting state to App.onSubmit function
     //this.clearState();
