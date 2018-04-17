@@ -141,7 +141,6 @@ class SignInForm extends React.Component {
         />
         </div>
         <button className="btn btn-primary" id="submit" onClick={e => this.onSubmit(e)}>S'inscrire</button>
-        <a href="#" className="lien">Pas encore inscrit ?</a>
         </form>
     );
   }
