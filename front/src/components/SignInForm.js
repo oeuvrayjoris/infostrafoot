@@ -83,52 +83,66 @@ class SignInForm extends React.Component {
 
   render() {
     return (
-      <div>
+
+      <form>
+      <div className="input-group">
+        <input
+          name="firstname"
+          className="form-control"
+          placeholder='Prénom'
+          value={this.state.firstname}
+          onChange={e => this.handleChange(e)}
+        />
+        </div>
+        <div className="input-group">
+        <input
+          name="lastname"
+          className="form-control"
+          placeholder='Nom'
+          value={this.state.lastname}
+          onChange={e => this.handleChange(e)}
+        />
+        </div>
+        <div className="input-group">
+        <input
+          name="username"
+          className="form-control"
+          placeholder='Pseudo'
+          value={this.state.username}
+          onChange={e => this.handleChange(e)}
+        />
+        </div>
+        <div className="input-group">
         <input
           name="mail"
+          className="form-control"
           placeholder='Email'
           value={this.state.mail}
           onChange={e => this.handleChange(e)}
         />
-        <br />
-        <input
-          name="username"
-          placeholder='Username'
-          value={this.state.username}
-          onChange={e => this.handleChange(e)}
-        />
-        <br />
+        </div>
+        <div className="input-group">
         <input
           name="password"
-          placeholder='Password'
+          className="form-control"
+          placeholder='Mot de passe'
           type="password"
           value={this.state.password}
           onChange={e => this.handleChange(e)}
         />
-        <br />
-        <input
-          name="firstname"
-          placeholder='First name'
-          value={this.state.firstname}
-          onChange={e => this.handleChange(e)}
-        />
-        <br />
-        <input
-          name="lastname"
-          placeholder='Last Name'
-          value={this.state.lastname}
-          onChange={e => this.handleChange(e)}
-        />
-        <br />
+        </div>
+        <div className="input-group">
         <input
           name="birthdate"
-          placeholder='Birthdate'
+          className="form-control"
+          placeholder='Date de naissance'
           value={this.state.birthdate}
           onChange={e => this.handleChange(e)}
         />
-        <br />
-        <button onClick={e => this.onSubmit(e)}>Sign in</button>
         </div>
+        <button className="btn btn-primary" id="submit" onClick={e => this.onSubmit(e)}>S'inscrire</button>
+        <a href="#" className="lien">Pas encore inscrit ?</a>
+        </form>
     );
   }
 }
