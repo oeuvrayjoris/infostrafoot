@@ -24,7 +24,6 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 		'lastname',
 		'birthdate',
 		'mail',
-		'api_token'
 	];
 
 	/**
@@ -34,6 +33,7 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 	 */
 	protected $hidden = [
 		'password',
+		'api_token'
 	];
 
 	/* Check if username is available (return true if available) */
