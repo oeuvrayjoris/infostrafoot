@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './img/logo.png';
-import './App.scss';
 import Header from './components/Header.js';
 import Menu from './components/Menu.js';
 import Footer from './components/Footer.js';

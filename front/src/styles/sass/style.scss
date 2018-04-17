@@ -1,5 +1,5 @@
-@import './sass/variables';
-@import './sass/mixins';
+@import "variables";
+@import "mixins";
 
 body {
     font-family: Roboto;
@@ -64,9 +64,10 @@ a {
     top: 0;
     bottom: 0;
     width: 100%;
+    margin: 0;
 
     #connexion-img {
-        @include background-image('./img/babyfoot.jpg');
+        @include background-image('../../img/babyfoot.jpg');
         height: 100%;
     }
 
