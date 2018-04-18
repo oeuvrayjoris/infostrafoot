@@ -183,20 +183,22 @@ a:hover {
   padding: 30px 30px 30px 30px;
 }
 /* line 150, ../sass/style.scss */
-#main .nav-pills > li.active > a,
-#main .nav-pills > li.active > a:focus,
-#main .nav-pills > li.active > a:hover {
-  background-color: #fff;
-  color: #3f79f0;
-  border-right: 3px solid #3f79f0;
+#main .nav > li > a {
+  border-right: 3px solid transparent;
 }
-/* line 158, ../sass/style.scss */
+/* line 154, ../sass/style.scss */
+#main .active {
+  background-color: #f9f9fa !important;
+  color: #3f79f0 !important;
+  border-right-color: #3f79f0 !important;
+}
+/* line 160, ../sass/style.scss */
 #main .section {
   background: #fff;
   height: 300px;
   border: 1px solid #dbdee5;
 }
-/* line 164, ../sass/style.scss */
+/* line 166, ../sass/style.scss */
 #main #content {
   padding-top: 10px;
 }
