@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
                     },
                     body: JSON.stringify(this.state)
                   };
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/player'
+    const url = 'https://www.floriantorres.fr/infostrafootapi/public/login'
 
     fetch(url, myInit)
       .then(function(response) {

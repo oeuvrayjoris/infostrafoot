@@ -24,14 +24,10 @@ class Login extends Component {
           <LoginForm onSubmit={fields => this.onSubmit(fields)} />
         </div>
         <div className="col-md-8" id="connexion-img">
-        </div>
-
-        <Header/>
-        
+        </div>        
         <p>
           {JSON.stringify(this.state.fields, null, 2)}
         </p>
-        <Footer/>
       </div>
     );
   }
