@@ -25,7 +25,7 @@ class Menu extends React.Component {
               </div>
               <div className="navbar-collapse collapse sidebar-navbar-collapse">
                 <ul className="nav nav-pills nav-stacked">
-                  <li><NavLink to="/home" activeClassName="active"><i className="fas fa-home" /><br />Accueil</NavLink></li>
+                  <li><NavLink to="/" activeClassName="active"><i className="fas fa-home" /><br />Accueil</NavLink></li>
                   <li><NavLink to="/profile" activeClassName="active"><i className="fas fa-user" /><br />Profil</NavLink></li>
                   <li><NavLink to="/match" activeClassName="active"><i className="fas fa-plus-square" /><br />Créer un match</NavLink></li>
                   <li><NavLink to="/comparator" activeClassName="active"><i className="fas fa-users" /><br />Comparateur</NavLink></li>
