@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import './styles/sass/style.scss';
-import Login from './components/views/Login.js';
-import SignUp from './components/views/SignUp.js';
-import Home from './components/views/Home.js';
+import Header from './components/Header.js';
+import Main from './components/Main.js';
+import Footer from './components/Footer.js';
 
-class App extends Component {
-
-  render() {
-    return (
-        
-        //<Home/>
-        <Login/>
-        //<SignUp/>
-    );
-  }
-}
+const App = () => (
+	<div>
+        <Header/>
+        <Main/>
+        <Footer/>
+    </div>
+)
 
 export default App;
