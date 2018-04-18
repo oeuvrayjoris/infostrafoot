@@ -28,7 +28,7 @@ $router->get('players','PlayerController@index');
 $router->get('player/info','PlayerController@info');
 $router->get('player/{id}','PlayerController@getPlayer');
 $router->post('player','PlayerController@createPlayer');
-$router->get('login/','PlayerController@authenticate');
+$router->post('login/','PlayerController@authenticate');
 // TODO : Authentification nécessaire pour les routes 'put' et 'delete' -> MiddleWare ? Vérification dans le Controller ?
 $router->put('player/{id}','PlayerController@updatePlayer');
 $router->delete('player/{id}','PlayerController@deletePlayer');
