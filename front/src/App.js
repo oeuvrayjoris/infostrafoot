@@ -6,9 +6,9 @@ import Footer from './components/Footer.js';
 
 const App = () => (
 	<div>
-        <Header/>
+        {/*<Header/>*/}
         <Main/>
-        <Footer/>
+        {/*<Footer/>*/}
     </div>
 )
 
