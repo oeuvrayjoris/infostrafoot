@@ -7,7 +7,8 @@ class SignUpForm extends React.Component {
       password: '',
       firstname: '',
       lastname: '',
-      birthdate: ''
+      birthdate: '',
+      errors: {}
   }
 
   handleChange = e => {

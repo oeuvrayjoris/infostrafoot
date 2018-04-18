@@ -8,7 +8,8 @@ import LoginForm from '../LoginForm.js';
 class Login extends Component {
 
   state = {
-    fields: {}
+    fields: {
+    }
   }
 
   onSubmit = (fields) => {

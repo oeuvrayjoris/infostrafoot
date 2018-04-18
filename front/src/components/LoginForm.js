@@ -1,21 +1,42 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 class LoginForm extends React.Component {
-  state = {
-      username: '',
-      password: ''
+  constructor(props) {
+    super(props)
+    this.state = {
+        credentials: {
+          username: '',
+          password: '',
+        },
+        errors: {}
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+
   }
 
-  handleChange = e => {
+  handleChange = event => {
+    const field = event.target.name;
+    const credentials = this.state.credentials;
+    credentials[field] = event.target.value;
     this.setState({
-      [e.target.name]: e.target.value
+      credentials: credentials
     });
   };
 
+  handleSave(event) {
+    event.preventDefault();
+    this.props.actions.logInUser(this.state.credentials);
+  }
+
   clearState = () => {
     this.setState({
-      username: '',
-      password: ''
+      credentials : {
+        username: '',
+        password: ''
+      }
     })
   };
 
@@ -37,7 +58,11 @@ class LoginForm extends React.Component {
       })
       .then(function(datas) {
         console.log(datas)
-      });    
+      })
+      .catch(function(error) {
+          this.state.error = error
+          console.log(error)
+      });
   }
 
 // TEST POST - PRESQUE OK*/}
@@ -52,7 +77,7 @@ class LoginForm extends React.Component {
                        'Accept': 'application/json',
                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(this.state)
+                    body: JSON.stringify(this.state.credentials)
                   };
     const url = 'https://www.floriantorres.fr/infostrafootapi/public/login'
 
@@ -85,7 +110,7 @@ class LoginForm extends React.Component {
               className="form-control"
               aria-describedby="basic-addon1"
               placeholder='Pseudo'
-              value={this.state.username}
+              value={this.state.credentials['username']}
               onChange={e => this.handleChange(e)}
             />
         </div>
@@ -98,13 +123,21 @@ class LoginForm extends React.Component {
               aria-describedby="basic-addon2"
               placeholder='Mot de passe'
               type="password"
-              value={this.state.password}
+              value={this.state.credentials['password']}
               onChange={e => this.handleChange(e)}
             />
         </div>
 
-        <button className="btn btn-primary" id="submit" onClick={e => this.onSubmit(e)}>Connexion</button>
-        <a href="/signup" className="lien">Pas encore inscrit ?</a>
+        <div className="input-group">
+          <input
+            className="btn btn-primary" 
+            id="submit" 
+            onClick={e => this.onSubmit(e)}
+            value="Connexion"
+            type="submit"
+          />
+        </div>
+        <Link to="/signup" className="lien">Pas encore inscrit ?</Link>
       </form>
     );
   }
