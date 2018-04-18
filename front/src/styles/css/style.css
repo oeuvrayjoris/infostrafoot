@@ -131,55 +131,58 @@ a:hover {
 /* line 94, ../sass/style.scss */
 #connexion .input-group-addon {
   background-color: #fff;
-  border-color: #bdc3d0;
+  border: 1px solid #bdc3d0;
+  border-bottom-left-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  border-right: 0;
   color: #bdc3d0;
-  padding: 6px 15px;
+  padding: 15px 15px 0 15px;
   font-size: 12px;
 }
-/* line 102, ../sass/style.scss */
+/* line 105, ../sass/style.scss */
 #connexion .lien {
   display: block;
   margin-top: 10px;
   float: right;
 }
 
-/* line 111, ../sass/style.scss */
+/* line 114, ../sass/style.scss */
 #main .logo {
   width: 100%;
 }
-/* line 115, ../sass/style.scss */
+/* line 118, ../sass/style.scss */
 #main .navbar-default {
   background-color: #fff;
   border-radius: 0;
   text-align: center;
 }
-/* line 121, ../sass/style.scss */
+/* line 124, ../sass/style.scss */
 #main .height100 {
   height: 100%;
 }
-/* line 125, ../sass/style.scss */
+/* line 128, ../sass/style.scss */
 #main .nav-pills > li > a {
   border-radius: 0;
 }
-/* line 129, ../sass/style.scss */
+/* line 132, ../sass/style.scss */
 #main .nav > li > a {
   padding: 30px 15px;
   color: #bdc3d0;
 }
-/* line 134, ../sass/style.scss */
+/* line 137, ../sass/style.scss */
 #main .navbar-collapse {
   padding: 0;
 }
-/* line 138, ../sass/style.scss */
+/* line 141, ../sass/style.scss */
 #main .navbar-header {
   float: none;
 }
-/* line 142, ../sass/style.scss */
+/* line 145, ../sass/style.scss */
 #main .navbar-brand {
   height: 100px;
   padding: 30px 30px 30px 30px;
 }
-/* line 147, ../sass/style.scss */
+/* line 150, ../sass/style.scss */
 #main .nav-pills > li.active > a,
 #main .nav-pills > li.active > a:focus,
 #main .nav-pills > li.active > a:hover {
@@ -187,13 +190,13 @@ a:hover {
   color: #3f79f0;
   border-right: 3px solid #3f79f0;
 }
-/* line 155, ../sass/style.scss */
+/* line 158, ../sass/style.scss */
 #main .section {
   background: #fff;
   height: 300px;
   border: 1px solid #dbdee5;
 }
-/* line 161, ../sass/style.scss */
+/* line 164, ../sass/style.scss */
 #main #content {
   padding-top: 10px;
 }

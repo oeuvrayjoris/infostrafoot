@@ -93,9 +93,12 @@ a {
 
     .input-group-addon {
         background-color: #fff;
-        border-color: $color0;
+        border: 1px solid $color0;
+        border-bottom-left-radius: 0.25rem;
+        border-top-left-radius: 0.25rem;
+        border-right: 0;
         color: $color0;
-        padding: 6px 15px;
+        padding: 15px 15px 0 15px;
         font-size: 12px;
     }
 
