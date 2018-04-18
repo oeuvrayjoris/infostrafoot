@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
-import Header from '../Header.js';
-import Footer from '../Footer.js';
 import Menu from '../Menu.js';
 
 class Home extends Component {
@@ -12,7 +9,7 @@ class Home extends Component {
 
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">
-            <Menu />
+           <Menu />
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
@@ -20,19 +17,19 @@ class Home extends Component {
             <hr />
             <div className="row">
               <div className="col-md-3">
-                <div className="section" id="s1" />
+                <div className="section flexbox" id="s1">Section 1</div>
               </div>
               <div className="col-md-9">
-                <div className="section" id="s2" />
+                <div className="section flexbox" id="s2">Section 2</div>
               </div>
             </div>
             <br />
             <div className="row">
               <div className="col-md-3">
-                <div className="section" id="s3" />
+                <div className="section flexbox" id="s3">Section 3</div>
               </div>
               <div className="col-md-9">
-                <div className="section" id="s4" />
+                <div className="section flexbox" id="s4">Section 4</div>
               </div>
             </div>
           </div>

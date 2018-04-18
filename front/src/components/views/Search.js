@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 
-class Match extends Component {
+class Search extends Component {
 
   render() {
     return (
@@ -13,7 +13,7 @@ class Match extends Component {
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
-            <h1>Créer un match</h1>
+            <h1>Rechercher</h1>
             <hr />
         </div>
         </div>
@@ -22,4 +22,4 @@ class Match extends Component {
   }
 };
 
-export default Match;
+export default Search;

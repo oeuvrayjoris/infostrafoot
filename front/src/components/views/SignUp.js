@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
-import Header from '../Header.js';
-import Footer from '../Footer.js';
 import SignUpForm from '../SignUpForm.js';
 
 class SignUp extends Component {
