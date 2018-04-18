@@ -1,59 +1,12 @@
 import React from 'react';
 
-class SignUpForm extends React.Component {
-  state = {
-      mail: '',
-      username: '',
-      password: '',
-      firstname: '',
-      lastname: '',
-      birthdate: '',
-      errors: {}
-  }
+const SignUpForm = (props) => (
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  clearState = () => {
-    this.setState({
-      mail: '',
-      username: '',
-      password: '',
-      firstname: '',
-      lastname: '',
-      birthdate: ''
-    })
-  };
-
-  checkFields = () => {
-    return true;
-  };
-
-// TEST GET - OK*/}
-
-  loadPlayers = () => {
-    const myInit = { method: 'get',
-                    mode: 'no-cors'
-                  };
-
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/players'
-    fetch(url)
-      .then(function(response, myInit) {
-        return response.json();
-      })
-      .then(function(datas) {
-        console.log(datas)
-      });    
-  }
-
-// TEST POST - PRESQUE OK*/}
+/*
 
   onSubmit = e => {
     e.preventDefault();
-    (this.checkFields() && this.props.onSubmit(this.state));
+    (this.checkFields() && props.onSubmit(this.state));
     console.log(JSON.stringify(this.state))
 
     const myInit = { method: 'post',
@@ -77,74 +30,75 @@ class SignUpForm extends React.Component {
       });
 
     this.loadPlayers()
+*/
 
-    // Transmitting state to App.onSubmit function
-    //this.clearState();
-  };
+  <form>
+  <div className="input-group">
+    <input
+      name="firstname"
+      className="form-control"
+      placeholder='Prénom'
+      value={props.credentials.firstname}
+      onChange={e => props.handleChange(e)}
+    />
+    </div>
+    <div className="input-group">
+    <input
+      name="lastname"
+      className="form-control"
+      placeholder='Nom'
+      value={props.credentials.lastname}
+      onChange={e => props.handleChange(e)}
+    />
+    </div>
+    <div className="input-group">
+    <input
+      name="username"
+      className="form-control"
+      placeholder='Pseudo'
+      value={props.credentials.username}
+      onChange={e => props.handleChange(e)}
+    />
+    </div>
+    <div className="input-group">
+    <input
+      name="mail"
+      className="form-control"
+      placeholder='Email'
+      value={props.credentials.mail}
+      onChange={e => props.handleChange(e)}
+    />
+    </div>
+    <div className="input-group">
+    <input
+      name="password"
+      className="form-control"
+      placeholder='Mot de passe'
+      type="password"
+      value={props.credentials.password}
+      onChange={e => props.handleChange(e)}
+    />
+    </div>
+    <div className="input-group">
+    <input
+      name="birthdate"
+      className="form-control"
+      placeholder='Date de naissance'
+      value={props.credentials.birthdate}
+      onChange={e => props.handleChange(e)}
+    />
+    </div>
+    <div className="input-group">
+      <input
+        className="btn btn-primary" 
+        id="submit" 
+        onClick={e => props.handleSubmit(e)}
+        value="S'inscrire"
+        type="submit"
+      />
+    </div>
 
-  render() {
-    return (
-
-      <form>
-      <div className="input-group">
-        <input
-          name="firstname"
-          className="form-control"
-          placeholder='Prénom'
-          value={this.state.firstname}
-          onChange={e => this.handleChange(e)}
-        />
-        </div>
-        <div className="input-group">
-        <input
-          name="lastname"
-          className="form-control"
-          placeholder='Nom'
-          value={this.state.lastname}
-          onChange={e => this.handleChange(e)}
-        />
-        </div>
-        <div className="input-group">
-        <input
-          name="username"
-          className="form-control"
-          placeholder='Pseudo'
-          value={this.state.username}
-          onChange={e => this.handleChange(e)}
-        />
-        </div>
-        <div className="input-group">
-        <input
-          name="mail"
-          className="form-control"
-          placeholder='Email'
-          value={this.state.mail}
-          onChange={e => this.handleChange(e)}
-        />
-        </div>
-        <div className="input-group">
-        <input
-          name="password"
-          className="form-control"
-          placeholder='Mot de passe'
-          type="password"
-          value={this.state.password}
-          onChange={e => this.handleChange(e)}
-        />
-        </div>
-        <div className="input-group">
-        <input
-          name="birthdate"
-          className="form-control"
-          placeholder='Date de naissance'
-          value={this.state.birthdate}
-          onChange={e => this.handleChange(e)}
-        />
-        </div>
-        <button className="btn btn-primary" id="submit" onClick={e => this.onSubmit(e)}>S'inscrire</button>
-        </form>
-    );
-  }
-}
+    </form>
+)
 
 export default SignUpForm;
