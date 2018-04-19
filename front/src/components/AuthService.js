@@ -35,13 +35,14 @@ export default class AuthService {
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // Getting token from sessionStorage
+        console.log(!!token && !this.isTokenExpired(token))
         return !!token && !this.isTokenExpired(token) // handwaiving here
     }
 
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired.
+            if (decoded.exp < (Date.now() + 60 * 60 * 1000)/ 1000) { // Checking if token is expired.
                 return true;
             }
             else
@@ -70,6 +71,7 @@ export default class AuthService {
     getProfile() {
         // Using jwt-decode npm package to decode the token
         return decode(this.getToken());
+        //Example return decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o")
     }
 
 

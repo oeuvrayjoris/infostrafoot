@@ -2,21 +2,28 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 
 class Header extends React.Component {
-  state = {
-  }
 
-  clearState = () => {
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
 
   render() {
     return (
-        <div id="header">
-            <NavLink to="/login">Connexion</NavLink>
+        <div>
+          {!this.props.user ? 
+            (<div id="header">
+              <NavLink to="/login">Connexion</NavLink>
             <NavLink to="/signup">Inscription</NavLink>
-            <NavLink to="/logout">Déconnexion</NavLink>
+            </div>) :
+            (<div id="header">
+              <NavLink to="/" onClick={this.props.handleLogout}>Déconnexion</NavLink>
+            </div>)
+          }
         </div>
     );
   }
 }
 
-export default Header;
+export default Header

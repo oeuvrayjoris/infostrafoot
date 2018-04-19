@@ -3,6 +3,9 @@ import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
 import Background from '../../img/novelli.jpg';
+import AuthService from '../AuthService'
+import withAuth from '../withAuth';
+const Auth = new AuthService();
 
 
 class Profile extends Component {
@@ -40,4 +43,5 @@ class Profile extends Component {
   }
 };
 
-export default Profile;
+export default Profile
+//export default withAuth(Profile);

@@ -33,7 +33,7 @@ class SignUp extends Component {
   
   // Checks before if are logged in we render the DOM 
   componentWillMount(){
-    if(!this.Auth.loggedIn())
+    if(this.Auth.loggedIn())
         this.props.history.replace('/');
   }
 
@@ -61,6 +61,7 @@ class SignUp extends Component {
       })
       .catch(err =>{
           alert(err);
+          // Afficher ce qui va pas quand ca sera géré en back
       })
   }
 
@@ -88,7 +89,7 @@ class SignUp extends Component {
         console.log(datas)
       })
       .catch(function(error) {
-          this.state.error = error
+          this.setState({error})
           console.log(error)
       });
   }

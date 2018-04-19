@@ -50,6 +50,7 @@ class Login extends Component {
       .then(res => {
         console.log(res)
         console.log(this.Auth.getToken())
+        this.props.handleUser()
       })
       .then(res =>{
          this.props.history.replace('/');
@@ -83,7 +84,7 @@ class Login extends Component {
         console.log(datas)
       })
       .catch(function(error) {
-          this.state.error = error
+          this.setState({error})
           console.log(error)
       });
   }

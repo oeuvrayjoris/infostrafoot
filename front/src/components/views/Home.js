@@ -2,8 +2,22 @@ import React, { Component } from 'react';
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
+import AuthService from '../AuthService'
+const Auth = new AuthService();
 
 class Home extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+    }
+    console.log(this.props.user)
+  }
+
+  handleLogout(){
+    Auth.logout()
+    this.props.history.replace('/');
+  }
 
   render() {
     return (
@@ -14,7 +28,7 @@ class Home extends Component {
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
-            <Header />
+            <Header handleLogout={this.handleLogout.bind(this)} user={this.props.user}/>
             <h1>Accueil</h1>
             <hr />
             <div className="row">
@@ -41,4 +55,5 @@ class Home extends Component {
   }
 };
 
-export default Home;
+//export default withAuth(Home);
+export default Home
