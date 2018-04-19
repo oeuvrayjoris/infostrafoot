@@ -18,6 +18,19 @@ class Match extends Component {
             <Header />
             <h1>Créer un match</h1>
             <hr />
+            <div className="row">
+                <div className="col-md-4">
+                Equipe 1
+                </div>
+                <div className="col-md-4">
+                <span className="versus">VS</span>
+        
+                <button className="btn btn-primary">Créer un match</button>
+        
+                </div>
+                <div className="col-md-4">
+                Equipe 2</div>
+            </div>
         </div>
         </div>
       </div>

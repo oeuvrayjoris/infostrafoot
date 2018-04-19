@@ -20,43 +20,33 @@ body {
     width: 200px;
 }
 
-.form-control {
-    height: 50px;
-    border-color: $color0;
-    color: $color0;
-    padding: 6px 15px;
-    @include placeholder-color($color0);
-
-    &:focus {
-        border-color: $color1;
-        @include box-shadow(0px, 0px, 8px, rgba($color1, .3));
-    }
-}
-
-.btn-primary {
-    background-color: $color1;
-    border-color: transparent;
-    &:hover {
-        background-color: darken($color1, 20%);
-        border-color: transparent;
-    }
-    text-transform: uppercase;
-    height: 50px;
-    padding: 0px 30px 0px 30px;
-    @include box-shadow(0px, 7px, 17px, rgba($color1, .3));
-}
-
-.btn-default {
-    height: 50px;
-    padding: 0px 30px 0px 30px;
-}
-
 a {
     color: $color1;
     &:hover {
         color: darken($color1, 20%);
         text-decoration: none;
     }
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.btn-primary {
+        background-color: $color1;
+        border-color: transparent;
+        &:hover {
+            background-color: darken($color1, 20%);
+            border-color: transparent;
+        }
+        text-transform: uppercase;
+        height: 50px;
+        padding: 0px 30px 0px 30px;
+        @include box-shadow(0px, 7px, 17px, rgba($color1, .3));
 }
 
 #connexion {
@@ -66,13 +56,30 @@ a {
     width: 100%;
     margin: 0;
 
+    .form-control {
+        height: 50px;
+        border-color: $color0;
+        color: $color0;
+        padding: 6px 15px;
+        @include placeholder-color($color0);
+
+        &:focus {
+            border-color: $color1;
+            @include box-shadow(0px, 0px, 8px, rgba($color1, .3));
+        }
+    }
+
+    .btn-default {
+        height: 50px;
+        padding: 0px 30px 0px 30px;
+    }
+
     #connexion-img {
         @include background-image('../../img/babyfoot.jpg');
         height: 100%;
     }
 
     #submit {
-        float: right;
         margin-top: 20px;
     }
 
@@ -109,6 +116,10 @@ a {
     }
 }
 
+#root {
+    overflow: hidden;
+}
+
 #main {
 
     .logo {
@@ -141,8 +152,8 @@ a {
     .navbar-header {
         float: none;
     }
-    
-    .nav-stacked>li+li {
+
+    .nav-stacked > li + li {
         margin-top: 0px;
     }
 
@@ -150,7 +161,7 @@ a {
         height: 100px;
         padding: 30px 30px 30px 30px;
     }
-    
+
     .nav > li > a {
         border-right: 3px solid transparent;
     }
@@ -160,15 +171,46 @@ a {
         color: $color1 !important;
         border-right-color: $color1 !important;
     }
-    
+
     .section {
         background: #fff;
         height: 300px;
         border: 1px solid lighten($color0, 10%);
     }
-    
+
     #content {
         padding-top: 10px;
     }
+
+    .photo {
+        height: 100px;
+        width: 100px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+    }
+
+    h5 {
+        color: $color0;
+        margin-top: 0;
+        font-weight: 300;
+    }
+
+    .profil {
+        flex-direction: column;
+        margin: 50px 0;
+    }
     
+    .versus {
+        display: block;
+        font-size: 5em;
+    }
+
+}
+
+#header {
+    a {
+        margin-right: 10px;
+    }
 }

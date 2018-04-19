@@ -61,7 +61,7 @@ const LoginForm = (props) => (
         />
     </div>
 
-    <div className="input-group">
+    <div className="input-group right">
       <input
         className="btn btn-primary" 
         id="submit" 

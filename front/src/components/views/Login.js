@@ -93,7 +93,7 @@ class Login extends Component {
 
       <div className="row" id="connexion">
         <div className="col-md-4 flexbox">
-          <img src={logo} className="logo" alt="logo" />
+          <a href="/"><img src={logo} className="logo" alt="logo" /></a>
           <LoginForm credentials={this.state.credentials} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
         </div>
         <div className="col-md-8" id="connexion-img">

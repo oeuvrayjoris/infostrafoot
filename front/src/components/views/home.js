@@ -35,7 +35,6 @@ class Home extends Component {
               </div>
             </div>
           </div>
-          <section id="section1" />
         </div>
       </div>
     );
