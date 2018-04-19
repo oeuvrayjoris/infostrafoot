@@ -136,7 +136,7 @@ a:hover {
   border-top-left-radius: 0.25rem;
   border-right: 0;
   color: #bdc3d0;
-  padding: 15px 15px 0 15px;
+  padding: 0px 15px;
   font-size: 12px;
 }
 /* line 105, ../sass/style.scss */
@@ -178,27 +178,31 @@ a:hover {
   float: none;
 }
 /* line 145, ../sass/style.scss */
+#main .nav-stacked > li + li {
+  margin-top: 0px;
+}
+/* line 149, ../sass/style.scss */
 #main .navbar-brand {
   height: 100px;
   padding: 30px 30px 30px 30px;
 }
-/* line 150, ../sass/style.scss */
+/* line 154, ../sass/style.scss */
 #main .nav > li > a {
   border-right: 3px solid transparent;
 }
-/* line 154, ../sass/style.scss */
+/* line 158, ../sass/style.scss */
 #main .active {
   background-color: #f9f9fa !important;
   color: #3f79f0 !important;
   border-right-color: #3f79f0 !important;
 }
-/* line 160, ../sass/style.scss */
+/* line 164, ../sass/style.scss */
 #main .section {
   background: #fff;
   height: 300px;
   border: 1px solid #dbdee5;
 }
-/* line 166, ../sass/style.scss */
+/* line 170, ../sass/style.scss */
 #main #content {
   padding-top: 10px;
 }

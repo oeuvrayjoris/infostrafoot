@@ -98,7 +98,7 @@ a {
         border-top-left-radius: 0.25rem;
         border-right: 0;
         color: $color0;
-        padding: 15px 15px 0 15px;
+        padding: 0px 15px;
         font-size: 12px;
     }
 
@@ -140,6 +140,10 @@ a {
 
     .navbar-header {
         float: none;
+    }
+    
+    .nav-stacked>li+li {
+        margin-top: 0px;
     }
 
     .navbar-brand {

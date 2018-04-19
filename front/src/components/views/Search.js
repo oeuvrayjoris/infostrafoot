@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
+import Header from '../Header.js';
+
 
 class Search extends Component {
 
@@ -13,8 +15,15 @@ class Search extends Component {
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
+            <Header />
             <h1>Rechercher</h1>
             <hr />
+            <div className="input-group">
+                <input type="text" className="form-control" placeholder="Rechercher..." />
+                <span className="input-group-btn">
+                    <button className="btn btn-default" type="button"><i className="fas fa-search"></i></button>
+                </span>
+            </div>
         </div>
         </div>
       </div>
