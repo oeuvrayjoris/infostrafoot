@@ -97,9 +97,9 @@ class SignUp extends Component {
   render() {
     return (
 
-      <div className="row" id="connexion">
+      <div className="row" className="connexion" id="inscription">
         <div className="col-md-4 flexbox">
-          <img src={logo} className="logo" alt="logo" />
+          <a href="/" className="logo"><img src={logo} alt="logo" /></a>
           <SignUpForm credentials={this.state.credentials} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
         </div>
         <div className="col-md-8" id="connexion-img">
