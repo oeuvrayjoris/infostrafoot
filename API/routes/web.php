@@ -26,10 +26,17 @@ $router->get('/migrate', function () {
 });
 
 
-// Test php
-$router->get('/date', function () {
-	return "Aujourd'hui : " . date('d-m-Y');
+/*
+|----------------
+| Auth routes
+|----------------
+*/
+$router->group(['prefix' => 'auth'], function($router) {
+	$router->post('/login', 'AuthController@login');
+	$router->post('/logout', 'AuthController@logout');
+	$router->get('/player','PlayerController@info'); // Auth
 });
+
 
 /*
 |----------------
@@ -37,7 +44,6 @@ $router->get('/date', function () {
 |----------------
 */
 $router->get('players','PlayerController@index');
-
 $router->group(['prefix' => 'player'], function($router) {
 	$router->get('/{id}','PlayerController@getPlayer');
 	$router->post('/','PlayerController@createPlayer');
@@ -57,19 +63,9 @@ $router->delete('match/{id}','MatchController@deleteMatch'); // Need Auth
 
 /*
 |----------------
-| Match routes
+| Team routes
 |----------------
 */
 $router->get('teams','TeamController@index');
 $router->post('team','TeamController@createTeam');
 $router->delete('team/{id}','TeamController@deleteTeam');
-/*
-|----------------
-| Auth routes
-|----------------
-*/
-$router->group(['prefix' => 'auth'], function($router) {
-	$router->post('/login', 'AuthController@login');
-	$router->post('/logout', 'AuthController@logout');
-	$router->get('/player','PlayerController@info'); // Auth
-});
