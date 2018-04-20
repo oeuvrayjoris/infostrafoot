@@ -16,10 +16,12 @@ class Header extends React.Component {
             (<div id="header">
               <NavLink to="/login">Connexion</NavLink>
             <NavLink to="/signup">Inscription</NavLink>
-            </div>) :
+            </div>
+            ) :
             (<div id="header">
               <NavLink to="/" onClick={this.props.handleLogout}>Déconnexion</NavLink>
-            </div>)
+            </div>
+            )
           }
         </div>
     );

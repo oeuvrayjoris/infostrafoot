@@ -50,7 +50,6 @@ class Login extends Component {
       .then(res => {
         console.log(res)
         console.log(this.Auth.getToken())
-        this.props.handleUser()
       })
       .then(res =>{
          this.props.history.replace('/');
@@ -72,7 +71,7 @@ class Login extends Component {
   render() {
     return (
 
-      <div className="row" id="connexion">
+      <div className="row" className="connexion">
         <div className="col-md-4 flexbox">
           <a href="/"><img src={logo} className="logo" alt="logo" /></a>
           <LoginForm credentials={this.state.credentials} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />

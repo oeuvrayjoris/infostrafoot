@@ -3,7 +3,7 @@ import decode from 'jwt-decode';
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'https://www.floriantorres.fr/infostrafootapi/public/' // API server domain
+        this.domain = domain || 'https://www.floriantorres.fr/infostrafootapi/public' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
@@ -11,11 +11,11 @@ export default class AuthService {
 
     login(credentials) {
         // Get a token from api server using the fetch api
-        return this.fetch(`${this.domain}/login`, {
+        return this.fetch(`${this.domain}/auth/login`, {
             method: 'POST',
             body: JSON.stringify(credentials)
         }).then(res => {
-            this.setToken(res.api_token) // Setting the token in sessionStorage
+            this.setToken(res.access_token) // Setting the token in sessionStorage
             return Promise.resolve(res);
         })
     }
@@ -26,7 +26,7 @@ export default class AuthService {
             method: 'POST',
             body: JSON.stringify(credentials)
         }).then(res => {
-            this.setToken(/*res.api_token*/'yo') // Setting the token in sessionStorage
+            this.setToken(res.access_token) // Setting the token in sessionStorage
             return Promise.resolve(res);
         })
 
@@ -35,14 +35,13 @@ export default class AuthService {
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // Getting token from sessionStorage
-        console.log(!!token && !this.isTokenExpired(token))
         return !!token && !this.isTokenExpired(token) // handwaiving here
     }
 
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < (Date.now() + 60 * 60 * 1000)/ 1000) { // Checking if token is expired.
+            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired.
                 return true;
             }
             else
@@ -64,8 +63,20 @@ export default class AuthService {
     }
 
     logout() {
-        // Clear user token and profile data from sessionStorage
-        sessionStorage.removeItem('id_token');
+        if (this.loggedIn()) {
+            try {
+                this.fetch(`${this.domain}/auth/logout`, {
+                    method: 'POST',
+                }).then(res => {
+                    // Clear user token and profile data from sessionStorage
+                    sessionStorage.removeItem('id_token');
+                    return Promise.resolve(res);
+                })
+            }
+            catch(error) {
+                console.log(error)
+            }
+        }
     }
 
     getProfile() {
@@ -97,13 +108,15 @@ export default class AuthService {
     }
 
     _checkStatus(response) {
+        console.log(response)
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
             return response
         } else {
             var error = new Error(response.statusText)
             error.response = response
-            throw error
+            console.log(error)
+            //throw error
         }
     }
 }

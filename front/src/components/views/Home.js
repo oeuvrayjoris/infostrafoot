@@ -23,6 +23,7 @@ class Home extends Component {
 
   handleLogout(){
     Auth.logout()
+    this.checkIfUserAuth()
     this.props.history.replace('/');
   }
 
@@ -34,12 +35,10 @@ class Home extends Component {
       }, () => console.log(this.state))
     }
     catch(err){
-      // A CHANGER
       console.log(err)
       this.setState({
-          user: "null"
+          user: null
       }, () => console.log(this.state))
-      console.log(this.state.user)
     }
   }
 

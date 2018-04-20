@@ -42,20 +42,23 @@ class Search extends Component {
             <h1>Rechercher</h1>
             <hr />
             <div className="row">
-                <div className="col-md-3">
-        <div className="input-group">
-                <input type="text" className="form-control"name="search" placeholder="Rechercher..." value={this.state.value} onChange={e => this.handleChange(e)}/>
-                <span className="input-group-btn">
-                    <input 
-                    type="submit" 
-                    className="btn btn-default" 
-                    onClick={e => this.handleSubmit(e)}
-                    /><i className="fas fa-search"></i>
-                </span>
-            </div></div>
-                <div className="col-md-9"></div>
+              <div className="col-md-3">
+                <div className="input-group">
+                <form>
+                  <input type="text" className="form-control"name="search" placeholder="Rechercher..." value={this.state.value} onChange={e => this.handleChange(e)}/>
+                    <span className="input-group-btn">
+                        <button 
+                        type="submit" 
+                        className="btn btn-default" 
+                        onClick={e => this.handleSubmit(e)}
+                        ><i className="fas fa-search"></i></button>
+                    </span>
+                </form>
+                </div>
+              </div>
+            <div className="col-md-9"></div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     );

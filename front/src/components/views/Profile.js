@@ -34,7 +34,9 @@ class Profile extends Component {
             <h1>Profil</h1>
             <hr />
             <div className="flexbox profil">
-                <div className="photo" style={{ backgroundImage: `url(${Background})` }}></div>
+                <div className="photo">
+                    <div style={{ backgroundImage: `url(${Background})` }}></div>
+                </div>
                 <h3>Jean-Christophe Novelli</h3>
                 <h5>@Noveldu93</h5>
                 <button className="btn btn-default">Modifier le profil</button>

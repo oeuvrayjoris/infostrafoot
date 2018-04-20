@@ -21,7 +21,7 @@ class Menu extends React.Component {
                   <span className="icon-bar" />
                   <span className="icon-bar" />
                 </button>
-                <span className="navbar-brand"><img src={logo} className="logo" alt="logo" /></span>
+                <span className="navbar-brand"><a href="/" className="logo"><img src={logo} alt="logo" /></a></span>
               </div>
               <div className="navbar-collapse collapse sidebar-navbar-collapse">
                 <ul className="nav nav-pills nav-stacked">
