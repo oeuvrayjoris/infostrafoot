@@ -56,6 +56,19 @@ a {
     @include box-shadow(0px, 7px, 17px, rgba($color1, .3));
 }
 
+.btn-success {
+    background-color: $color3;
+    border-color: transparent;
+    &:hover {
+        background-color: darken($color3, 20%);
+        border-color: transparent;
+    }
+    text-transform: uppercase;
+    height: 50px;
+    padding: 0px 30px 0px 30px;
+    @include box-shadow(0px, 7px, 17px, rgba($color3, .3));
+}
+
 #inscription {
     .form-control {
         border-radius: 4px;
@@ -239,8 +252,11 @@ a {
     }
 
     .versus {
-        display: block;
         font-size: 5em;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        margin-top: 100px;
     }
 
 }
@@ -256,6 +272,10 @@ a {
 }
 
 .player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     background: #fff;
     height: 300px;
     border: 1px solid lighten($color0, 10%);
@@ -298,14 +318,13 @@ a {
 
 h3 {
     text-align: center;
+    margin-bottom: 30px;
 }
 
-.team {
-    text-align: center;
-    padding: 10px;
-    height: 100px;
+.role {
+    height: 75px;
     width: 100%;
     border-radius: 4px;
-    font-size: 1em;
     border: 1px solid lighten($color0, 10%);
+    margin-bottom: 15px;
 }

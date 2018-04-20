@@ -5,8 +5,8 @@ import ItemTypes from './ItemTypes'
 import style from '../styles/sass/style.scss'
 
 const boxTarget = {
-	drop(props) {
-		return { name: props.name }
+    drop(props, monitor) {
+		props.onDrop(monitor.getItem())
 	},
 }
 
@@ -15,12 +15,13 @@ class Team extends Component {
 		connectDropTarget: PropTypes.func.isRequired,
 		isOver: PropTypes.bool.isRequired,
 		canDrop: PropTypes.bool.isRequired,
+        players: PropTypes.array,
+		onDrop: PropTypes.func.isRequired,
 	}
 
 	render() {
-		const { canDrop, isOver, connectDropTarget } = this.props
+		const { name, players, canDrop, isOver, connectDropTarget } = this.props
 		const isActive = canDrop && isOver
-        const { name } = this.props
 
 		let backgroundColor = '#fff'
 		if (isActive) {
@@ -32,8 +33,13 @@ class Team extends Component {
 		return connectDropTarget(
             <div className="col-md-4 flexbox flex-column">
                 <h3>{name}</h3>
-                <div className="team flexbox" style={{ backgroundColor }}>
-                    {isActive ? 'Relâcher pour ajouter le joueur' : 'Faites glisser un joueur ici'}
+                {players.map(({ prenom, nom, pseudo }, index) => (
+				    <div className="role flexbox" key={pseudo}>
+                        {prenom}
+                    </div>
+				))}
+                <div className="role flexbox" style={{ backgroundColor }}>
+                        {isActive ? 'Relâcher pour ajouter le joueur' : 'Faites glisser un joueur ici'}
                 </div>
             </div>,
 		)

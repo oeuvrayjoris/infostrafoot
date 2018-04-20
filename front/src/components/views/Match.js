@@ -3,14 +3,39 @@ import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
 
-import { DragDropContextProvider } from 'react-dnd'
+import update from 'immutability-helper'
+import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
 import Team from '../Team'
 import Player from '../Player'
+import ItemTypes from '../ItemTypes'
 
 class Match extends Component {
+    
+    constructor(props) {
+		super(props)
+		this.state = {
+			teams: [
+				{ name: 'Equipe 1', players: [] },
+				{ name: 'Equipe 2', players: [] }
+			],
+			players: [
+				{ prenom: 'Joris', nom: 'Oeuvray', pseudo: 'jojo', type: ItemTypes.BOX },
+				{ prenom: 'David', nom: 'Naser', pseudo: 'levacancier', type: ItemTypes.BOX },
+				{ prenom: 'Jordan', nom: 'Vilsaint', pseudo: 'legamin', type: ItemTypes.BOX },
+			],
+			droppedPseudos: [],
+		}
+	}
+    
+    isDropped(pseudo) {
+		return this.state.droppedPseudos.indexOf(pseudo) > -1
+	}
 
   render() {
+      
+    const { teams, players } = this.state
+    
     return (
 
       <div className="row" id="main" style={{ height: window.innerHeight}}>
@@ -22,40 +47,76 @@ class Match extends Component {
             <Header />
             <h1>Créer un match</h1>
             <hr />
-            <DragDropContextProvider backend={HTML5Backend}>
-				<div>
-					<div className="row">
-				        <Team name="Equipe 1" />
-                        <div className="col-md-4 flexbox flex-column">
-                            <p className="versus">VS</p>
-                            <button className="btn btn-primary">Créer un match</button>
-                        </div>
-				        <Team name="Equipe 2" />
-					</div>
-                    <hr />
-                    <div className="row">
-                        <div className="col-md-3">
-                            <div className="input-group search">
-                                <input type="text" className="form-control" placeholder="Rechercher un joueur..." />
-                                <span className="input-group-btn">
-                                    <button className="btn btn-default" type="button"><i className="fas fa-search"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                        <div className="col-md-9"></div>
+            <div>
+				<div className="row">
+                    <Team
+                        name={teams[0].name}
+                        players={teams[0].players}
+                        onDrop={item => this.handleDrop(0, item)}
+                        key={teams[0].name}
+                    />
+                    <div className="col-md-4 flexbox" style={{ height: '100%' }}>
+                        <p className="versus">VS</p>
                     </div>
-					<div className="row">
-						<Player prenom="Joris" pseudo="jojo" />
-						<Player prenom="Jordan" pseudo="legamin" />
-						<Player prenom="David" pseudo="levacancier" />
-					</div>
+                    <Team
+                        name={teams[1].name}
+                        players={teams[1].players}
+                        onDrop={item => this.handleDrop(1, item)}
+                        key={teams[1].name}
+                    />
 				</div>
-			</DragDropContextProvider>
+                <div className="flexbox">
+                    <button className="btn btn-success">Créer un match</button>
+                </div>
+                <hr />
+                <div className="row">
+                    <div className="col-md-3">
+                        <div className="input-group search">
+                            <input type="text" className="form-control" placeholder="Rechercher un joueur..." />
+                            <span className="input-group-btn">
+                                <button className="btn btn-default" type="button"><i className="fas fa-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div className="col-md-9"></div>
+                </div>
+                <div className="row">
+					{players.map(({ prenom, nom, pseudo }, index) => (
+						<Player
+							prenom={prenom}
+							nom={nom}
+                            pseudo={pseudo}
+							isDropped={this.isDropped(pseudo)}
+							key={pseudo}
+						/>
+					))}
+                </div>
+			</div>
         </div>
         </div>
       </div>
     );
   }
+    
+    handleDrop(index, item) {
+        const { pseudo } = item
+        const droppedPseudos = pseudo ? { $push: [pseudo] } : {}
+
+        this.setState(
+            update(this.state, {
+                teams: {
+                    [index]: {
+                        players: {
+                            $push: [item],
+                        },
+                    },
+                },
+                droppedPseudos,
+            }),
+        )
+        
+        console.log(this.state.teams)
+    }
 };
 
-export default Match;
+export default DragDropContext(HTML5Backend)(Match);
