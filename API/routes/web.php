@@ -41,3 +41,12 @@ $router->delete('player/{id}','PlayerController@deletePlayer');
 $router->get('matches','MatchController@index');
 $router->post('match','MatchController@createMatch');
 $router->delete('match/{id}','MatchController@deleteMatch');
+
+/*
+|----------------
+| Match routes
+|----------------
+*/
+$router->get('teams','TeamController@index');
+$router->post('team','TeamController@createTeam');
+$router->delete('team/{id}','TeamController@deleteTeam');

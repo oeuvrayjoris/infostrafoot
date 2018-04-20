@@ -12,7 +12,7 @@ class Match extends Model {
      */
     protected $fillable = [
     	'begin_time',
-        'end_time',
+        'end_time'
     ];
 }
 
