@@ -10,8 +10,15 @@ class Home extends Component {
   constructor(props){
     super(props)
     this.state = {
+      user: null
     }
-    console.log(this.props.user)
+    setTimeout(
+      () => this.checkIfUserAuth()
+    /*
+      this.setState({
+        user: "hello"
+      })*/
+    , 1000)
   }
 
   handleLogout(){
@@ -19,16 +26,37 @@ class Home extends Component {
     this.props.history.replace('/');
   }
 
+  checkIfUserAuth() {
+    try {
+      const profile = Auth.getProfile()
+      this.setState({
+          user: profile
+      }, () => console.log(this.state))
+    }
+    catch(err){
+      // A CHANGER
+      console.log(err)
+      this.setState({
+          user: "null"
+      }, () => console.log(this.state))
+      console.log(this.state.user)
+    }
+  }
+
+/*
+  componentWillMount() {
+    this.checkIfUserAuth()
+  }*/
+
   render() {
     return (
-
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">
            <Menu />
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
-            <Header handleLogout={this.handleLogout.bind(this)} user={this.props.user}/>
+            <Header handleLogout={this.handleLogout.bind(this)} user={this.state.user}/>
             <h1>Accueil</h1>
             <hr />
             <div className="row">

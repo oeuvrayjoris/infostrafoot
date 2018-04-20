@@ -48,20 +48,6 @@ class App extends Component {
 		}
 	}
 
-	componentWillMount() {
-        try {
-            const profile = Auth.getProfile()
-            this.setState({
-                user: profile
-            })
-        }
-        catch(err){
-        	// A CHANGER
-        	console.log(err)
-        console.log(this.state.user)
-        }
-	}
-
 	render() {
 		return(
 			<div>

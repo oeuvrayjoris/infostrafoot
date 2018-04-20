@@ -10,9 +10,20 @@ const Auth = new AuthService();
 
 class Profile extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      mail: '',
+      username: '',
+      password: '',
+      firstname: '',
+      lastname: '',
+      birthdate: ''
+    }
+  }
+
   render() {
     return (
-
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">
            <Menu />

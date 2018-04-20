@@ -34,10 +34,10 @@ class Login extends Component {
   }
 
   // Handle the changed values on the form
-  handleChange = event => {
-    const field = event.target.name;
+  handleChange = e => {
+    const field = e.target.name;
     const credentials = this.state.credentials;
-    credentials[field] = event.target.value;
+    credentials[field] = e.target.value;
     this.setState({
       credentials: credentials
     });
@@ -68,27 +68,7 @@ class Login extends Component {
       }
     })
   };
-
-  // Check the GET method on the API
-  loadPlayers = () => {
-    const myInit = { method: 'get',
-                    mode: 'no-cors'
-                  };
-
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/players'
-    fetch(url)
-      .then(function(response, myInit) {
-        return response.json();
-      })
-      .then(function(datas) {
-        console.log(datas)
-      })
-      .catch(function(error) {
-          this.setState({error})
-          console.log(error)
-      });
-  }
-
+  
   render() {
     return (
 
