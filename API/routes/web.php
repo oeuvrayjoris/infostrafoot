@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,6 +17,16 @@ $router->get('/', function () {
 	return "API Infostrafoot";
 });
 
+
+// Effectuer les migrations sans ligne de commande
+$router->get('/migrate', function () {
+	$migrate = Artisan::call('migrate', array('--path' => 'database/migrations', '--force' => true));
+	echo $migrate;
+	return "Migration effectuée";
+});
+
+
+// Test php
 $router->get('/date', function () {
 	return "Aujourd'hui : " . date('d-m-Y');
 });
@@ -25,13 +37,14 @@ $router->get('/date', function () {
 |----------------
 */
 $router->get('players','PlayerController@index');
-$router->get('player/info','PlayerController@info');
-$router->get('player/{id}','PlayerController@getPlayer');
-$router->post('player','PlayerController@createPlayer');
-$router->post('login/','PlayerController@authenticate');
-// TODO : Authentification nécessaire pour les routes 'put' et 'delete' -> MiddleWare ? Vérification dans le Controller ?
-$router->put('player/{id}','PlayerController@updatePlayer');
-$router->delete('player/{id}','PlayerController@deletePlayer');
+
+$router->group(['prefix' => 'player'], function($router) {
+	$router->get('/{id}','PlayerController@getPlayer');
+	$router->post('/','PlayerController@createPlayer');
+	$router->put('/{id}','PlayerController@updatePlayer'); // Auth
+	$router->delete('/{id}','PlayerController@deletePlayer'); // Auth
+});
+
 
 /*
 |----------------
@@ -39,8 +52,8 @@ $router->delete('player/{id}','PlayerController@deletePlayer');
 |----------------
 */
 $router->get('matches','MatchController@index');
-$router->post('match','MatchController@createMatch');
-$router->delete('match/{id}','MatchController@deleteMatch');
+$router->post('match','MatchController@createMatch'); // Need Auth
+$router->delete('match/{id}','MatchController@deleteMatch'); // Need Auth
 
 /*
 |----------------
@@ -50,3 +63,13 @@ $router->delete('match/{id}','MatchController@deleteMatch');
 $router->get('teams','TeamController@index');
 $router->post('team','TeamController@createTeam');
 $router->delete('team/{id}','TeamController@deleteTeam');
+/*
+|----------------
+| Auth routes
+|----------------
+*/
+$router->group(['prefix' => 'auth'], function($router) {
+	$router->post('/login', 'AuthController@login');
+	$router->post('/logout', 'AuthController@logout');
+	$router->get('/player','PlayerController@info'); // Auth
+});

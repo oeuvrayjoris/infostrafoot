@@ -8,8 +8,9 @@ use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Player extends Model implements AuthenticatableContract, AuthorizableContract {
+class Player extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject {
 
 	use Authenticatable, Authorizable;
 
@@ -32,8 +33,7 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 	 * @var array
 	 */
 	protected $hidden = [
-		'password',
-		'api_token'
+		'password'
 	];
 
 	/* Check if username is available (return true if available) */
@@ -41,5 +41,24 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 		return DB::table('players')->where('username', $username)->doesntExist();
 	}
 
+	/**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }
 ?>

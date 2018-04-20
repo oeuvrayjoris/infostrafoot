@@ -18,19 +18,19 @@ class PlayerController extends Controller
 		]]);
 	}
 
-	// Get all players
+	/* Get all players */
 	public function index() {
 		$players = Player::all();
 		return response()->json($players);
 	}
 
-	// Get player by id
+	/* Get player by id */
 	public function getPlayer($id){
 		$Player = Player::find($id);
 		return response()->json($Player);
 	}
 
-	// Create a player (POST)
+	/* Create a player (POST) */
 	public function createPlayer(Request $request) {
 		// Check if username is available
 		$username = $request->input('username');
@@ -45,9 +45,9 @@ class PlayerController extends Controller
 		}
 	}
 	
-	// Update a player (PUT) by id
+	/* Update a player (PUT) by id */
 	public function updatePlayer(Request $request, $id) {
-		// On récupère le joueur correspondant à l'id
+		// On récupère le joueur correspondant à l'id en paramètre
 		$player = Player::find($id);
 
 		// On vérifie que l'utilisateur modifie sa propre page
@@ -76,44 +76,24 @@ class PlayerController extends Controller
 		return response()->json($player);
 	}
 
+	/* Delete Player */
 	public function deletePlayer($id) {
+		// On récupère le joueur correspondant à l'id en paramètre 
 		$player = Player::find($id);
+
+		// On vérifie que l'utilisateur supprime sa propre page (sinon : message d'erreur)
 		if ($player != Auth::user()) {
 			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer cet utilisateur."]);
 		}
+
+		// Suppression du joueur
 		$player->delete();
+
+		// On renvoie un message de validation 
 		return response()->json(['status' => 'success', 'message' => "Le profil a bien été supprimé."]);
 	}
 
-	public function authenticate(Request $request) {
-		// On valide la requête d'authentification si username et password sont renseignés
-		$this->validate($request, [
-			'username' => 'required',
-			'password' => 'required'
-		]);
-
-		// On créer un user avec le Player qui a le username indiqué dans la requête
-		$user = Player::where('username', $request->input('username'))->first();
-
-		if ($user == NULL)
-			return response()->json(['status' => 'fail', 'message' => 'Aucun utilisateur avec ce pseudo']);
-
-		// On regarde si le mot de passe du user est bien le mot de passe indiqué dans la requête
-		if (Hash::check($request->input('password'), $user->password)) {
-			$apitoken = base64_encode(str_random(40));
-
-			// On génère un nouvel api_token à chaque connexion
-			Player::where('username', $request->input('username'))->update(['api_token' => "$apitoken"]);
-
-			// Si oui on retourne un statut de succès et un token d'authentification
-			return response()->json(['status' => 'success', 'api_token' => $apitoken]);
-		} else { // Sinon, on retourne un statut d'erreur
-			return response()->json(['status' => 'fail', 'message' => 'Mot de passe incorrect'], 401);
-		}
-			
-	}
-
-	// Renvoie l'utilisateur connecté
+	/* Renvoie l'utilisateur connecté */
 	public function info() {
     	return Auth::user();
     }
