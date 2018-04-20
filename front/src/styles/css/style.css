@@ -1,52 +1,82 @@
 /* COLORS */
-/* FONT */
+/* Gris clair */
+/* Bleu */
+/* Rouge */
+/* Vert */
+/* Beige */
 /* PLACEHOLDER */
 /* BOX-SHADOW */
 /* BACKGROUND */
-/* line 4, ../sass/style.scss */
+/* Access SASS variables in a React component */
+/* line 5, ../sass/style.scss */
+:export {
+  color0: #bdc3d0;
+}
+
+/* line 6, ../sass/style.scss */
+:export {
+  color1: #3f79f0;
+}
+
+/* line 7, ../sass/style.scss */
+:export {
+  color2: #ec4655;
+}
+
+/* line 8, ../sass/style.scss */
+:export {
+  color3: #1d9e8a;
+}
+
+/* line 9, ../sass/style.scss */
+:export {
+  color4: #e5c592;
+}
+
+/* line 11, ../sass/style.scss */
 body {
   font-family: Roboto;
   background: #f5f6fa;
 }
 
-/* line 9, ../sass/style.scss */
+/* line 16, ../sass/style.scss */
 .flexbox {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* line 15, ../sass/style.scss */
+/* line 22, ../sass/style.scss */
 .clearfix {
   clear: both;
 }
 
-/* line 19, ../sass/style.scss */
+/* line 26, ../sass/style.scss */
 .logo {
   width: 200px;
 }
 
-/* line 23, ../sass/style.scss */
+/* line 30, ../sass/style.scss */
 a {
   color: #3f79f0;
 }
-/* line 25, ../sass/style.scss */
+/* line 32, ../sass/style.scss */
 a:hover {
   color: #0f47ba;
   text-decoration: none;
 }
 
-/* line 31, ../sass/style.scss */
+/* line 38, ../sass/style.scss */
 .right {
   float: right;
 }
 
-/* line 35, ../sass/style.scss */
+/* line 42, ../sass/style.scss */
 .left {
   float: left;
 }
 
-/* line 39, ../sass/style.scss */
+/* line 46, ../sass/style.scss */
 .btn-primary {
   background-color: #3f79f0;
   border-color: transparent;
@@ -57,18 +87,18 @@ a:hover {
   -moz-box-shadow: 0px 7px 17px rgba(63, 121, 240, 0.3);
   box-shadow: 0px 7px 17px rgba(63, 121, 240, 0.3);
 }
-/* line 42, ../sass/style.scss */
+/* line 49, ../sass/style.scss */
 .btn-primary:hover {
   background-color: #0f47ba;
   border-color: transparent;
 }
 
-/* line 53, ../sass/style.scss */
+/* line 60, ../sass/style.scss */
 #inscription .form-control {
   border-radius: 4px;
 }
 
-/* line 58, ../sass/style.scss */
+/* line 65, ../sass/style.scss */
 .connexion {
   position: fixed;
   top: 0;
@@ -76,7 +106,7 @@ a:hover {
   width: 100%;
   margin: 0;
 }
-/* line 65, ../sass/style.scss */
+/* line 72, ../sass/style.scss */
 .connexion .form-control {
   height: 50px;
   border-color: #bdc3d0;
@@ -103,44 +133,44 @@ a:hover {
   /* Internet Explorer 10+ */
   color: #bdc3d0;
 }
-/* line 72, ../sass/style.scss */
+/* line 79, ../sass/style.scss */
 .connexion .form-control:focus {
   border-color: #3f79f0;
   -webkit-box-shadow: 0px 0px 8px rgba(63, 121, 240, 0.3);
   -moz-box-shadow: 0px 0px 8px rgba(63, 121, 240, 0.3);
   box-shadow: 0px 0px 8px rgba(63, 121, 240, 0.3);
 }
-/* line 78, ../sass/style.scss */
+/* line 85, ../sass/style.scss */
 .connexion .btn-default {
   height: 50px;
   padding: 0px 30px 0px 30px;
 }
-/* line 83, ../sass/style.scss */
+/* line 90, ../sass/style.scss */
 .connexion #connexion-img {
   background: url("../../img/babyfoot.jpg") no-repeat center center;
   background-size: cover;
   height: 100%;
 }
-/* line 88, ../sass/style.scss */
+/* line 95, ../sass/style.scss */
 .connexion #submit {
   margin-top: 20px;
 }
-/* line 92, ../sass/style.scss */
+/* line 99, ../sass/style.scss */
 .connexion .input-group {
   margin-top: 15px;
 }
-/* line 96, ../sass/style.scss */
+/* line 103, ../sass/style.scss */
 .connexion .flexbox {
   height: 100%;
   flex-direction: column;
   padding-left: 30px;
 }
-/* line 102, ../sass/style.scss */
+/* line 109, ../sass/style.scss */
 .connexion form {
   margin-top: 50px;
   padding: 0 100px 0 100px;
 }
-/* line 107, ../sass/style.scss */
+/* line 114, ../sass/style.scss */
 .connexion .input-group-addon {
   background-color: #fff;
   border: 1px solid #bdc3d0;
@@ -151,85 +181,85 @@ a:hover {
   padding: 0px 15px;
   font-size: 12px;
 }
-/* line 118, ../sass/style.scss */
+/* line 125, ../sass/style.scss */
 .connexion .lien {
   display: block;
   margin-top: 10px;
   float: right;
 }
 
-/* line 125, ../sass/style.scss */
+/* line 132, ../sass/style.scss */
 #root {
   overflow: hidden;
 }
 
-/* line 130, ../sass/style.scss */
+/* line 137, ../sass/style.scss */
 .logo:hover {
   opacity: 0.8;
 }
-/* line 133, ../sass/style.scss */
+/* line 140, ../sass/style.scss */
 .logo img {
   width: 100%;
 }
 
-/* line 140, ../sass/style.scss */
+/* line 147, ../sass/style.scss */
 #main .navbar-default {
   background-color: #fff;
   border-radius: 0;
   text-align: center;
 }
-/* line 146, ../sass/style.scss */
+/* line 153, ../sass/style.scss */
 #main .height100 {
   height: 100%;
 }
-/* line 150, ../sass/style.scss */
+/* line 157, ../sass/style.scss */
 #main .nav-pills > li > a {
   border-radius: 0;
 }
-/* line 154, ../sass/style.scss */
+/* line 161, ../sass/style.scss */
 #main .nav > li > a {
   padding: 30px 15px;
   color: #bdc3d0;
 }
-/* line 159, ../sass/style.scss */
+/* line 166, ../sass/style.scss */
 #main .navbar-collapse {
   padding: 0;
 }
-/* line 163, ../sass/style.scss */
+/* line 170, ../sass/style.scss */
 #main .navbar-header {
   float: none;
 }
-/* line 167, ../sass/style.scss */
+/* line 174, ../sass/style.scss */
 #main .nav-stacked > li + li {
   margin-top: 0px;
 }
-/* line 171, ../sass/style.scss */
+/* line 178, ../sass/style.scss */
 #main .navbar-brand {
   height: 100px;
   padding: 30px 30px 30px 30px;
 }
-/* line 176, ../sass/style.scss */
+/* line 183, ../sass/style.scss */
 #main .nav > li > a {
   border-right: 3px solid transparent;
 }
-/* line 180, ../sass/style.scss */
+/* line 187, ../sass/style.scss */
 #main .active {
   background-color: #f9f9fa !important;
   color: #3f79f0 !important;
   border-right-color: #3f79f0 !important;
 }
-/* line 186, ../sass/style.scss */
+/* line 193, ../sass/style.scss */
 #main .section {
   background: #fff;
   height: 300px;
   border: 1px solid #dbdee5;
   border-radius: 4px;
 }
-/* line 193, ../sass/style.scss */
+/* line 200, ../sass/style.scss */
 #main #content {
   padding-top: 10px;
 }
-/* line 197, ../sass/style.scss */
+/* line 204, ../sass/style.scss */
 #main .photo {
   height: 100px;
   width: 100px;
@@ -237,7 +267,7 @@ a:hover {
   border-radius: 50%;
   transform: translateZ(0);
 }
-/* line 204, ../sass/style.scss */
+/* line 211, ../sass/style.scss */
 #main .photo div {
   width: 100%;
   height: 100%;
@@ -248,48 +278,48 @@ a:hover {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-/* line 214, ../sass/style.scss */
+/* line 221, ../sass/style.scss */
 #main .photo div:hover {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
   cursor: pointer;
 }
-/* line 223, ../sass/style.scss */
+/* line 230, ../sass/style.scss */
 #main h5 {
   color: #bdc3d0;
   margin-top: 0;
   font-weight: 300;
 }
-/* line 229, ../sass/style.scss */
+/* line 236, ../sass/style.scss */
 #main .profil {
   flex-direction: column;
   margin: 50px 0;
 }
-/* line 234, ../sass/style.scss */
+/* line 241, ../sass/style.scss */
 #main .versus {
   display: block;
   font-size: 5em;
 }
 
-/* line 241, ../sass/style.scss */
+/* line 248, ../sass/style.scss */
 .flex-column {
   flex-direction: column;
 }
 
-/* line 246, ../sass/style.scss */
+/* line 253, ../sass/style.scss */
 #header a {
   margin-right: 10px;
 }
 
-/* line 251, ../sass/style.scss */
+/* line 258, ../sass/style.scss */
 .player {
   background: #fff;
   height: 300px;
   border: 1px solid #dbdee5;
   border-radius: 4px;
 }
-/* line 257, ../sass/style.scss */
+/* line 264, ../sass/style.scss */
 .player .photo2 {
   height: 100px;
   width: 100px;
@@ -297,7 +327,7 @@ a:hover {
   border-radius: 50%;
   transform: translateZ(0);
 }
-/* line 264, ../sass/style.scss */
+/* line 271, ../sass/style.scss */
 .player .photo2 div {
   width: 100%;
   height: 100%;
@@ -308,19 +338,35 @@ a:hover {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-/* line 276, ../sass/style.scss */
+/* line 283, ../sass/style.scss */
 .player:hover {
   cursor: pointer;
   background: #eee;
 }
-/* line 281, ../sass/style.scss */
+/* line 288, ../sass/style.scss */
 .player:hover .photo2 div {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
 
-/* line 288, ../sass/style.scss */
+/* line 295, ../sass/style.scss */
 .search {
-  margin: 25px 0;
+  margin-bottom: 25px;
+}
+
+/* line 299, ../sass/style.scss */
+h3 {
+  text-align: center;
+}
+
+/* line 303, ../sass/style.scss */
+.team {
+  text-align: center;
+  padding: 10px;
+  height: 100px;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 1em;
+  border: 1px solid #dbdee5;
 }
