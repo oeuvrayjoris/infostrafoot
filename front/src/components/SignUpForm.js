@@ -1,4 +1,5 @@
 import React from 'react';
+import Photo from '../img/photo_example.gif'
 
 const SignUpForm = (props) => (
 
@@ -33,6 +34,22 @@ const SignUpForm = (props) => (
 */
 
   <form>
+    <div className="input-group" id="photoInput">
+    <label htmlFor="file">
+        <div className="photo">
+            <div className="flexbox" style={{ backgroundImage: `url(${Photo})` }}>
+                <span><i class="fas fa-camera"></i></span>  
+            </div>
+        </div>
+    </label>
+    <input
+        id="file"
+        type="file"
+        name="photo"
+        className="input-file"
+        onChange={e => props.handleChange(e.target.files)}
+    />
+    </div>
   <div className="input-group">
     <input
       name="firstname"

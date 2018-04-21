@@ -15,10 +15,11 @@ class Header extends React.Component {
           {!this.props.user ? 
             (<div id="header">
               <NavLink to="/login">Connexion</NavLink>
-            <NavLink to="/signup">Inscription</NavLink>
+                <NavLink to="/signup">Inscription</NavLink>
             </div>
             ) :
             (<div id="header">
+                Bonjour, vous est bien connecté !
               <NavLink to="/" onClick={this.props.handleLogout}>Déconnexion</NavLink>
             </div>
             )
