@@ -23,7 +23,7 @@ class Player extends Component {
 	}
 
 	render() {
-		const { prenom, nom, pseudo, isDropped, isDragging, connectDragSource } = this.props
+		const { prenom, nom, pseudo, isDragging, connectDragSource } = this.props
 		const opacity = isDragging ? 0.4 : 1
 
 		return connectDragSource(

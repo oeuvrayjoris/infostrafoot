@@ -50,15 +50,17 @@ class Match extends Component {
             <div>
 				<div className="row">
                     <Team
+                        id={1}
                         name={teams[0].name}
                         players={teams[0].players}
                         onDrop={item => this.handleDrop(0, item)}
                         key={teams[0].name}
                     />
-                    <div className="col-md-4 flexbox" style={{ height: '100%' }}>
+                    <div className="col-md-4 flexbox">
                         <p className="versus">VS</p>
                     </div>
                     <Team
+                        id={2}
                         name={teams[1].name}
                         players={teams[1].players}
                         onDrop={item => this.handleDrop(1, item)}
@@ -114,8 +116,6 @@ class Match extends Component {
                 droppedPseudos,
             }),
         )
-        
-        console.log(this.state.teams)
     }
 };
 

@@ -16,7 +16,6 @@ class Search extends Component {
   // Handle the changed values on the form
   handleChange = e => {
     const field = e.target.value;
-    const name = e.target.name
     this.setState({
       search: field
     });
