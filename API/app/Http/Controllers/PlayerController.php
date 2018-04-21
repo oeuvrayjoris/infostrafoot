@@ -32,11 +32,26 @@ class PlayerController extends Controller
 
 	/* Create a player (POST) */
 	public function createPlayer(Request $request) {
+		$this->validate($request, [
+		    'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+		]);
+
 		// Check if username is available
 		$username = $request->input('username');
 		if (Player::isUsernameAvailable($username)) {
 			$player = Player::create($request->all());
 			$player->password = Hash::make($request->input('password'));
+			if ($request->hasFile('photo') && $request->file('photo')->isValid()) {				
+			    /* upload picture */
+			    $fileName = time().'.'.$request->file('photo')->getClientOriginalExtension();
+			    $destinationPath = base_path('public/uploads');
+			    $request->file('photo')->move($destinationPath, $fileName);
+				$player->photo = $destinationPath."/".$fileName;
+			} else {
+				/* default picture */
+				print(base_path('public/uploads/user_default.png'));
+				$player->photo = base_path('public/uploads/user_default.png');
+			}
 			$player->save();
 			return response()->json($player, 200);
 		} else {
