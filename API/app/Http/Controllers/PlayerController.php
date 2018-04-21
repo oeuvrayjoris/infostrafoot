@@ -21,13 +21,13 @@ class PlayerController extends Controller
 	/* Get all players */
 	public function index() {
 		$players = Player::all();
-		return response()->json($players);
+		return response()->json($players, 200);
 	}
 
 	/* Get player by id */
 	public function getPlayer($id){
 		$Player = Player::find($id);
-		return response()->json($Player);
+		return response()->json($Player, 200);
 	}
 
 	/* Create a player (POST) */
@@ -39,9 +39,9 @@ class PlayerController extends Controller
 			$player->password = Hash::make($request->input('password'));
 			$player->api_token = base64_encode(str_random(40));
 			$player->save();
-			return response()->json($player);
+			return response()->json($player, 200);
 		} else {
-			return response()->json(['status' => 'fail', 'message' => "Ce nom d'utilisateur existe déjà."]);
+			return response()->json(['status' => 'fail', 'message' => "Ce nom d'utilisateur existe déjà."], 409);
 		}
 	}
 	
@@ -52,7 +52,7 @@ class PlayerController extends Controller
 
 		// On vérifie que l'utilisateur modifie sa propre page
 		if ($player != Auth::user()) {
-			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour effectuer cette modification."]);
+			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour effectuer cette modification."], 401);
 		}
 
 		// On met à jour ses infos
@@ -73,7 +73,7 @@ class PlayerController extends Controller
 		$player->save();
 
 		// On retourne le joueur modifié
-		return response()->json($player);
+		return response()->json($player, 200);
 	}
 
 	/* Delete Player */
@@ -83,18 +83,18 @@ class PlayerController extends Controller
 
 		// On vérifie que l'utilisateur supprime sa propre page (sinon : message d'erreur)
 		if ($player != Auth::user()) {
-			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer cet utilisateur."]);
+			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer cet utilisateur."], 401);
 		}
 
 		// Suppression du joueur
 		$player->delete();
 
 		// On renvoie un message de validation 
-		return response()->json(['status' => 'success', 'message' => "Le profil a bien été supprimé."]);
+		return response()->json(['status' => 'success', 'message' => "Le profil a bien été supprimé."], 200);
 	}
 
 	/* Renvoie l'utilisateur connecté */
 	public function info() {
-    	return Auth::user();
+    	return response()->json(Auth::user(), 200);
     }
 }
