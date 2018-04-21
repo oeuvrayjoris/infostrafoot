@@ -58,8 +58,10 @@ $router->group(['prefix' => 'player'], function($router) {
 |----------------
 */
 $router->get('matches','MatchController@index');
+$router->get('match/{id_player}','MatchController@getMatchByPlayer');
 $router->post('match','MatchController@createMatch'); // Need Auth
 $router->delete('match/{id}','MatchController@deleteMatch'); // Need Auth
+
 
 /*
 |----------------
@@ -69,3 +71,13 @@ $router->delete('match/{id}','MatchController@deleteMatch'); // Need Auth
 $router->get('teams','TeamController@index');
 $router->post('team','TeamController@createTeam');
 $router->delete('team/{id}','TeamController@deleteTeam');
+
+
+/*
+|----------------
+| Goals routes
+|----------------
+*/
+$router->get('goals','GoalController@index');
+$router->post('goal','GoalController@createGoal');
+$router->delete('goal/{id}','GeamController@deleteGeam');
