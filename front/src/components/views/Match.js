@@ -83,7 +83,9 @@ class Match extends Component {
                     <div className="col-md-9"></div>
                 </div>
                 <div className="row">
-					{players.map(({ prenom, nom, pseudo }, index) => (
+					{players.map(({ prenom, nom, pseudo }, index) =>  {
+                        if(!(this.isDropped(pseudo))) {
+                            return (
 						<Player
 							prenom={prenom}
 							nom={nom}
@@ -91,7 +93,8 @@ class Match extends Component {
 							isDropped={this.isDropped(pseudo)}
 							key={pseudo}
 						/>
-					))}
+                        )}
+                    })}
                 </div>
 			</div>
         </div>
