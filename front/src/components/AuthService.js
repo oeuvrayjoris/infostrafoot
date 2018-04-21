@@ -63,19 +63,20 @@ export default class AuthService {
     }
 
     logout() {
-        if (this.loggedIn()) {
-            try {
-                this.fetch(`${this.domain}/auth/logout`, {
-                    method: 'POST',
-                }).then(res => {
-                    // Clear user token and profile data from sessionStorage
-                    sessionStorage.removeItem('id_token');
-                    return Promise.resolve(res);
-                })
-            }
-            catch(error) {
-                console.log(error)
-            }
+        
+        try {
+            this.fetch(`${this.domain}/auth/logout`, {
+                method: 'POST',
+            }).then(res => {
+                // Clear user token and profile data from sessionStorage
+                sessionStorage.removeItem('id_token');
+                console.log(this.getToken())
+                return Promise.resolve(res);
+            })
+        }
+        catch(error) {
+            sessionStorage.removeItem('id_token');
+            console.log(error)
         }
     }
 
@@ -105,10 +106,11 @@ export default class AuthService {
         })
             .then(this._checkStatus)
             .then(response => response.json())
+            .catch(error => console.log(error))
     }
 
     _checkStatus(response) {
-        console.log(response)
+        //console.log(response)
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
             return response

@@ -38,7 +38,7 @@ const SignUpForm = (props) => (
     <label htmlFor="file">
         <div className="photo">
             <div className="flexbox" style={{ backgroundImage: `url(${Photo})` }}>
-                <span><i class="fas fa-camera"></i></span>  
+                <span><i className="fas fa-camera"></i></span>  
             </div>
         </div>
     </label>

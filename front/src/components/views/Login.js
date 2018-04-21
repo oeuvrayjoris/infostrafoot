@@ -47,10 +47,6 @@ class Login extends Component {
   handleSubmit(e){
     e.preventDefault();
     this.Auth.login(this.state.credentials)
-      .then(res => {
-        console.log(res)
-        console.log(this.Auth.getToken())
-      })
       .then(res =>{
          this.props.history.replace('/');
       })

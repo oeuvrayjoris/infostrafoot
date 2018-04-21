@@ -19,8 +19,8 @@ class Header extends React.Component {
             </div>
             ) :
             (<div id="header">
-                Bonjour, vous est bien connecté !
-              <NavLink to="/" onClick={this.props.handleLogout}>Déconnexion</NavLink>
+                Bonjour, vous est bien connecté ! 
+              <NavLink to="/login" onClick={this.props.handleLogout}>Déconnexion</NavLink>
             </div>
             )
           }

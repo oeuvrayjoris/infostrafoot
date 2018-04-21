@@ -12,19 +12,22 @@ class Home extends Component {
     this.state = {
       user: null
     }
+    /*
     setTimeout(
       () => this.checkIfUserAuth()
-    /*
       this.setState({
         user: "hello"
-      })*/
-    , 1000)
+      })
+    , 1000)*/
   }
 
   handleLogout(){
     Auth.logout()
+    //this.props.history.replace('/');
+    this.setState({
+      user: null
+    }, console.log("Disconnected"))
     this.checkIfUserAuth()
-    this.props.history.replace('/');
   }
 
   checkIfUserAuth() {
@@ -42,10 +45,10 @@ class Home extends Component {
     }
   }
 
-/*
+
   componentWillMount() {
     this.checkIfUserAuth()
-  }*/
+  }
 
   render() {
     return (
