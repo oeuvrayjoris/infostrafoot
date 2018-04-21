@@ -18,7 +18,6 @@ class Search extends Component {
     const field = e.target.value;
     const name = e.target.name
     this.setState({
-
       search: field
     });
   };
@@ -43,9 +42,8 @@ class Search extends Component {
             <hr />
             <div className="row">
               <div className="col-md-3">
-                <div className="input-group">
-                <form>
-                  <input type="text" className="form-control"name="search" placeholder="Rechercher..." value={this.state.value} onChange={e => this.handleChange(e)}/>
+                <form className="input-group">
+                    <input type="text" className="form-control"name="search" placeholder="Rechercher..." value={this.state.value} onChange={e => this.handleChange(e)} />
                     <span className="input-group-btn">
                         <button 
                         type="submit" 
@@ -54,7 +52,6 @@ class Search extends Component {
                         ><i className="fas fa-search"></i></button>
                     </span>
                 </form>
-                </div>
               </div>
             <div className="col-md-9"></div>
             </div>

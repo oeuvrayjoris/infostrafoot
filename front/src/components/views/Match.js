@@ -71,12 +71,12 @@ class Match extends Component {
                 <hr />
                 <div className="row">
                     <div className="col-md-3">
-                        <div className="input-group search">
+                        <form className="input-group search">
                             <input type="text" className="form-control" placeholder="Rechercher un joueur..." />
                             <span className="input-group-btn">
                                 <button className="btn btn-default" type="button"><i className="fas fa-search"></i></button>
                             </span>
-                        </div>
+                        </form>
                     </div>
                     <div className="col-md-9"></div>
                 </div>
