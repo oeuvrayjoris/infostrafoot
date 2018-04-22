@@ -37,6 +37,12 @@ $router->group(['prefix' => 'auth'], function($router) {
 	$router->get('/player','PlayerController@info'); // Auth
 });
 
+/*
+|----------------
+| Home routes
+|----------------
+*/
+$router->get('/home','HomeController@index');
 
 /*
 |----------------
