@@ -36,10 +36,20 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 		'password'
 	];
 
-	/* Check if username is available (return true if available) */
+	/**
+     * Check if username is available (return true if available) 
+     */
 	static public function isUsernameAvailable($username) {
 		return DB::table('players')->where('username', $username)->doesntExist();
 	}
+
+	/**
+     * Get the goals for the player.
+     */
+    public function goals()
+    {
+        return $this->hasMany('App\Goal');
+    }
 
 	/**
      * Get the identifier that will be stored in the subject claim of the JWT.

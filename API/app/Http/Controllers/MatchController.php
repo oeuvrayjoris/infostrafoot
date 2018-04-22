@@ -17,6 +17,7 @@ class MatchController extends Controller
 	// Get match by id
 	public function getMatch($id){
 		$match = Match::find($id);
+		$match->goals;
 		return response()->json($match, 200);
 	}
 

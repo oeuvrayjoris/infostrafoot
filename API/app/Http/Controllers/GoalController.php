@@ -23,6 +23,8 @@ class GoalController extends Controller
 	// Create a goal (POST)
 	public function createGoal(Request $request){
 		$goal = Goal::create($request->all());
+		$goal->number = count($goal->match->goals);
+		$goal->save();
 		return response()->json($goal, 200);
     }
 
