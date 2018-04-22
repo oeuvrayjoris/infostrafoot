@@ -13,7 +13,8 @@ class Goal extends Model {
     protected $fillable = [
     	'number',
         'gamelle',
-        'date_hour',
+        'own_goal',
+        'role'
     ];
 }
 
