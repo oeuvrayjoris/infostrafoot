@@ -46,11 +46,10 @@ class PlayerController extends Controller
 			    $fileName = time().'.'.$request->file('photo')->getClientOriginalExtension();
 			    $destinationPath = base_path('public/uploads');
 			    $request->file('photo')->move($destinationPath, $fileName);
-				$player->photo = $destinationPath."/".$fileName;
+				$player->photo = $request->root()."/uploads/".$fileName;
 			} else {
 				/* default picture */
-				print(base_path('public/uploads/user_default.png'));
-				$player->photo = base_path('public/uploads/user_default.png');
+				$player->photo = $request->root()."/uploads/user_default.png";
 			}
 			$player->save();
 			return response()->json($player, 200);
