@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use DB;
 
 class PlayerController extends Controller
 {
@@ -26,8 +27,30 @@ class PlayerController extends Controller
 
 	/* Get player by id */
 	public function getPlayer($id){
-		$Player = Player::find($id);
-		return response()->json($Player, 200);
+		$player = Player::find($id);
+		if (!$player) {
+			return response()->json([
+				"status"=>"fail",
+				"message"=>"Le joueur n'existe pas."
+			], 404);
+		}
+		$goals = $player->goals;
+
+		/* A MODIFIER : Passer par la table team plutôt que goal car un joueur peut marquer 0 but */
+		$nb_played_matches = DB::table('matches')
+            ->join('goals', 'matches.id', '=', 'goals.match_id')
+            ->join('players', 'goals.player_id', '=', 'players.id')
+            ->where('players.id', $player->id)
+            ->select('matches.*')
+            ->distinct()
+            ->get()->count();
+
+		return response()->json([
+			"player" => $player,
+			"nb_goals" => count($goals),
+			"nb_gamelles" => count($goals->where("gamelle", 1)),
+			"nb_played_matches" => $nb_played_matches,
+		], 200);
 	}
 
 	/* Create a player (POST) */
@@ -54,7 +77,10 @@ class PlayerController extends Controller
 			$player->save();
 			return response()->json($player, 200);
 		} else {
-			return response()->json(['status' => 'fail', 'message' => "Ce nom d'utilisateur existe déjà."], 409);
+			return response()->json([
+				'status' => 'fail', 
+				'message' => "Ce nom d'utilisateur existe déjà."
+			], 409);
 		}
 	}
 	
