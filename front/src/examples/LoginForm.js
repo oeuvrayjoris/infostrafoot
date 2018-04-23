@@ -2,38 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 const LoginForm = (props) => (
-/*
-  handleSubmit = e => {
-    e.preventDefault();
-    (this.checkFields() && props.onSubmit(this.state));
-    console.log(JSON.stringify(this.state))
-
-    const myInit = { method: 'post',
-                     headers: {
-                       'Accept': 'application/json',
-                       'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.state.credentials)
-                  };
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/login'
-
-    fetch(url, myInit)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(datas) {
-        console.log(datas)
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-
-    this.loadPlayers()
-
-    // Transmitting state to App.onSubmit function
-    //this.clearState();
-  };
-  */
   <form>
     
     <div className="input-group">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
-import SignUpForm from '../SignUpForm.js';
+import Photo from '../../img/photo_example.gif'
 import AuthService from '../AuthService'
 
 class SignUp extends Component {
@@ -16,25 +16,39 @@ class SignUp extends Component {
         lastname: '',
         birthdate: ''
       },
-      errors: {}
+      errors: {
+        isPasswordOk: false,
+        isUsernameOk: false,
+        passwordConfirmation: false
+      }
     }
 
     // Bindings this
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.Auth = new AuthService();
-
   }
 
-  // TODO - Verifier la validité des champs
-  checkFields = () => {
-    return true;
-  };
-  
-  // Checks before if are logged in we render the DOM 
-  componentWillMount(){
-    if(this.Auth.loggedIn())
-        this.props.history.replace('/');
+  checkPseudo(username) {
+      setTimeout(() => {
+          let result = /^(?=.{3,20}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(username);
+          const errors = this.state.errors
+          errors.isUsernameOk = result
+          this.setState({
+             errors: errors
+          })
+      },800)
+  }
+
+  checkPassword(password) {
+      setTimeout(() => {
+          let result = /^(?=.{3,128}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(password);
+          const errors = this.state.errors
+          errors.isPasswordOk = result
+          this.setState({
+             errors: errors
+          })
+      },800)
   }
 
   // Handle the changed values on the form
@@ -50,57 +64,124 @@ class SignUp extends Component {
   // Handle the submit event
   handleSubmit(e){
     e.preventDefault();
+    
+    const options = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method : 'POST',
+        body: JSON.stringify(this.state.credentials)
+
+    }
+    const url = 'https://www.floriantorres.fr/infostrafootapi/public/player'
+    fetch(url, options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+
+/*
     this.Auth.signup(this.state.credentials)
       .then(res => {
         console.log(res)
-        console.log(this.Auth.getToken())
-        this.loadPlayers()
       })
       .then(res =>{
-         this.props.history.replace('/');
+        this.props.history.replace('/');
       })
       .catch(err =>{
-          alert(err);
+        console.log(err)
+        alert(err);
           // Afficher ce qui va pas quand ca sera géré en back
-      })
-  }
-
-  clearState = () => {
-    this.setState({
-      credentials : {
-        username: '',
-        password: ''
-      }
-    })
-  };
-
-  // Check the GET method on the API
-  loadPlayers = () => {
-    const myInit = { method: 'get',
-                    mode: 'no-cors'
-                  };
-
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/players'
-    fetch(url)
-      .then(function(response, myInit) {
-        return response.json();
-      })
-      .then(function(datas) {
-        console.log(datas)
-      })
-      .catch(function(error) {
-          this.setState({error})
-          console.log(error)
-      });
+      })*/
   }
 
   render() {
     return (
-
       <div className="row" className="connexion" id="inscription">
         <div className="col-md-4 flexbox">
           <a href="/" className="logo"><img src={logo} alt="logo" /></a>
-          <SignUpForm credentials={this.state.credentials} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
+          <form>
+            <div className="input-group" id="photoInput">
+            <label htmlFor="file">
+                <div className="photo">
+                    <div className="flexbox" style={{ backgroundImage: `url(${Photo})` }}>
+                        <span><i className="fas fa-camera"></i></span>  
+                    </div>
+                </div>
+            </label>
+            <input
+                id="file"
+                type="file"
+                name="photo"
+                className="input-file"
+                onChange={e => this.handleChange(e.target.files)}
+            />
+            </div>
+          <div className="input-group">
+            <input
+              name="firstname"
+              className="form-control"
+              placeholder='Prénom'
+              value={this.state.credentials.firstname}
+              onChange={e => this.handleChange(e)}
+            />
+            </div>
+            <div className="input-group">
+            <input
+              name="lastname"
+              className="form-control"
+              placeholder='Nom'
+              value={this.state.credentials.lastname}
+              onChange={e => this.handleChange(e)}
+            />
+            </div>
+            <div className="input-group">
+            <input
+              name="username"
+              className="form-control"
+              placeholder='Pseudo'
+              value={this.state.credentials.username}
+              onChange={e => this.handleChange(e)}
+            />
+            </div>
+            <div className="input-group">
+            <input
+              name="mail"
+              className="form-control"
+              placeholder='Email'
+              value={this.state.credentials.mail}
+              onChange={e => this.handleChange(e)}
+            />
+            </div>
+            <div className="input-group">
+            <input
+              name="password"
+              className="form-control"
+              placeholder='Mot de passe'
+              type="password"
+              value={this.state.credentials.password}
+              onChange={e => this.handleChange(e)}
+            />
+            </div>
+            <div className="input-group">
+            <input
+              name="birthdate"
+              className="form-control"
+              placeholder='Date de naissance'
+              value={this.state.credentials.birthdate}
+              onChange={e => this.handleChange(e)}
+            />
+            </div>
+            <div className="input-group">
+              <input
+                className="btn btn-primary" 
+                id="submit" 
+                onClick={e => this.handleSubmit(e)}
+                value="S'inscrire"
+                type="submit"
+              />
+            </div>
+            </form>
         </div>
         <div className="col-md-8" id="connexion-img">
         </div>

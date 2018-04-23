@@ -1,11 +1,16 @@
+// Importing Libraries
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+// Importing Styles
 import '../../styles/sass/style.scss';
+// Importing Components
 import Menu from '../Menu.js';
 import Header from '../Header.js';
 import AuthService from '../AuthService'
 const Auth = new AuthService();
 
-class Home extends Component {
+class App extends Component {
 
   constructor(props){
     super(props)
@@ -86,4 +91,5 @@ class Home extends Component {
 };
 
 //export default withAuth(Home);
-export default Home
+
+export default connect(state => state)(App);

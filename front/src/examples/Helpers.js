@@ -1,5 +1,3 @@
-
-
   // Check the GET method on the API
   getPlayers = () => {
     const myInit = { method: 'get',

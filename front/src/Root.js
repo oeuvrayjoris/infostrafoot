@@ -1,14 +1,18 @@
+// Importing Libraries
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
+// Importing Components
 import AuthService from './components/AuthService'
-import Home from './components/views/Home'
+import App from './components/views/App'
 import Login from './components/views/Login'
 import SignUp from './components/views/SignUp'
 import Profile from './components/views/Profile'
 import Match from './components/views/Match'
 import Comparator from './components/views/Comparator'
 import Search from './components/views/Search'
+//Importing styles
 import './styles/sass/style.scss';
+
 
 
 const routes = [
@@ -40,7 +44,7 @@ const routes = [
 
 const Auth = new AuthService();
 
-class App extends Component {
+class Root extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
@@ -50,17 +54,17 @@ class App extends Component {
 
 	render() {
 		return(
-			<div>
+			<BrowserRouter>
 				<Switch>
-				  <Route exact path='/' render={(props) => <Home {...props} user={this.state.user}/>} />
+				  <Route exact path='/' render={(props) => <App {...props} user={this.state.user}/>} />
 				  {routes.map( ({path, component: C }, index) => (
 				  	<Route key={index} path={path} render={(props) => <C {...props} user={this.state.user}/>} 
 				  	/> 
 				  ))}
 				</Switch>
-		    </div>
+		    </BrowserRouter>
 	    )
 	}
 }
 
-export default App;
+export default Root
