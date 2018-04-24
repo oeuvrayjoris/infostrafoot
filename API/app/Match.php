@@ -19,10 +19,10 @@ class Match extends Model {
     ];
 
 	/**
-	 * Get the goals for the match.
+     * Get the goals for the match.
+     */
 	public function goals()
-	 */
-	{
+    {
 		return $this->hasMany('App\Goal');
 	}
     
