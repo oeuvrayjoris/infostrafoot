@@ -38,12 +38,12 @@ class PlayerController extends Controller
 
 		/* A MODIFIER : Passer par la table team plutôt que goal car un joueur peut marquer 0 but */
 		$nb_played_matches = Player::join('goals', 'goals.player_id', '=', 'players.id')
-            ->join('matches', 'matches.id', '=', 'goals.match_id')
-            ->where('players.id', $player->id)
-            ->select('matches.*')
-            ->distinct()
-            ->get()
-            ->count();
+			->join('matches', 'matches.id', '=', 'goals.match_id')
+			->where('players.id', $player->id)
+			->select('matches.*')
+			->distinct()
+			->get()
+			->count();
 
 		return response()->json([
 			"player" => $player,
@@ -56,7 +56,7 @@ class PlayerController extends Controller
 	/* Search player by username, firstname or lastname */
 	public function searchPlayer(Request $request){
 		$this->validate($request, [
-		    'value' => 'required',
+			'value' => 'required',
 		]);
 		$value = $request->input('value');
 		$players = Player::where('username', 'like', '%'.$value.'%')
@@ -81,7 +81,7 @@ class PlayerController extends Controller
 	/* Create a player */
 	public function createPlayer(Request $request) {
 		$this->validate($request, [
-		    'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+			'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
 		]);
 
 		// Check if username is available
@@ -89,11 +89,11 @@ class PlayerController extends Controller
 		if (Player::isUsernameAvailable($username)) {
 			$player = Player::create($request->all());
 			$player->password = Hash::make($request->input('password'));
-			if ($request->hasFile('photo') && $request->file('photo')->isValid()) {				
-			    /* upload picture */
-			    $fileName = time().'.'.$request->file('photo')->getClientOriginalExtension();
-			    $destinationPath = base_path('public/uploads');
-			    $request->file('photo')->move($destinationPath, $fileName);
+			if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+				/* upload picture */
+				$fileName = time().'.'.$request->photo->extension();
+				$destinationPath = base_path('public/uploads');
+				$request->file('photo')->move($destinationPath, $fileName);
 				$player->photo = $request->root()."/uploads/".$fileName;
 			} else {
 				/* default picture */
@@ -109,7 +109,7 @@ class PlayerController extends Controller
 		}
 	}
 	
-	/* Update a player (PUT) by id */
+	/* Update a player by id */
 	public function updatePlayer(Request $request, $id) {
 		// On récupère le joueur correspondant à l'id en paramètre
 		$player = Player::find($id);
@@ -119,9 +119,18 @@ class PlayerController extends Controller
 			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour effectuer cette modification."], 401);
 		}
 
-		// On met à jour ses infos
-		if ($request->input('username')) 
-			$player->username = $request->input('username');
+		$this->validate($request, [
+			'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+		]);
+
+		/* Update informations */
+
+		// Check if username is available
+		$username = $request->input('username');
+		if (Player::isUsernameAvailable($username)) {
+			if ($request->input('username')) 
+				$player->username = $request->input('username');
+		}
 		if ($request->input('password'))
 			$player->password = Hash::make($request->input('password'));
 		if ($request->input('firstname'))
@@ -133,10 +142,18 @@ class PlayerController extends Controller
 		if ($request->input('mail'))
 			$player->mail = $request->input('mail');
 
-		// On enregistre
+		if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+			/* upload picture */
+			$fileName = time().'.'.$request->photo->extension();
+			$destinationPath = base_path('public/uploads');
+			$request->file('photo')->move($destinationPath, $fileName);
+			$player->photo = $request->root()."/uploads/".$fileName;
+		}
+
+		// Saving the player
 		$player->save();
 
-		// On retourne le joueur modifié
+		// Return the modified player
 		return response()->json($player, 200);
 	}
 
@@ -157,8 +174,8 @@ class PlayerController extends Controller
 		return response()->json(['status' => 'success', 'message' => "Le profil a bien été supprimé."], 200);
 	}
 
-	/* Renvoie l'utilisateur connecté */
+	/* Return the connected player */
 	public function info() {
-    	return response()->json(Auth::user(), 200);
-    }
+		return response()->json(Auth::user(), 200);
+	}
 }

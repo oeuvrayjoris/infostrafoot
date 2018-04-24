@@ -60,7 +60,7 @@ $router->get('players','PlayerController@index');
 $router->group(['prefix' => 'player'], function($router) {
 	$router->get('/{id}','PlayerController@getPlayer');
 	$router->post('/','PlayerController@createPlayer');
-	$router->put('/{id}','PlayerController@updatePlayer'); // Auth
+	$router->post('/{id}','PlayerController@updatePlayer'); // Auth
 	$router->delete('/{id}','PlayerController@deletePlayer'); // Auth
 });
 
