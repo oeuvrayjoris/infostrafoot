@@ -15,6 +15,22 @@ class Team extends Model {
     	'id_player1',
     	'id_player2'
     ];
+
+    /**
+     * Get the players for the team.
+     */
+    public function players()
+    {
+        return $this->hasMany('App\Player');
+    }
+
+    /**
+     * Get the matches that owns the team.
+     */
+    public function matches()
+    {
+        return $this->belongsToMany('App\Match');
+    }
 }
 
 ?>

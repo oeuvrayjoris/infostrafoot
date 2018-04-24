@@ -76,7 +76,9 @@ $router->delete('match/{id}','MatchController@deleteMatch'); // Need Auth
 */
 $router->get('teams','TeamController@index');
 $router->post('team','TeamController@createTeam');
+$router->put('team/{id}','TeamController@updateTeam');
 $router->delete('team/{id}','TeamController@deleteTeam');
+$router->get('player/{id}/teams','TeamController@getTeamsbyPlayer');
 
 
 /*

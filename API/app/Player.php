@@ -51,6 +51,14 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
         return $this->hasMany('App\Goal');
     }
 
+    /**
+	 * Get the teams that owns the player.
+	 */
+	public function teams()
+	{
+		return $this->belongsToMany('App\Team');
+	}
+
 	/**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

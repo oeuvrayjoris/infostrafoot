@@ -17,9 +17,6 @@ class CreateMatchesTable extends Migration
             $table->increments('id');
             $table->dateTime('begin_time');
             $table->dateTime('end_time');
-            $table->integer('id_team1');
-            $table->integer('id_team2');
-            $table->integer('winner');
             $table->timestamps();
         });
     }

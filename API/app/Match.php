@@ -15,7 +15,7 @@ class Match extends Model {
         'end_time',
         'id_team1',
         'id_team2',
-        'winner'
+        'id_winner'
     ];
 
 	/**
@@ -25,6 +25,14 @@ class Match extends Model {
 	{
 		return $this->hasMany('App\Goal');
 	}
+    
+    /**
+     * Get the teams for the match.
+     */
+    public function teams()
+    {
+        return $this->hasMany('App\Team');
+    }
 }
 
 ?>
