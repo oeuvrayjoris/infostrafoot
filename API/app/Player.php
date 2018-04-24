@@ -25,6 +25,7 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 		'lastname',
 		'birthdate',
 		'mail',
+		'photo'
 	];
 
 	/**
