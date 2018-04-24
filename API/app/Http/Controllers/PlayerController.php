@@ -37,23 +37,48 @@ class PlayerController extends Controller
 		$goals = $player->goals;
 
 		/* A MODIFIER : Passer par la table team plutôt que goal car un joueur peut marquer 0 but */
-		$nb_played_matches = DB::table('matches')
-            ->join('goals', 'matches.id', '=', 'goals.match_id')
-            ->join('players', 'goals.player_id', '=', 'players.id')
+		$nb_played_matches = Player::join('goals', 'goals.player_id', '=', 'players.id')
+            ->join('matches', 'matches.id', '=', 'goals.match_id')
             ->where('players.id', $player->id)
             ->select('matches.*')
             ->distinct()
-            ->get()->count();
+            ->get()
+            ->count();
 
 		return response()->json([
 			"player" => $player,
-			"nb_goals" => count($goals),
-			"nb_gamelles" => count($goals->where("gamelle", 1)),
-			"nb_played_matches" => $nb_played_matches,
+			"goals_count" => count($goals),
+			"gamelles_count" => count($goals->where("gamelle", 1)),
+			"played_matches_count" => $nb_played_matches,
 		], 200);
 	}
 
-	/* Create a player (POST) */
+	/* Search player by username, firstname or lastname */
+	public function searchPlayer(Request $request){
+		$this->validate($request, [
+		    'value' => 'required',
+		]);
+		$value = $request->input('value');
+		$players = Player::where('username', 'like', '%'.$value.'%')
+			->orWhere('firstname', 'like', '%'.$value.'%')
+			->orWhere('lastname', 'like', '%'.$value.'%')
+			->orWhere(DB::raw('CONCAT(firstname, " ", lastname)'), 'like', '%'.$value.'%')
+			->orWhere(DB::raw('CONCAT(lastname, " ", firstname)'), 'like', '%'.$value.'%')
+			->get();
+
+		if (count($players) == 0) {
+			return response()->json([
+				"status"=>"fail",
+				"message"=>"Aucun joueur ne correspond à votre recherche"
+			], 404);
+		}
+		
+		return response()->json([
+			"players" => $players,
+		], 200);
+	}
+
+	/* Create a player */
 	public function createPlayer(Request $request) {
 		$this->validate($request, [
 		    'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',

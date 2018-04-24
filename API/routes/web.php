@@ -46,6 +46,13 @@ $router->get('/home','HomeController@index');
 
 /*
 |----------------
+| search routes
+|----------------
+*/
+$router->get('/search/player','PlayerController@searchPlayer');
+
+/*
+|----------------
 | Player routes
 |----------------
 */
