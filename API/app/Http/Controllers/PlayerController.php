@@ -33,7 +33,7 @@ class PlayerController extends Controller
 		$player = Player::find($id);
 		if (!$player) {
 			return response()->json([
-				"status"=>"fail",
+				"status"=>"error",
 				"message"=>"Le joueur n'existe pas."
 			], 404);
 		}
@@ -71,7 +71,7 @@ class PlayerController extends Controller
 
 		if (count($players) == 0) {
 			return response()->json([
-				"status"=>"fail",
+				"status"=>"error",
 				"message"=>"Aucun joueur ne correspond à votre recherche"
 			], 404);
 		}
