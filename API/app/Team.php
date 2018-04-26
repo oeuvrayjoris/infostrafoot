@@ -11,9 +11,7 @@ class Team extends Model {
      * @var array
      */
     protected $fillable = [
-    	'name',
-    	'id_player1',
-    	'id_player2'
+    	'name'
     ];
 
     /**
@@ -21,7 +19,7 @@ class Team extends Model {
      */
     public function players()
     {
-        return $this->hasMany('App\Player');
+        return $this->belongsToMany('App\Player', 'team_player')->withTimestamps();
     }
 
     /**
@@ -29,7 +27,7 @@ class Team extends Model {
      */
     public function matches()
     {
-        return $this->belongsToMany('App\Match');
+        return $this->belongsToMany('App\Match', 'match_team')->withTimestamps();
     }
 }
 

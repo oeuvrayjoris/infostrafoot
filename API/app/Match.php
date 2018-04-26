@@ -12,10 +12,7 @@ class Match extends Model {
      */
     protected $fillable = [
     	'begin_time',
-        'end_time',
-        'id_team1',
-        'id_team2',
-        'id_winner'
+        'end_time'
     ];
 
 	/**
@@ -31,7 +28,7 @@ class Match extends Model {
      */
     public function teams()
     {
-        return $this->hasMany('App\Team');
+        return $this->belongsToMany('App\Team', 'match_team')->withTimestamps();
     }
 }
 

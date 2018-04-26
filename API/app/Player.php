@@ -57,7 +57,7 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 	 */
 	public function teams()
 	{
-		return $this->belongsToMany('App\Team');
+		return $this->belongsToMany('App\Team', 'team_player')->withTimestamps();
 	}
 
 	/**
