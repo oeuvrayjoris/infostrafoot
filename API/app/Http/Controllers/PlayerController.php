@@ -23,7 +23,8 @@ class PlayerController extends Controller
 	public function index() {
 		$players = Player::all();
 		foreach ($players as $player) {
-			$goals = $player->goals;
+			$player->goals;
+			$player->teams;
 		}
 		return response()->json($players, 200);
 	}
@@ -38,6 +39,10 @@ class PlayerController extends Controller
 			], 404);
 		}
 		$goals = $player->goals;
+		$teams = $player->teams;
+		foreach ($teams as $team) {
+			$team->players;
+		}
 
 		/* A MODIFIER : Passer par la table team plutôt que goal car un joueur peut marquer 0 but dans un match */
 		$nb_played_matches = Player::join('goals', 'goals.player_id', '=', 'players.id')

@@ -27,7 +27,7 @@ class Team extends Model {
      */
     public function matches()
     {
-        return $this->belongsToMany('App\Match', 'match_team')->withTimestamps();
+        return $this->belongsToMany('App\Match', 'match_team')->withPivot("winner")->withTimestamps();
     }
 }
 
