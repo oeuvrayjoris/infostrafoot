@@ -27,10 +27,9 @@ class MatchController extends Controller
 				"message"=>"Le match n'existe pas."
 			], 404);
 		}
-		return response()->json($match, 200);
 		$match->goals;
 		$match->teams;
-        
+		return response()->json($match, 200);
 	}
 
 	// Get match by id_player
