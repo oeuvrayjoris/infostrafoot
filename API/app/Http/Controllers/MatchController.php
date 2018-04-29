@@ -21,9 +21,16 @@ class MatchController extends Controller
 	// Get match by id
 	public function getMatch($id){
 		$match = Match::find($id);
+        if (!$match) {
+			return response()->json([
+				"status"=>"error",
+				"message"=>"Le match n'existe pas."
+			], 404);
+		}
+		return response()->json($match, 200);
 		$match->goals;
 		$match->teams;
-		return response()->json($match, 200);
+        
 	}
 
 	// Get match by id_player
