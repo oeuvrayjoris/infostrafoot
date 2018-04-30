@@ -49,7 +49,7 @@ $router->get('/home','HomeController@index');
 | search routes
 |----------------
 */
-$router->get('/search/player','PlayerController@searchPlayer');
+$router->get('/search/players','PlayerController@searchPlayers');
 
 /*
 |----------------
@@ -63,6 +63,7 @@ $router->group(['prefix' => 'players'], function($router) {
 	$router->post('/{id}','PlayerController@updatePlayer'); // Auth
 	$router->delete('/{id}','PlayerController@deletePlayer'); // Auth
 	$router->get('/{id}/teams','PlayerController@getTeamsByPlayer');
+	$router->get('/{id}/matches','PlayerController@getMatchesByPlayer');
 });
 
 

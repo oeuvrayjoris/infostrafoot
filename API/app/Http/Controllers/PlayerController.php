@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Player;
+use App\Team;
+use App\Match;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -62,7 +64,7 @@ class PlayerController extends Controller
 	}
 
 	/* Search player by username, firstname or lastname */
-	public function searchPlayer(Request $request){
+	public function searchPlayers(Request $request){
 		$this->validate($request, [
 			'value' => 'required',
 		]);
@@ -192,5 +194,14 @@ class PlayerController extends Controller
 		$player = Player::find($id);
 		$teams = $player->teams;
 		return response()->json($teams, 200);
+	}
+
+	public function getMatchesByPlayer($id) {
+		$matches = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
+		    ->join('teams', 'match_team.team_id', '=', 'teams.id')
+		    ->join('team_player', 'teams.id', '=', 'team_player.team_id')
+		    ->join('players', 'team_player.player_id', '=', 'players.id')
+		    ->where('players.id', $id)->get();
+		return response()->json($matches, 200);
 	}
 }
