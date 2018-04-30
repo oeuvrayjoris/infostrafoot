@@ -5,7 +5,9 @@ import Header from '../Header.js';
 import Background from '../../img/novelli.jpg';
 import AuthService from '../AuthService'
 import withAuth from '../withAuth';
+import ApiService from '../ApiService'
 const Auth = new AuthService();
+const Api = new ApiService();
 
 
 class Profile extends Component {

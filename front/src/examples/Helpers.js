@@ -1,7 +1,6 @@
   // Check the GET method on the API
   getPlayers = () => {
-    const myInit = { method: 'get',
-                    mode: 'no-cors'
+    const myInit = { method: 'get'
                   };
 
     const url = 'https://www.floriantorres.fr/infostrafootapi/public/players'
