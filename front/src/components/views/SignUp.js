@@ -37,7 +37,7 @@ class SignUp extends Component {
           this.setState({
              errors: errors
           })
-      },800)
+      }, 800)
   }
 
   checkPassword(password) {
@@ -171,6 +171,9 @@ class SignUp extends Component {
               value={this.state.credentials.birthdate}
               onChange={e => this.handleChange(e)}
             />
+            </div>
+            <div className="input-group" id="result">
+                Error! ou Success! message here.
             </div>
             <div className="input-group">
               <input

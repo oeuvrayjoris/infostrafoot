@@ -42,7 +42,7 @@ class App extends Component {
             <hr />
             <div className="row">
               <div className="col-md-3">
-                <div className="section flexbox flex-column" style={{ backgroundImage: `url(${Background})` }} id="s1">
+                <div className="section flexbox flex-column" id="s1">
                     <i className="fas fa-trophy fa-3x"></i>
                     <h3>Meilleur buteur</h3>
                     <h5>@novelnovel</h5>

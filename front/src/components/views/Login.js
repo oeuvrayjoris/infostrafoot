@@ -130,6 +130,10 @@ class Login extends Component {
                 />
             </div>
 
+            <div className="input-group" id="result">
+                Error! ou Success! message here.
+            </div>
+
             <div className="input-group right">
               <input
                 className="btn btn-primary" 
