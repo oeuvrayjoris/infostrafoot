@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Player;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PlayerController;
@@ -24,7 +25,17 @@ class HomeController extends Controller
 	/* Get the 3 best players */
 	public function getBestPlayers(){
 		// Order by victories (count innerjoin team innerjoin match_team where victory == 1), limit(3)->get()
-		$players = Player::orderBy('username', 'asc')->limit(3)->get();
+        
+        
+        // A FINIR //
+		$players = DB::select(DB::raw('
+            SELECT username, COUNT(winner) FROM players, match_team, team_player
+            WHERE winner = "0"
+            AND players.id = player_id 
+            AND team_player.team_id = match_team.team_id
+            GROUP BY username
+            ORDER BY winner DESC
+            LIMIT 3'));
 		return $players;
 	}
 
