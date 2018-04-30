@@ -186,4 +186,11 @@ class PlayerController extends Controller
 	public function info() {
 		return response()->json(Auth::user(), 200);
 	}
+
+	/* Return the teams for the player with id = $id */
+	public function getTeamsByPlayer($id) {
+		$player = Player::find($id);
+		$teams = $player->teams;
+		return response()->json($teams, 200);
+	}
 }
