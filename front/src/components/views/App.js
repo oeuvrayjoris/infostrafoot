@@ -18,13 +18,6 @@ class App extends Component {
     this.state = {
       user: null
     }
-    /*
-    setTimeout(
-      () => this.checkIfUserAuth()
-      this.setState({
-        user: "hello"
-      })
-    , 1000)*/
   }
 
   handleLogout(){
@@ -33,26 +26,6 @@ class App extends Component {
     this.setState({
       user: null
     }, console.log("Disconnected"))
-    this.checkIfUserAuth()
-  }
-
-  checkIfUserAuth() {
-    try {
-      const profile = Auth.getProfile()
-      this.setState({
-          user: profile
-      }, () => console.log(this.state))
-    }
-    catch(err){
-      console.log(err)
-      this.setState({
-          user: null
-      }, () => console.log(this.state))
-    }
-  }
-
-
-  componentWillMount() {
     this.checkIfUserAuth()
   }
 

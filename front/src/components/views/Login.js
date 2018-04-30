@@ -1,8 +1,14 @@
+// Import libraries
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+import {bindActionCreators} from 'redux';  
+import {connect} from 'react-redux';  
+import * as sessionActions from '../../actions/sessionActions';
+// Import components
+import AuthService from '../AuthService'
+// Import files
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
-import AuthService from '../AuthService'
-import { Link } from 'react-router-dom'
 
 class Login extends Component {
   constructor(props) {
@@ -43,7 +49,14 @@ class Login extends Component {
     });
   };
 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.actions.logInUser(this.state.credentials);
+  }
+
+
   // Handle the submit event
+  /*
   handleSubmit(e){
     e.preventDefault();
     
@@ -71,6 +84,7 @@ class Login extends Component {
     .then(response => response.json())
     .then(response => console.log(response))
     .catch(error => console.log(error))
+    */
 
 /*
     this.Auth.login(this.state.credentials)
@@ -80,9 +94,9 @@ class Login extends Component {
       })
       .catch(err =>{
           alert(err);
-      })*/
+      })
     
-  }
+  }*/
   
   render() {
     return (
@@ -135,4 +149,9 @@ class Login extends Component {
   }
 }
 
-export default Login;
+function mapDispatchToProps(dispatch) {  
+  return {
+    actions: bindActionCreators(sessionActions, dispatch)
+  };
+}
+export default connect(null, mapDispatchToProps)(Login);
