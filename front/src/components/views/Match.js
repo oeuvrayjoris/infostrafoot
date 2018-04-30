@@ -21,7 +21,7 @@ class Match extends Component {
 			],
 			players: [
 				{ prenom: 'Joris', nom: 'Oeuvray', pseudo: 'jojo', type: ItemTypes.BOX },
-				{ prenom: 'David', nom: 'Naser', pseudo: 'levacancier', type: ItemTypes.BOX },
+				{ prenom: 'David', nom: 'Nasr', pseudo: 'lelibanais', type: ItemTypes.BOX },
 				{ prenom: 'Jordan', nom: 'Vilsaint', pseudo: 'legamin', type: ItemTypes.BOX },
 			],
 			droppedPseudos: [],

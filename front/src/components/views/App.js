@@ -7,7 +7,8 @@ import '../../styles/sass/style.scss';
 // Importing Components
 import Menu from '../Menu.js';
 import Header from '../Header.js';
-import AuthService from '../AuthService'
+import AuthService from '../AuthService';
+import Background from '../../img/novelli.jpg';
 const Auth = new AuthService();
 
 class App extends Component {
@@ -68,7 +69,11 @@ class App extends Component {
             <hr />
             <div className="row">
               <div className="col-md-3">
-                <div className="section flexbox" id="s1">Section 1</div>
+                <div className="section flexbox flex-column" id="s1">
+                    <i className="fas fa-trophy fa-3x"></i>
+                    <h3>Meilleur buteur</h3>
+                    <h5>@novelnovel</h5>
+                </div>
               </div>
               <div className="col-md-9">
                 <div className="section flexbox" id="s2">Section 2</div>

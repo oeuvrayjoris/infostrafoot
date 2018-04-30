@@ -411,7 +411,6 @@ a {
 
 h3 {
     text-align: center;
-    margin-bottom: 30px;
 }
 
 .role {
@@ -504,4 +503,10 @@ h3 {
     border-radius: 50%;
     color: #fff;
     display: inline-block;
+}
+
+#s1 {
+    svg, h3, h5 {
+        color: $color4;
+    }
 }
