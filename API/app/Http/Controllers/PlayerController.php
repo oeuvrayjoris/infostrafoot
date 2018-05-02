@@ -92,6 +92,7 @@ class PlayerController extends Controller
 	public function createPlayer(Request $request) {
 		$this->validate($request, [
 			'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+			'mail' => 'email',
 		]);
 
 		// Check if username is available
