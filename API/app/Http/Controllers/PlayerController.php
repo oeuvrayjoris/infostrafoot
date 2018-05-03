@@ -46,9 +46,10 @@ class PlayerController extends Controller
 			$team->players;
 		}
 
-		/* A MODIFIER : Passer par la table team plutôt que goal car un joueur peut marquer 0 but dans un match */
-		$nb_played_matches = Player::join('goals', 'goals.player_id', '=', 'players.id')
-			->join('matches', 'matches.id', '=', 'goals.match_id')
+		$played_matches_count = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
+			->join('teams', 'match_team.team_id', '=', 'teams.id')
+			->join('team_player', 'teams.id', '=', 'team_player.team_id')
+			->join('players', 'team_player.player_id', '=', 'players.id')
 			->where('players.id', $player->id)
 			->select('matches.*')
 			->distinct()
@@ -59,7 +60,7 @@ class PlayerController extends Controller
 			"player" => $player,
 			"goals_count" => count($goals),
 			"gamelles_count" => count($goals->where("gamelle", 1)),
-			"played_matches_count" => $nb_played_matches,
+			"played_matches_count" => $played_matches_count,
 		], 200);
 	}
 
