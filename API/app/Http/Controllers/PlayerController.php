@@ -56,11 +56,43 @@ class PlayerController extends Controller
 			->get()
 			->count();
 
+		$victories_count = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
+			->join('teams', 'match_team.team_id', '=', 'teams.id')
+			->join('team_player', 'teams.id', '=', 'team_player.team_id')
+			->join('players', 'team_player.player_id', '=', 'players.id')
+			->where([
+				['players.id', $player->id],
+				['match_team.winner', 1],
+			])
+			->select('matches.*')
+			->distinct()
+			->get()
+			->count();
+
+		$best_teams = Team::join('match_team', 'teams.id', '=', 'match_team.team_id')
+			->join('team_player', 'team_player.team_id', '=', 'teams.id')
+			->where([
+				['team_player.player_id', $player->id],
+				['match_team.winner', 1],
+			])
+			->select('id', 'name', DB::raw('count(*) as victories_count'))
+			->groupBy("teams.id")
+			->orderBy("victories_count", 'desc')
+			->limit(3)
+			->get();
+
+		foreach ($best_teams as $team) {
+			$team->players;
+		}
+
 		return response()->json([
 			"player" => $player,
 			"goals_count" => count($goals),
 			"gamelles_count" => count($goals->where("gamelle", 1)),
 			"played_matches_count" => $played_matches_count,
+			"victories_count" => $victories_count,
+			"defeats_count" => $played_matches_count - $victories_count,
+			"best_teams" => $best_teams,
 		], 200);
 	}
 
