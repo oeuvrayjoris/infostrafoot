@@ -8,6 +8,13 @@ export default class ApiService {
         this.login = this.login.bind(this)
         this.getTokenInfos = this.getTokenInfos.bind(this)
         this.getMyProfil = this.getMyProfil.bind(this)
+        this.getProfil = this.getProfil.bind(this)
+        this.searchPlayer = this.searchPlayer.bind(this)
+        this.home = this.home.bind(this)
+        this.addMatch = this.addMatch.bind(this)
+        this.getTeams = this.getTeams.bind(this)
+        this.getTeam = this.getTeam.bind(this)
+        this.addTeam = this.addTeam.bind(this)
     }
 
     login(credentials) {
@@ -120,18 +127,20 @@ export default class ApiService {
         }
     }
 
+    // --- AUTH / PROFIL --- //
+
     getMyProfil() {
         const myInit = {
-            method: 'get'
+            method: 'GET'
         };
         return this.fetch(`${this.domain}/auth/player`, myInit)
         .then(function(response, myInit) {
-        //console.log(response)
-        return response;
+            //console.log(response)
+            return response;
         })
         .then(function(datas) {
-        console.log(datas)
-        return datas;
+            //console.log(datas)
+            return datas;
         })
         .catch(function(error) {
             //this.setState({error})
@@ -139,22 +148,150 @@ export default class ApiService {
         });
     }
 
+    // --- PLAYERS --- //
+
     getProfil(id) {
         const myInit = {
-            method: 'get'
+            method: 'GET'
         };
         return this.fetch(`${this.domain}/players/${id}`, myInit)
         .then(function(response, myInit) {
-        //console.log(response)
-        return response;
+            //console.log(response)
+            return response;
         })
         .then(function(datas) {
-        //console.log(datas)
-        return datas;
+            //console.log(datas)
+            return datas;
         })
         .catch(function(error) {
             //this.setState({error})
             console.log(error)
         });
+    }
+
+    // props can be : username, lastname and / or firstname
+    searchPlayer(props) {
+        const myInit = {
+            method: 'GET'
+        };
+        const encodedValue = encodeURIComponent(props)
+        
+        return this.fetch(`${this.domain}/search/players?value=${encodedValue}`, myInit)
+        .then(function(response, myInit) {
+            //console.log(response)
+            return response;
+        })
+        .then(function(datas) {
+            console.log(datas)
+            return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
+    }
+
+    // --- HOME / STATS --- //
+
+    home() {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/home`, myInit)
+        .then(function(response, myInit) {
+            //console.log(response)
+            return response;
+        })
+        .then(function(datas) {
+            //console.log(datas)
+            return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
+    }
+
+    // --- MATCHES --- //
+
+    getMatches() {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/matches`, myInit)
+        .then(function(response, myInit) {
+            //console.log(response)
+            return response;
+        })
+        .then(function(datas) {
+            console.log(datas)
+            return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
+    }
+
+    addMatch(id_team1, id_team2) {
+        const myInit = {
+            method: 'POST',
+            body: JSON.stringify({id_team1:id_team1,id_team2:id_team2})
+        };
+        return this.fetch(`${this.domain}/matches`, myInit)
+        .then(res => {
+            return Promise.resolve(res);
+        })
+    }
+
+    // --- TEAMS --- //
+
+    getTeams() {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/teams`, myInit)
+        .then(function(response, myInit) {
+            //console.log(response)
+            return response;
+        })
+        .then(function(datas) {
+            //console.log(datas)
+            return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
+    }
+
+    getTeam(id) {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/taems/${id}`, myInit)
+        .then(function(response, myInit) {
+            //console.log(response)
+            return response;
+        })
+        .then(function(datas) {
+            //console.log(datas)
+            return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
+    }
+
+    addTeam(id_player1, id_player2) {
+        const myInit = {
+            method: 'POST',
+            body: JSON.stringify({id_team1:id_player1,id_team2:id_player2})
+        };
+        return this.fetch(`${this.domain}/matches`, myInit)
+        .then(res => {
+            return Promise.resolve(res);
+        })
     }
 }
