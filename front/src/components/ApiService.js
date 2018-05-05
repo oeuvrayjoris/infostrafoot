@@ -124,27 +124,37 @@ export default class ApiService {
         const myInit = {
             method: 'get'
         };
-         return this.fetch(`${this.domain}/auth/player`, myInit)
-          .then(function(response, myInit) {
-              console.log(response)
-            return response;
-          })
-          .then(function(datas) {
-            console.log(datas)
-          })
-          .catch(function(error) {
-              //this.setState({error})
-              console.log(error)
-          });
-          /*
-         fetch(`${this.domain}/auth/player`)
-         .then(response =>response.json())
-         .then(parsedJSON => console.log(parsedJSON.results))
-         .catch(error => console.log('parsing failed', error))
-         */
+        return this.fetch(`${this.domain}/auth/player`, myInit)
+        .then(function(response, myInit) {
+        //console.log(response)
+        return response;
+        })
+        .then(function(datas) {
+        console.log(datas)
+        return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
     }
 
     getProfil(id) {
-
+        const myInit = {
+            method: 'get'
+        };
+        return this.fetch(`${this.domain}/players/${id}`, myInit)
+        .then(function(response, myInit) {
+        //console.log(response)
+        return response;
+        })
+        .then(function(datas) {
+        //console.log(datas)
+        return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
     }
 }

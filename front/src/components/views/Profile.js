@@ -22,11 +22,20 @@ class Profile extends Component {
       lastname: '',
       birthdate: ''
     }
+    this.setMyProfil = this.setMyProfil.bind(this)
+    
+    Api.getMyProfil().then(result => this.setMyProfil(result))  // Calls API and then setState with the result
   }
 
-  test = (props) =>{
-    console.log("id : " + props.id)
-    console.log("username : " + props.username)
+  setMyProfil(result) {
+    this.setState({
+      mail: result.mail,
+      username: result.username,
+      password: result.password,
+      firstname: result.firstname,
+      lastname: result.lastname,
+      birthdate: result.birthdate
+    })
   }
 
   render() {
@@ -34,8 +43,7 @@ class Profile extends Component {
       username: 'babou97',
       password: 'babou97'
     })
-    
-    console.log(Api.getMyProfil())
+        
     return (
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">
@@ -50,8 +58,8 @@ class Profile extends Component {
                 <div className="photo">
                     <div style={{ backgroundImage: `url(${Background})` }}></div>
                 </div>
-                <h3>Jean-Christophe Novelli</h3>
-                <h5>@Noveldu93</h5>
+                <h3>{this.state.firstname} {this.state.lastname}</h3>
+                <h5>{this.state.username}</h5>
                 <button className="btn btn-default">Modifier le profil</button>
             </div>
             <div className="row">
