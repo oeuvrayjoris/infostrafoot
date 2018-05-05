@@ -9,6 +9,9 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import Team from '../Team'
 import Player from '../Player'
 import ItemTypes from '../ItemTypes'
+import ApiService from '../ApiService'
+
+const Api = new ApiService();
 
 class Match extends Component {
     
@@ -20,17 +23,29 @@ class Match extends Component {
 				{ name: 'Equipe 2', players: [] }
 			],
 			players: [
-				{ prenom: 'Joris', nom: 'Oeuvray', pseudo: 'jojo', type: ItemTypes.BOX },
-				{ prenom: 'David', nom: 'Nasr', pseudo: 'lelibanais', type: ItemTypes.BOX },
-				{ prenom: 'Jordan', nom: 'Vilsaint', pseudo: 'legamin', type: ItemTypes.BOX },
+				{ firstname: 'Joris', lastname: 'Oeuvray', username: 'jojo', type: ItemTypes.BOX },
+				{ firstname: 'David', lastname: 'Nasr', username: 'lelibanais', type: ItemTypes.BOX },
+				{ firstname: 'Jordan', lastname: 'Vilsaint', username: 'legamin', type: ItemTypes.BOX },
 			],
 			droppedPseudos: [],
-		}
+        }
+        
+        this.setPlayers = this.setPlayers.bind(this)
 	}
     
-    isDropped(pseudo) {
-		return this.state.droppedPseudos.indexOf(pseudo) > -1
-	}
+    isDropped(username) {
+		return this.state.droppedPseudos.indexOf(username) > -1
+    }
+    
+    componentDidMount() {
+        //Api.getPlayers().then(result => this.setPlayers())
+    }
+
+    setPlayers(res) {
+        this.setState(
+            res.map()
+        )
+    }
 
   render() {
       
@@ -83,15 +98,15 @@ class Match extends Component {
                     <div className="col-md-9"></div>
                 </div>
                 <div className="row">
-					{players.map(({ prenom, nom, pseudo }, index) =>  {
-                        if(!(this.isDropped(pseudo))) {
+					{players.map(({ firstname, lastname, username }, index) =>  {
+                        if(!(this.isDropped(username))) {
                             return (
 						<Player
-							prenom={prenom}
-							nom={nom}
-                            pseudo={pseudo}
-							isDropped={this.isDropped(pseudo)}
-							key={pseudo}
+							firstname={firstname}
+							lastname={lastname}
+                            username={username}
+							isDropped={this.isDropped(username)}
+							key={username}
 						/>
                         )}
                     })}
@@ -104,8 +119,8 @@ class Match extends Component {
   }
     
     handleDrop(index, item) {
-        const { pseudo } = item
-        const droppedPseudos = pseudo ? { $push: [pseudo] } : {}
+        const { username } = item
+        const droppedPseudos = username ? { $push: [username] } : {}
 
         this.setState(
             update(this.state, {

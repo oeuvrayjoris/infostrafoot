@@ -7,9 +7,9 @@ import Background from '../img/novelli.jpg';
 const boxSource = {
 	beginDrag(props) {
 		return {
-			prenom: props.prenom,
-			nom: props.nom,
-            pseudo: props.pseudo
+			firstname: props.firstname,
+			lastname: props.lastname,
+            username: props.username
 		}
 	},
 }
@@ -18,12 +18,12 @@ class Player extends Component {
   	static propTypes = {
 		connectDragSource: PropTypes.func.isRequired,
 		isDragging: PropTypes.bool.isRequired,
-		prenom: PropTypes.string.isRequired,
+		firstname: PropTypes.string.isRequired,
         isDropped: PropTypes.bool.isRequired,
 	}
 
 	render() {
-		const { prenom, nom, pseudo, isDragging, connectDragSource } = this.props
+		const { firstname, lastname, username, isDragging, connectDragSource } = this.props
 		const opacity = isDragging ? 0.4 : 1
 
 		return connectDragSource(
@@ -32,8 +32,8 @@ class Player extends Component {
                     <div className="photo2">
                         <div style={{ backgroundImage: `url(${Background})` }}></div>
                     </div>
-                    <h4>{prenom} {nom}</h4>
-                    <h5>@{pseudo}</h5>
+                    <h4>{firstname} {lastname}</h4>
+                    <h5>@{username}</h5>
                 </div>
             </div>
         )

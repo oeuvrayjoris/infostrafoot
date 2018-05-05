@@ -23,7 +23,10 @@ class Profile extends Component {
       birthdate: ''
     }
     this.setMyProfil = this.setMyProfil.bind(this)
-    
+  }
+
+  
+  componentDidMount() {
     Api.getMyProfil().then(result => this.setMyProfil(result))  // Calls API and then setState with the result
   }
 
