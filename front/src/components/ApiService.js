@@ -156,16 +156,11 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/players/${id}`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             //console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -175,16 +170,11 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/players`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             //console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -197,16 +187,11 @@ export default class ApiService {
         const encodedValue = encodeURIComponent(props)
         
         return this.fetch(`${this.domain}/search/players?value=${encodedValue}`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -218,16 +203,11 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/home`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             //console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -239,16 +219,11 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/matches`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -271,16 +246,11 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/teams`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             //console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -290,16 +260,11 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/taems/${id}`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
         .then(function(datas) {
             //console.log(datas)
             return datas;
         })
         .catch(function(error) {
-            //this.setState({error})
             console.log(error)
         });
     }
@@ -307,11 +272,16 @@ export default class ApiService {
     addTeam(id_player1, id_player2) {
         const myInit = {
             method: 'POST',
-            body: JSON.stringify({id_team1:id_player1,id_team2:id_player2})
+            body: JSON.stringify({id_player1:id_player1,id_player2:id_player2})
         };
-        return this.fetch(`${this.domain}/matches`, myInit)
-        .then(res => {
-            return Promise.resolve(res);
+        return this.fetch(`${this.domain}/teams`, myInit)
+        .then(function(datas) {
+            Promise.resolve(datas);
+            //console.log(datas)
+            return datas;
         })
+        .catch(function(error) {
+            console.log(error)
+        });
     }
 }

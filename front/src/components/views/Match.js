@@ -19,14 +19,18 @@ class Match extends Component {
 		super(props)
 		this.state = {
 			teams: [
-				{ name: 'Equipe 1', players: [] },
-				{ name: 'Equipe 2', players: [] }
+				{ id:0, name: 'Equipe 1', players: [] },
+				{ id:1, name: 'Equipe 2', players: [] }
 			],
 			players: [],
 			droppedPseudos: [],
         }
         
         this.setPlayers = this.setPlayers.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.createTeams = this.createTeams.bind(this)
+        this.changeTeamID = this.changeTeamID.bind(this)
+        this.createMatch = this.createMatch.bind(this)
 	}
     
     isDropped(username) {
@@ -49,6 +53,42 @@ class Match extends Component {
         this.setState({
             players : array
         })
+    }
+
+    changeTeamID(num, id) {
+        var teams = this.state.teams
+        teams[num].id = id
+        this.setState({teams:teams})
+        console.log(this.state.teams[num].id)
+    }
+
+    createTeams() {
+        Api.addTeam(this.state.teams[0].players[0].id, this.state.teams[0].players[1].id)
+        .then(result => this.changeTeamID(0,result.id))
+        Api.addTeam(this.state.teams[1].players[0].id, this.state.teams[1].players[1].id)
+        .then(result => this.changeTeamID(1,result.id))
+        //console.log(this.state.teams[0].id, this.state.teams[1].id)
+        //console.log(this.state.teams)
+    }
+
+    createMatch() {
+        this.createTeams()
+        //Api.addMatch(this.state.teams[0].id, this.state.teams[1].id)
+        var teams = this.state.teams
+        console.log(teams)
+        console.log(teams[0].id, teams[1].id)
+        //Api.addMatch(1, 2)
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+
+        //this.createTeams()
+        
+        (this.state.teams[0].players.length === 2 /*&& this.state.teams[1].players.length === 2*/) 
+        ? this.createMatch()
+        : console.log("Must add 4 players")
+        //Api.addTeam()
     }
 
   render() {
@@ -87,7 +127,10 @@ class Match extends Component {
                     />
 				</div>
                 <div className="flexbox">
-                    <button className="btn btn-success">Créer un match</button>
+                    <button 
+                      className="btn btn-success"
+                      onClick={e => this.handleSubmit(e)}
+                      >Créer un match</button>
                 </div>
                 <hr />
                 <div className="row">
@@ -106,6 +149,7 @@ class Match extends Component {
                         if(!(this.isDropped(username))) {
                             return (
 						<Player
+                            id={id}
 							firstname={firstname}
 							lastname={lastname}
                             username={username}

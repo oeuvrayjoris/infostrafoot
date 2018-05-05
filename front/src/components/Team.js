@@ -38,8 +38,8 @@ class Team extends Component {
 		return connectDropTarget(
             <div className="col-md-4 flexbox flex-column" id={idName}>
                 <h3>{name}</h3>
-                {players.map(({ firstname, lastname, username }, index) => (
-                    <div className="row flexbox role" key={username}>
+                {players.map(({ id, firstname, lastname, username }, index) => (
+                    <div className="row flexbox role" key={id}>
                         <div className="col-md-3">
                             <div className="photo3">
                                 <div style={{ backgroundImage: `url(${Background})` }}></div>

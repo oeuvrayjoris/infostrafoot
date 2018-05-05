@@ -7,6 +7,7 @@ import Background from '../img/novelli.jpg';
 const boxSource = {
 	beginDrag(props) {
 		return {
+			id: props.id,
 			firstname: props.firstname,
 			lastname: props.lastname,
             username: props.username
