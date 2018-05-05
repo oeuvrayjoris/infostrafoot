@@ -22,11 +22,7 @@ class Match extends Component {
 				{ name: 'Equipe 1', players: [] },
 				{ name: 'Equipe 2', players: [] }
 			],
-			players: [
-				{ firstname: 'Joris', lastname: 'Oeuvray', username: 'jojo', type: ItemTypes.BOX },
-				{ firstname: 'David', lastname: 'Nasr', username: 'lelibanais', type: ItemTypes.BOX },
-				{ firstname: 'Jordan', lastname: 'Vilsaint', username: 'legamin', type: ItemTypes.BOX },
-			],
+			players: [],
 			droppedPseudos: [],
         }
         
@@ -38,13 +34,21 @@ class Match extends Component {
     }
     
     componentDidMount() {
-        Api.getPlayers().then(result => this.setPlayers())
+        Api.getPlayers().then(result => this.setPlayers(result))
     }
 
     setPlayers(res) {
-        this.setState(
-            //res.map()
-        )
+        var array = res.map(player => ({
+            id: player.id,
+            firstname: player.firstname,
+            lastname: player.lastname,
+            username: player.username,
+            type: ItemTypes.BOX
+        }))
+
+        this.setState({
+            players : array
+        })
     }
 
   render() {
@@ -98,7 +102,7 @@ class Match extends Component {
                     <div className="col-md-9"></div>
                 </div>
                 <div className="row">
-					{players.map(({ firstname, lastname, username }, index) =>  {
+					{players.map(({ id, firstname, lastname, username }, index) =>  {
                         if(!(this.isDropped(username))) {
                             return (
 						<Player
@@ -106,7 +110,7 @@ class Match extends Component {
 							lastname={lastname}
                             username={username}
 							isDropped={this.isDropped(username)}
-							key={username}
+							key={id}
 						/>
                         )}
                     })}
