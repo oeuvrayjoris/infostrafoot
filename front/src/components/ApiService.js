@@ -7,6 +7,7 @@ export default class ApiService {
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getTokenInfos = this.getTokenInfos.bind(this)
+        this.getMyProfil = this.getMyProfil.bind(this)
     }
 
     login(credentials) {
@@ -125,15 +126,22 @@ export default class ApiService {
         };
          return this.fetch(`${this.domain}/auth/player`, myInit)
           .then(function(response, myInit) {
-            return response.json();
+              console.log(response)
+            return response;
           })
           .then(function(datas) {
             console.log(datas)
           })
           .catch(function(error) {
-              this.setState({error})
+              //this.setState({error})
               console.log(error)
           });
+          /*
+         fetch(`${this.domain}/auth/player`)
+         .then(response =>response.json())
+         .then(parsedJSON => console.log(parsedJSON.results))
+         .catch(error => console.log('parsing failed', error))
+         */
     }
 
     getProfil(id) {

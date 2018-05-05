@@ -24,7 +24,18 @@ class Profile extends Component {
     }
   }
 
+  test = (props) =>{
+    console.log("id : " + props.id)
+    console.log("username : " + props.username)
+  }
+
   render() {
+    Auth.login({
+      username: 'babou97',
+      password: 'babou97'
+    })
+    
+    console.log(Api.getMyProfil())
     return (
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">

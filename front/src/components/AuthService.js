@@ -16,6 +16,7 @@ export default class AuthService {
             body: JSON.stringify(credentials)
         }).then(res => {
             this.setToken(res.access_token) // Setting the token in sessionStorage
+            console.log(res)
             return Promise.resolve(res);
         })
     }
