@@ -38,12 +38,12 @@ class Match extends Component {
     }
     
     componentDidMount() {
-        //Api.getPlayers().then(result => this.setPlayers())
+        Api.getPlayers().then(result => this.setPlayers())
     }
 
     setPlayers(res) {
         this.setState(
-            res.map()
+            //res.map()
         )
     }
 

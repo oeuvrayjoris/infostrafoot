@@ -9,6 +9,7 @@ export default class ApiService {
         this.getTokenInfos = this.getTokenInfos.bind(this)
         this.getMyProfil = this.getMyProfil.bind(this)
         this.getProfil = this.getProfil.bind(this)
+        this.getPlayers = this.getPlayers.bind(this)
         this.searchPlayer = this.searchPlayer.bind(this)
         this.home = this.home.bind(this)
         this.addMatch = this.addMatch.bind(this)
@@ -155,6 +156,25 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/players/${id}`, myInit)
+        .then(function(response, myInit) {
+            //console.log(response)
+            return response;
+        })
+        .then(function(datas) {
+            //console.log(datas)
+            return datas;
+        })
+        .catch(function(error) {
+            //this.setState({error})
+            console.log(error)
+        });
+    }
+
+    getPlayers() {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/players`, myInit)
         .then(function(response, myInit) {
             //console.log(response)
             return response;
