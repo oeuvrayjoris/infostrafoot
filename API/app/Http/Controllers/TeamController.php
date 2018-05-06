@@ -91,7 +91,7 @@ class TeamController extends Controller
 		// On enregistre
 		$team->save();
 
-		// On retourne le joueur modifié
+		// On retourne l'équipe modifiée
 		return response()->json($team, 200);
 	}
 

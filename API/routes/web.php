@@ -75,7 +75,7 @@ $router->group(['prefix' => 'players'], function($router) {
 $router->group(['prefix' => 'matches'], function($router) {
 	$router->get('/','MatchController@index');
 	$router->get('/{id}','MatchController@getMatch');
-	$router->put('/{id}','MatchController@updateMatch');
+	$router->put('/{id}','MatchController@setWinner');
 	$router->post('/','MatchController@createMatch'); // Need Auth
 	$router->delete('/{id}','MatchController@deleteMatch'); // Need Auth
 });

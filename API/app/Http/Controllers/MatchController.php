@@ -69,9 +69,15 @@ class MatchController extends Controller
 		return response()->json($match, 200);
     }
 
-    /* Update a match (PUT) by id */
-	public function updateMatch(Request $request, $id) {
+    /* Update a match (PUT) by id and set the winner team*/
+	public function setWinner(Request $request, $id) {
 		$match = Match::find($id);
+		if (!$match){
+			return response()->json([
+					"status" => "error",
+					"message" => "L'identifiant ne correspond pas à un match existant."
+ 				], 404);
+		}
 		if ($request->input('winner')){
 			// Check si la team existe et si elle fait partie du match
 			$id_winner = $request->winner;
@@ -84,6 +90,7 @@ class MatchController extends Controller
 			$find = NULL;
 			$teams = $match->teams;
 			foreach ($teams as $team) {
+				$match->teams()->updateExistingPivot($team, array('winner' => 0));
 				if ($team = Team::find($id_winner)){
 					$find = 1;
 					$match->teams()->updateExistingPivot($team, array('winner' => 1));
@@ -95,6 +102,9 @@ class MatchController extends Controller
 					"message" => "L'équipe entrée ne fait pas partie du match selectionné."
 				], 404);
 			}
+		}
+		if ($request->input('end_time')){
+			$match->end_time = $request->input('end_time');
 		}
 		$match->save();
 		return response()->json($match, 200);
