@@ -87,10 +87,6 @@ class TeamController extends Controller
 		// On met à jour ses infos
 		if ($request->input('name')) 
 			$team->name = $request->input('name');
-		/*if ($request->input('id_player1'))
-			$team->id_player1 = $request->input('id_player1');
-		if ($request->input('id_player2'))
-			$team->id_player2 = $request->input('id_player2');*/
 		
 		// On enregistre
 		$team->save();

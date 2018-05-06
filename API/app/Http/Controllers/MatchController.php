@@ -48,7 +48,7 @@ class MatchController extends Controller
 				"status" => "error",
 				"message" => "Veuillez entrer 2 équipes pour créer un match."
 			], 404);
-		} 
+		}
 		if (!Team::find($id_team1) || !Team::find($id_team2)) {
 			return response()->json([
 				"status"=>"error",
@@ -68,6 +68,37 @@ class MatchController extends Controller
 		$match->teams;
 		return response()->json($match, 200);
     }
+
+    /* Update a match (PUT) by id */
+	public function updateMatch(Request $request, $id) {
+		$match = Match::find($id);
+		if ($request->input('winner')){
+			// Check si la team existe et si elle fait partie du match
+			$id_winner = $request->winner;
+			if (!Team::find($id_winner)){
+				return response()->json([
+					"status" => "error",
+					"message" => "L'identifiant ne correspond pas à une équipe existante."
+ 				], 404);
+			}
+			$find = NULL;
+			$teams = $match->teams;
+			foreach ($teams as $team) {
+				if ($team = Team::find($id_winner)){
+					$find = 1;
+					$match->teams()->updateExistingPivot($team, array('winner' => 1));
+				}
+			}
+			if (!$find){
+				return response()->json([
+					"status" => "error",
+					"message" => "L'équipe entrée ne fait pas partie du match selectionné."
+				], 404);
+			}
+		}
+		$match->save();
+		return response()->json($match, 200);
+	}
 
 	public function deleteMatch($id){
 		$match = Match::find($id);
