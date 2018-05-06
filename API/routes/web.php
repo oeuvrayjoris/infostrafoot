@@ -102,5 +102,5 @@ $router->group(['prefix' => 'teams'], function($router) {
 $router->group(['prefix' => 'goals'], function($router) {
 	$router->get('/','GoalController@index');
 	$router->post('/','GoalController@createGoal');
-	$router->delete('/{id}','GeamController@deleteGeam');
+	$router->delete('/{id}','GoalController@deleteGoal');
 });
