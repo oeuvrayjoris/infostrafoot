@@ -166,6 +166,8 @@ class Match extends Component {
     handleDrop(index, item) {
         const { username } = item
         const droppedPseudos = username ? { $push: [username] } : {}
+        
+        console.log(this.state.teams)
 
         this.setState(
             update(this.state, {

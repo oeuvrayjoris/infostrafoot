@@ -20,6 +20,10 @@ class Team extends Component {
 		onDrop: PropTypes.func.isRequired,
 	}
 
+    handleClick() {
+        console.log('this is:', this);
+    }
+
 	render() {
 		const { name, players, canDrop, isOver, id, connectDropTarget } = this.props
 		const isActive = canDrop && isOver
@@ -40,14 +44,18 @@ class Team extends Component {
                 <h3>{name}</h3>
                 {players.map(({ id, firstname, lastname, username }, index) => (
                     <div className="row flexbox role" key={id}>
+                        <i className="fas fa-shield-alt fa-2x"></i>
                         <div className="col-md-3">
                             <div className="photo3">
                                 <div style={{ backgroundImage: `url(${Background})` }}></div>
                             </div>
                         </div>
-                        <div className="col-md-9">
-                            <h4>{firstname} {lastname}</h4>
-                            <h5>@{username}</h5>
+                        <div className="col-md-8">
+                            <div className="left">
+                                <h4>{firstname} {lastname}</h4>
+                                <h5>@{username}</h5>
+                            </div>
+                            <a href="#" className="close" onClick={(e) => this.handleClick(e)}>&times;</a>
                         </div>
                     </div>
 				))}
