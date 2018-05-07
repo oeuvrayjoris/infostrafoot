@@ -13,11 +13,14 @@ export default class ApiService {
         this.searchPlayer = this.searchPlayer.bind(this)
         this.home = this.home.bind(this)
         this.addMatch = this.addMatch.bind(this)
+        this.deleteMatch = this.deleteMatch.bind(this)
         this.getTeams = this.getTeams.bind(this)
         this.getTeam = this.getTeam.bind(this)
         this.addTeam = this.addTeam.bind(this)
+        this.deleteTeam = this.deleteTeam.bind(this)
         this.getGoals = this.getGoals.bind(this)
         this.addGoal = this.addGoal.bind(this)
+        this.deleteGoal = this.deleteGoal.bind(this)
     }
 
     login(credentials) {
@@ -241,6 +244,20 @@ export default class ApiService {
             })
     }
 
+    deleteMatch(match_id) {
+        const myInit = {
+            method: 'DELETE'
+        };
+        return this.fetch(`${this.domain}/matches/${match_id}`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
     // --- TEAMS --- //
 
     getTeams() {
@@ -287,6 +304,20 @@ export default class ApiService {
             });
     }
 
+    deleteTeam(team_id) {
+        const myInit = {
+            method: 'DELETE'
+        };
+        return this.fetch(`${this.domain}/teams/${team_id}`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
     // --- GOALS --- //
 
     getGoals() {
@@ -316,6 +347,20 @@ export default class ApiService {
             })
         };
         return this.fetch(`${this.domain}/goals`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    deleteGoal(goal_id) {
+        const myInit = {
+            method: 'DELETE'
+        };
+        return this.fetch(`${this.domain}/goals/${goal_id}`, myInit)
             .then(function(datas) {
                 //console.log(datas)
                 return datas;
