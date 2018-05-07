@@ -34,7 +34,8 @@ class Player extends Model implements AuthenticatableContract, AuthorizableContr
 	 * @var array
 	 */
 	protected $hidden = [
-		'password'
+		'password',
+		'role'
 	];
 
 	/**

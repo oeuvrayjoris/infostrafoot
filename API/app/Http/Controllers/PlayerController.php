@@ -143,6 +143,7 @@ class PlayerController extends Controller
 				/* default picture */
 				$player->photo = $request->root()."/uploads/user_default.png";
 			}
+			$player->role = "player";
 			$player->save();
 			return response()->json($player, 200);
 		} else {
@@ -207,7 +208,7 @@ class PlayerController extends Controller
 		$player = Player::find($id);
 
 		// On vérifie que l'utilisateur supprime sa propre page (sinon : message d'erreur)
-		if ($player != Auth::user()) {
+		if ($player != Auth::user() && Auth::user()->role != "admin") {
 			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer cet utilisateur."], 401);
 		}
 

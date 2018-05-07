@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Player;
 use App\Match;
 use App\Team;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
+use DB;
 
 class MatchController extends Controller
 {
@@ -111,6 +114,9 @@ class MatchController extends Controller
 	}
 
 	public function deleteMatch($id){
+		if (Auth::user()->role != "admin"){
+			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer ce match."], 401);
+		}
 		$match = Match::find($id);
 		$match->delete();
 		return response()->json('deleted', 200);

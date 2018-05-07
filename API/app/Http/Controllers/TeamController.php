@@ -7,6 +7,8 @@ use App\Player;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
+use DB;
 
 class TeamController extends Controller
 {
@@ -96,6 +98,9 @@ class TeamController extends Controller
 	}
 
 	public function deleteTeam($id){
+		if (Auth::user()->role != "admin"){
+			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer cette équipe."], 401);
+		}
 		$team = Team::find($id);
 		$team->delete();
 		return response()->json('deleted', 200);
