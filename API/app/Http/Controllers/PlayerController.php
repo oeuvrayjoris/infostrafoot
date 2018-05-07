@@ -85,6 +85,10 @@ class PlayerController extends Controller
 			$team->players;
 		}
 
+		$goals_as_striker = count($goals->where("role", "striker"));
+		$goals_as_defender = count($goals->where("role", "defender"));
+		$best_role = ($goals_as_striker || $goals_as_defender) ? ($goals_as_striker >= $goals_as_defender ? "striker" : "defender") : "";
+
 		return response()->json([
 			"player" => $player,
 			"goals_count" => count($goals),
@@ -93,6 +97,9 @@ class PlayerController extends Controller
 			"victories_count" => $victories_count,
 			"defeats_count" => $played_matches_count - $victories_count,
 			"best_teams" => $best_teams,
+			"best_role" => $best_role,
+			"goals_as_striker" => $goals_as_striker,
+			"goals_as_defender" => $goals_as_defender,
 		], 200);
 	}
 
