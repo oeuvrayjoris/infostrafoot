@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 // Importing Components
 import AppRoutes from './Root';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 // Importing styles
 import '../node_modules/font-awesome/css/font-awesome.min.css'; 
 import './styles/css/style.css';
@@ -16,4 +16,4 @@ render((
   </Provider>
 ), document.getElementById('root'));
 
-registerServiceWorker();
+unregister();

@@ -276,7 +276,7 @@ export default class ApiService {
         };
         return this.fetch(`${this.domain}/teams`, myInit)
         .then(function(datas) {
-            Promise.resolve(datas);
+            Promise.resolve(datas); // useless
             //console.log(datas)
             return datas;
         })
