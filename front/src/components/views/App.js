@@ -8,15 +8,19 @@ import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
 import AuthService from '../AuthService';
+import ApiService from '../ApiService'
 import Background from '../../img/novelli.jpg';
+
 const Auth = new AuthService();
+const Api = new ApiService();
 
 class App extends Component {
 
   constructor(props){
     super(props)
     this.state = {
-      user: null
+      user: null,
+      best_scorer : null
     }
   }
 
@@ -27,6 +31,17 @@ class App extends Component {
       user: null
     }, console.log("Disconnected"))
     this.checkIfUserAuth()
+  }
+
+  componentDidMount() {
+    Api.home()
+      .then(result => this.setStats(result))  // Calls API and then setState with the result
+  }
+
+  setStats(result) {
+    this.setState({
+      best_scorer: result.best_scorers[0].username
+    })
   }
 
   render() {
@@ -45,7 +60,7 @@ class App extends Component {
                 <div className="section flexbox flex-column" id="s1">
                     <i className="fas fa-trophy fa-3x"></i>
                     <h3>Meilleur buteur</h3>
-                    <h5>@novelnovel</h5>
+                    <h5>{this.state.best_scorer}</h5>
                 </div>
               </div>
               <div className="col-md-9">
