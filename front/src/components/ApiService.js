@@ -16,6 +16,8 @@ export default class ApiService {
         this.getTeams = this.getTeams.bind(this)
         this.getTeam = this.getTeam.bind(this)
         this.addTeam = this.addTeam.bind(this)
+        this.getGoals = this.getGoals.bind(this)
+        this.addGoal = this.addGoal.bind(this)
     }
 
     login(credentials) {
@@ -259,7 +261,7 @@ export default class ApiService {
         const myInit = {
             method: 'GET'
         };
-        return this.fetch(`${this.domain}/taems/${id}`, myInit)
+        return this.fetch(`${this.domain}/teams/${id}`, myInit)
             .then(function(datas) {
                 //console.log(datas)
                 return datas;
@@ -277,6 +279,44 @@ export default class ApiService {
         return this.fetch(`${this.domain}/teams`, myInit)
             .then(function(datas) {
                 Promise.resolve(datas); // useless
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    // --- GOALS --- //
+
+    getGoals() {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/goals`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    // Parameters : int player_id, int match_id, boolean (int) gamelle, boolean (int) own_goal, string role
+    addGoal(player_id, match_id, gamelle, own_goal, role) {
+        const myInit = {
+            method: 'POST',
+            body: JSON.stringify({
+                player_id : player_id,
+                match_id : match_id,
+                gamelle : gamelle,
+                own_goal : own_goal,
+                role : role
+            })
+        };
+        return this.fetch(`${this.domain}/goals`, myInit)
+            .then(function(datas) {
                 //console.log(datas)
                 return datas;
             })

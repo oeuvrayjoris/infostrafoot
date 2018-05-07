@@ -14,7 +14,7 @@ import ApiService from '../ApiService'
 const Api = new ApiService();
 
 class Match extends Component {
-    
+
     constructor(props) {
 		super(props)
 		this.state = {
@@ -80,6 +80,7 @@ class Match extends Component {
 
     handleSubmit(e){
         e.preventDefault();
+        this.toto();
         
         (this.state.teams[0].players.length === 2 && this.state.teams[1].players.length === 2) 
         ? this.createMatch()
