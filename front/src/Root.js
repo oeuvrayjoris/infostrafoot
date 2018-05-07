@@ -1,6 +1,7 @@
 // Importing Libraries
 import React, { Component } from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, Router } from 'react-router-dom'
+import history from './history'
 // Importing Components
 import AuthService from './components/AuthService'
 import App from './components/views/App'
@@ -59,7 +60,7 @@ class Root extends Component {
 
 	render() {
 		return(
-			<BrowserRouter>
+			<Router history={history}>
 				<Switch>
 				  <Route exact path='/' render={(props) => <App {...props} user={this.state.user}/>} />
 				  {routes.map( ({path, component: C }, index) => (
@@ -67,7 +68,7 @@ class Root extends Component {
 				  	/> 
 				  ))}
 				</Switch>
-		    </BrowserRouter>
+		    </Router>
 	    )
 	}
 }

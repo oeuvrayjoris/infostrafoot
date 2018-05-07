@@ -135,18 +135,18 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/auth/player`, myInit)
-        .then(function(response, myInit) {
-            //console.log(response)
-            return response;
-        })
-        .then(function(datas) {
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            //this.setState({error})
-            console.log(error)
-        });
+            .then(function(response, myInit) {
+                //console.log(response)
+                return response;
+            })
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                //this.setState({error})
+                console.log(error)
+            });
     }
 
     // --- PLAYERS --- //
@@ -156,13 +156,13 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/players/${id}`, myInit)
-        .then(function(datas) {
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     getPlayers() {
@@ -170,13 +170,13 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/players`, myInit)
-        .then(function(datas) {
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     // props can be : username, lastname and / or firstname
@@ -187,13 +187,13 @@ export default class ApiService {
         const encodedValue = encodeURIComponent(props)
         
         return this.fetch(`${this.domain}/search/players?value=${encodedValue}`, myInit)
-        .then(function(datas) {
-            console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     // --- HOME / STATS --- //
@@ -203,13 +203,13 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/home`, myInit)
-        .then(function(datas) {
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     // --- MATCHES --- //
@@ -219,13 +219,13 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/matches`, myInit)
-        .then(function(datas) {
-            console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     addMatch(id_team1, id_team2) {
@@ -234,9 +234,9 @@ export default class ApiService {
             body: JSON.stringify({id_team1:id_team1,id_team2:id_team2})
         };
         return this.fetch(`${this.domain}/matches`, myInit)
-        .then(res => {
-            return Promise.resolve(res);
-        })
+            .then(res => {
+                return Promise.resolve(res);
+            })
     }
 
     // --- TEAMS --- //
@@ -246,13 +246,13 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/teams`, myInit)
-        .then(function(datas) {
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     getTeam(id) {
@@ -260,13 +260,13 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/taems/${id}`, myInit)
-        .then(function(datas) {
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     addTeam(id_player1, id_player2) {
@@ -275,13 +275,13 @@ export default class ApiService {
             body: JSON.stringify({id_player1:id_player1,id_player2:id_player2})
         };
         return this.fetch(`${this.domain}/teams`, myInit)
-        .then(function(datas) {
-            Promise.resolve(datas);
-            //console.log(datas)
-            return datas;
-        })
-        .catch(function(error) {
-            console.log(error)
-        });
+            .then(function(datas) {
+                Promise.resolve(datas); // useless
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 }
