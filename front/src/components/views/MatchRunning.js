@@ -16,14 +16,15 @@ class MatchRunning extends Component {
     constructor(props) {
 		super(props)
 		this.state = {
+            matchId: 0,
 			teams: [
 				{ id:0, name: 'Equipe 1', players: [
-                        {id:2, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
-                        {id:4, firstname: "David", lastname: "Nasr", username: "Lolilol"}
+                        {id:1, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
+                        {id:2, firstname: "David", lastname: "Nasr", username: "Lolilol"}
                     ]
                 },
 				{ id:1, name: 'Equipe 2', players: [
-                        {id:2, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
+                        {id:3, firstname: "Joris", lastname: "Oeuvray", username: "LeGamin"},
                         {id:4, firstname: "Rachid", lastname: "Nasr", username: "Lolilol"}
                     ]
                 }

@@ -193,7 +193,7 @@ export default class ApiService {
         
         return this.fetch(`${this.domain}/search/players?value=${encodedValue}`, myInit)
             .then(function(datas) {
-                console.log(datas)
+                //console.log(datas)
                 return datas;
             })
             .catch(function(error) {
@@ -295,8 +295,7 @@ export default class ApiService {
         };
         return this.fetch(`${this.domain}/teams`, myInit)
             .then(function(datas) {
-                Promise.resolve(datas); // useless
-                //console.log(datas)
+                console.log(datas)
                 return datas;
             })
             .catch(function(error) {
