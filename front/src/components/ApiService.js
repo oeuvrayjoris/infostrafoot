@@ -12,6 +12,8 @@ export default class ApiService {
         this.getPlayers = this.getPlayers.bind(this)
         this.searchPlayer = this.searchPlayer.bind(this)
         this.home = this.home.bind(this)
+        this.getMatches = this.getMatches.bind(this)
+        this.getMatch = this.getMatch.bind(this)
         this.addMatch = this.addMatch.bind(this)
         this.deleteMatch = this.deleteMatch.bind(this)
         this.getTeams = this.getTeams.bind(this)
@@ -224,6 +226,20 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/matches`, myInit)
+            .then(function(datas) {
+                console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    getMatch(match_id) {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/matches/${match_id}`, myInit)
             .then(function(datas) {
                 console.log(datas)
                 return datas;
