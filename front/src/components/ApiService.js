@@ -382,6 +382,7 @@ export default class ApiService {
             })
             .catch(function(error) {
                 console.log(error)
+                console.log("You should probably wait few seconds and try again")
             });
     }
 }

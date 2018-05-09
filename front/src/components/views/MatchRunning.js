@@ -16,7 +16,7 @@ class MatchRunning extends Component {
     constructor(props) {
 		super(props)
 		this.state = {
-            matchId: 0,
+            match_id: 1,
 			teams: [
 				{ id:0, name: 'Equipe 1', players: [
                         {id:1, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
@@ -28,14 +28,43 @@ class MatchRunning extends Component {
                         {id:4, firstname: "Rachid", lastname: "Nasr", username: "Lolilol"}
                     ]
                 }
-			]
+            ],
+            last_goal_id : 0,
+            cancel_disabled : true,
+            scores: [
+                {
+                    score : 0
+                },
+                {
+                    score : 0
+                }
+            ]
         }
         
-	}
+    }
+    
+    addGoal(e, team_num, player_num, gamelle, own_goal, role) {
+        e.preventDefault();
+        const promise = Api.addGoal(this.state.teams[team_num].players[player_num].id, this.state.match_id, gamelle, own_goal, role)
+
+        Promise.all([promise])
+            .then(([result]) => (
+                this.setState({
+                    last_goal_id : result.id,
+                    cancel_disabled : false
+                })
+            ))
+    }
+
+    cancelAction() {
+        console.log(this.state.last_goal_id)
+        Api.deleteGoal(this.state.last_goal_id)
+            .then( () => this.setState({cancel_disabled:true}) )
+    }
 
   render() {
       
-    const { teams } = this.state
+    const { teams , cancel_disabled} = this.state
     
     console.log(teams)
     
@@ -70,15 +99,28 @@ class MatchRunning extends Component {
                                 </div>
                             </div>
                             <div className="row flexbox buttons">
-                                <button className="btn btn-default">But</button>
-                                <button className="btn btn-default">Contre son camp</button>
-                                <button className="btn btn-default">Gamelle</button>
+                                <button
+                                    className="btn btn-default"
+                                    onClick={e => this.addGoal(e, 0, index, false, false, index===0 ? "striker" : "defender")}
+                                >But</button>
+                                <button
+                                    className="btn btn-default"
+                                    onClick={e => this.addGoal(e, 0, index, false, true, index===0 ? "striker" : "defender")}
+                                >Contre son camp</button>
+                                <button
+                                    className="btn btn-default"
+                                    onClick={e => this.addGoal(e, 0, index, true, false, index===0 ? "striker" : "defender")}
+                                >Gamelle</button>
                             </div>
                         </div>
                     ))}
                 </div>
                 <div className="col-md-4 flexbox flex-column">
-                    <button className="btn btn-default">Annuler la dernière action <i className="fas fa-undo-alt"></i></button>
+                    <button
+                        className="btn btn-default"
+                        onClick={e => this.cancelAction()}
+                        disabled={cancel_disabled}
+                    >Annuler la dernière action <i className="fas fa-undo-alt"></i></button>
                     <div className="timer">05:45</div>
                     <div className="score">
                         <span id="score1">5</span> - <span id="score2">2</span>
@@ -102,10 +144,19 @@ class MatchRunning extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row">
-                                <button className="btn btn-default">But</button>
-                                <button className="btn btn-default">Contre son camp</button>
-                                <button className="btn btn-default">Gamelle</button>
+                            <div className="row flexbox buttons">
+                                <button
+                                    className="btn btn-default"
+                                    onClick={e => this.addGoal(e, 1, index, false, false, index===0 ? "striker" : "defender")}
+                                >But</button>
+                                <button
+                                    className="btn btn-default"
+                                    onClick={e => this.addGoal(e, 1, index, false, true, index===0 ? "striker" : "defender")}
+                                >Contre son camp</button>
+                                <button
+                                    className="btn btn-default"
+                                    onClick={e => this.addGoal(e, 1, index, true, false, index===0 ? "striker" : "defender")}
+                                >Gamelle</button>
                             </div>
                         </div>
                     ))}
