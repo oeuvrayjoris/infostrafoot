@@ -18,12 +18,12 @@ class MatchRunning extends Component {
 		this.state = {
             match_id: 1,
 			teams: [
-				{ id:0, name: 'Equipe 1', players: [
+				{ id:1, name: 'Equipe 1', players: [
                         {id:1, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
                         {id:2, firstname: "David", lastname: "Nasr", username: "Lolilol"}
                     ]
                 },
-				{ id:1, name: 'Equipe 2', players: [
+				{ id:2, name: 'Equipe 2', players: [
                         {id:3, firstname: "Joris", lastname: "Oeuvray", username: "LeGamin"},
                         {id:4, firstname: "Rachid", lastname: "Nasr", username: "Lolilol"}
                     ]
@@ -42,12 +42,14 @@ class MatchRunning extends Component {
                 }
             ],
             time: {},
-            seconds: 0
+            seconds: 0,
+            match_ended : false
         }
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
         this.addGoal = this.addGoal.bind(this)
+        this.endMatch = this.endMatch.bind(this)
     }
 
     // TIMER FUNCTIONS
@@ -77,18 +79,20 @@ class MatchRunning extends Component {
     }
     
     startTimer() {
-        if (this.timer == 0) {
+        if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000); // Called each seconds
         }
     }
     
     countDown() {
-        // Add one second, set state so a re-render happens.
-        let seconds = this.state.seconds + 1;
-        this.setState({
-            time: this.secondsToTime(seconds),
-            seconds: seconds
-        });
+        if (!this.state.match_ended) {
+            // Add one second, set state so a re-render happens.
+            let seconds = this.state.seconds + 1;
+            this.setState({
+                time: this.secondsToTime(seconds),
+                seconds: seconds
+            });
+        }
     }
     
     // GOALS MANAGEMENT FUNCTIONS
@@ -98,6 +102,7 @@ class MatchRunning extends Component {
         const promise = Api.addGoal(this.state.teams[team_num].players[player_num].id, this.state.match_id, gamelle, own_goal, role)
         const scores = this.state.scores
         const cancel_disabled = this.state.cancel_disabled
+        let match_ended = this.state.match_ended
 
         Promise.all([promise])
             .then(([result]) => {
@@ -120,11 +125,14 @@ class MatchRunning extends Component {
                             ? scores[1].score++
                             : scores[0].score++
                 
+                if (scores[0].score === 1) match_ended = true
+                if (scores[1].score === 1) match_ended = true
 
                 this.setState({
                     last_goal_id : result.id,
                     cancel_disabled : false,
-                    scores : scores
+                    scores : scores,
+                    match_ended : match_ended
                 })
             })
     }
@@ -132,19 +140,52 @@ class MatchRunning extends Component {
     cancelAction() {
         console.log(this.state.last_goal_id)
         const scores = this.state.scores
+
         Api.deleteGoal(this.state.last_goal_id)
             .then( () => {
                 scores.map(obj => (obj.score = obj.old_score))
+                
                 this.setState({
                     cancel_disabled:true,
-                    scores:scores
+                    scores:scores,
+                    match_ended:false
                 }) 
             })
     }
 
+    endMatch(e) {
+        e.preventDefault()
+        
+        Api.endMatch(
+            this.state.match_id,
+            (this.state.scores[0].score >= this.state.scores[1].score)
+                ? this.state.teams[0].id
+                : this.state.teams[1].id, 
+            this.formatDate())
+    }
+
+    formatDate() {
+        let d = new Date(),
+        month = d.getMonth() + 1,
+        day = (d.getDate() < 10) ? "0" + d.getDate() : d.getDate(),
+        year = d.getFullYear(),
+        hours = d.getHours(),
+        minutes = d.getMinutes(),
+        seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
+
+        if (hours > 12) {
+            hours -= 12;
+        } else if (hours === 0) {
+            hours = 12;
+        }
+
+        const today = year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+
+        return today
+    }
+
   render() {
-      
-    const { teams , cancel_disabled, scores} = this.state
+    const { teams , cancel_disabled, scores, match_ended} = this.state
     
     return (
 
@@ -179,14 +220,17 @@ class MatchRunning extends Component {
                             <div className="row flexbox buttons">
                                 <button
                                     className="btn btn-default"
+                                    disabled={match_ended}
                                     onClick={e => this.addGoal(e, 0, index, false, false, index===0 ? "striker" : "defender")}
                                 >But</button>
                                 <button
                                     className="btn btn-default"
+                                    disabled={match_ended}
                                     onClick={e => this.addGoal(e, 0, index, false, true, index===0 ? "striker" : "defender")}
                                 >Contre son camp</button>
                                 <button
                                     className="btn btn-default"
+                                    disabled={match_ended}
                                     onClick={e => this.addGoal(e, 0, index, true, false, index===0 ? "striker" : "defender")}
                                 >Gamelle</button>
                             </div>
@@ -235,14 +279,17 @@ class MatchRunning extends Component {
                             <div className="row flexbox buttons">
                                 <button
                                     className="btn btn-default"
+                                    disabled={match_ended}
                                     onClick={e => this.addGoal(e, 1, index, false, false, index===0 ? "striker" : "defender")}
                                 >But</button>
                                 <button
                                     className="btn btn-default"
+                                    disabled={match_ended}
                                     onClick={e => this.addGoal(e, 1, index, false, true, index===0 ? "striker" : "defender")}
                                 >Contre son camp</button>
                                 <button
                                     className="btn btn-default"
+                                    disabled={match_ended}
                                     onClick={e => this.addGoal(e, 1, index, true, false, index===0 ? "striker" : "defender")}
                                 >Gamelle</button>
                             </div>
@@ -251,7 +298,7 @@ class MatchRunning extends Component {
                 </div>
             </div>
             <div className="flexbox">
-                <button className="btn btn-success" onClick={e => this.handleSubmit(e)}>Arrêter le match</button>
+                <button className="btn btn-success" onClick={e => this.endMatch(e)}>Terminer le match</button>
             </div>
         </div>
     </div>

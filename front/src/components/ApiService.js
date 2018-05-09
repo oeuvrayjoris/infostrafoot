@@ -16,6 +16,7 @@ export default class ApiService {
         this.getMatch = this.getMatch.bind(this)
         this.addMatch = this.addMatch.bind(this)
         this.deleteMatch = this.deleteMatch.bind(this)
+        this.endMatch = this.endMatch.bind(this)
         this.getTeams = this.getTeams.bind(this)
         this.getTeam = this.getTeam.bind(this)
         this.addTeam = this.addTeam.bind(this)
@@ -258,6 +259,9 @@ export default class ApiService {
             .then(res => {
                 return Promise.resolve(res);
             })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     deleteMatch(match_id) {
@@ -268,6 +272,20 @@ export default class ApiService {
             .then(function(datas) {
                 //console.log(datas)
                 return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    endMatch(match_id, team_id, end_time) {
+        const myInit = {
+            method: 'PUT',
+            body: JSON.stringify({winner :team_id,end_time:end_time})
+        };
+        return this.fetch(`${this.domain}/matches/${match_id}`, myInit)
+            .then(res => {
+                return Promise.resolve(res);
             })
             .catch(function(error) {
                 console.log(error)
