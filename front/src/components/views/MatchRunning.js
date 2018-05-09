@@ -33,40 +33,118 @@ class MatchRunning extends Component {
             cancel_disabled : true,
             scores: [
                 {
-                    score : 0
+                    score : 0,
+                    old_score : 0
                 },
                 {
-                    score : 0
+                    score : 0,
+                    old_score : 0
                 }
-            ]
+            ],
+            time: {},
+            seconds: 0
         }
-        
+        this.timer = 0;
+        this.startTimer = this.startTimer.bind(this);
+        this.countDown = this.countDown.bind(this);
+        this.addGoal = this.addGoal.bind(this)
+    }
+
+    // TIMER FUNCTIONS
+
+    secondsToTime(secs){    
+        let divisor_for_minutes = secs % (60 * 60);
+        let minutes = Math.floor(divisor_for_minutes / 60);
+    
+        let divisor_for_seconds = divisor_for_minutes % 60;
+        let seconds = Math.ceil(divisor_for_seconds);
+    
+        let obj = {
+          "m": minutes,
+          "s": seconds
+        };
+        return obj;
     }
     
+    componentDidMount() {
+        let seconds = this.secondsToTime(this.state.seconds);
+        this.setState({ time: seconds });
+        this.startTimer()
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+    
+    startTimer() {
+        if (this.timer == 0) {
+            this.timer = setInterval(this.countDown, 1000); // Called each seconds
+        }
+    }
+    
+    countDown() {
+        // Add one second, set state so a re-render happens.
+        let seconds = this.state.seconds + 1;
+        this.setState({
+            time: this.secondsToTime(seconds),
+            seconds: seconds
+        });
+    }
+    
+    // GOALS MANAGEMENT FUNCTIONS
+
     addGoal(e, team_num, player_num, gamelle, own_goal, role) {
         e.preventDefault();
         const promise = Api.addGoal(this.state.teams[team_num].players[player_num].id, this.state.match_id, gamelle, own_goal, role)
+        const scores = this.state.scores
+        const cancel_disabled = this.state.cancel_disabled
 
         Promise.all([promise])
-            .then(([result]) => (
+            .then(([result]) => {
+
+                if (!cancel_disabled) {
+                    scores.map(obj => (obj.old_score = obj.score))
+                }
+                
+                (!gamelle && !own_goal)
+                    ? scores[team_num].score++
+                    : (gamelle)
+                        ? (team_num === 0)
+                            ? (scores[1].score === 0)
+                                ? console.log("Déso, useless goal")
+                                : scores[1].score--
+                            : (scores[0].score === 0)
+                                ? console.log("Déso, useless goal")
+                                : scores[0].score--
+                        : (team_num === 0)
+                            ? scores[1].score++
+                            : scores[0].score++
+                
+
                 this.setState({
                     last_goal_id : result.id,
-                    cancel_disabled : false
+                    cancel_disabled : false,
+                    scores : scores
                 })
-            ))
+            })
     }
 
     cancelAction() {
         console.log(this.state.last_goal_id)
+        const scores = this.state.scores
         Api.deleteGoal(this.state.last_goal_id)
-            .then( () => this.setState({cancel_disabled:true}) )
+            .then( () => {
+                scores.map(obj => (obj.score = obj.old_score))
+                this.setState({
+                    cancel_disabled:true,
+                    scores:scores
+                }) 
+            })
     }
 
   render() {
       
-    const { teams , cancel_disabled} = this.state
-    
-    console.log(teams)
+    const { teams , cancel_disabled, scores} = this.state
     
     return (
 
@@ -121,9 +199,19 @@ class MatchRunning extends Component {
                         onClick={e => this.cancelAction()}
                         disabled={cancel_disabled}
                     >Annuler la dernière action <i className="fas fa-undo-alt"></i></button>
-                    <div className="timer">05:45</div>
+                    <div className="timer">
+                    {
+                        (this.state.time.m < 10)
+                        ? "0" + this.state.time.m
+                        : this.state.time.m
+                    }:
+                    {
+                        (this.state.time.s < 10)
+                        ? "0" + this.state.time.s
+                        : this.state.time.s
+                    }</div>
                     <div className="score">
-                        <span id="score1">5</span> - <span id="score2">2</span>
+                        <span id="score1">{scores[0].score}</span> - <span id="score2">{scores[1].score}</span>
                     </div>
                 </div>
                 <div className="col-md-4 flexbox flex-column" id="team2">
