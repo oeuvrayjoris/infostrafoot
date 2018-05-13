@@ -18,7 +18,7 @@ class Profile extends Component {
     super(props)
     this.state = {
       infos_player : {
-        id: 40,
+        id: 1,
         mail: '',
         username: '',
         password: '',
@@ -27,7 +27,7 @@ class Profile extends Component {
         birthdate: ''
       },
       victory_stat : null,
-      favorite_post : ""
+      best_role : ""
     }
     this.setMyProfil = this.setMyProfil.bind(this)
   }
@@ -50,7 +50,7 @@ class Profile extends Component {
       this.setState({
         infos_player : this.getProfilInfos(profil),
         victory_stat : this.getVictoryStat(stats),
-        favorite_post : stats.best_role
+        best_role : this.getBestRole(stats)
       })
     })
   }
@@ -88,6 +88,14 @@ class Profile extends Component {
     )
   }
 
+  getBestRole(stats) {
+    return (
+      (stats.best_role === "striker")
+        ? "Attaquant"
+        : "Défenseur"
+    )
+  }
+
   render() {
     Auth.login({
       username: 'babou97',
@@ -115,7 +123,7 @@ class Profile extends Component {
             <div className="row">
               <div className="col-md-3">
                 <div className="section flexbox" id="s1">
-                  Poste préféré : {this.state.favorite_post}
+                  Poste préféré : {this.state.best_role}
                 </div>
               </div>
               <div className="col-md-9">
