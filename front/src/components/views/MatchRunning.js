@@ -116,17 +116,17 @@ class MatchRunning extends Component {
                     : (gamelle)
                         ? (team_num === 0)
                             ? (scores[1].score === 0)
-                                ? console.log("Déso, useless goal")
+                                ? scores[0].score++
                                 : scores[1].score--
                             : (scores[0].score === 0)
-                                ? console.log("Déso, useless goal")
+                                ? scores[1].score++
                                 : scores[0].score--
                         : (team_num === 0)
                             ? scores[1].score++
                             : scores[0].score++
                 
-                if (scores[0].score === 1) match_ended = true
-                if (scores[1].score === 1) match_ended = true
+                if (scores[0].score === 10) match_ended = true
+                if (scores[1].score === 10) match_ended = true
 
                 this.setState({
                     last_goal_id : result.id,
