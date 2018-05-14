@@ -99,6 +99,7 @@ class App extends Component {
 
   handleLogout() {
     this.ApiService.logout()
+    
   }
   setTeamMatchStat(team_id) {
     this.ApiService.getTeam(team_id)
