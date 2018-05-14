@@ -61,7 +61,7 @@ class Root extends Component {
 
 	render() {
 		return(
-			<BrowserRouter>
+			<BrowserRouter basename="/infostrafoot">
 				<Switch>
 				  <Route exact path='/' render={(props) => <App {...props} user={this.state.user}/>} />
 				  {routes.map( ({path, component: C }, index) => (

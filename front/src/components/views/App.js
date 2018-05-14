@@ -12,6 +12,7 @@ import AuthService from '../AuthService';
 import ApiService from '../ApiService'
 import Background from '../../img/novelli.jpg';
 import Pie from '../Pie';
+import Bar from '../Bar';
 
 const Auth = new AuthService();
 
@@ -23,7 +24,8 @@ class App extends Component {
       user: null,
       best_scorer : null,
       best_team : null,
-      goals_stat : null
+      goals_stat : null,
+      team_stat : null
     }
 
     this.ApiService = new ApiService();
@@ -33,6 +35,12 @@ class App extends Component {
     this.setState({ isAuthenticated: authenticated });
   }
 
+  // SET STATS FUNCTIONS
+
+  componentDidMount() {
+    this.setStats(this.getStats())
+  }
+
   getStats() {
     const home = this.ApiService.home()
     const goals = this.ApiService.getGoals()
@@ -40,14 +48,15 @@ class App extends Component {
     return Promise.all([home, goals])
   }
 
-  componentDidMount() {
-    this.setStats(this.getStats())
-  }
-
   setStats(results) {
     results.then(([home, goals]) => {
       // Home
-      const best_team = [home.best_teams[0].players[0].username, home.best_teams[0].players[1].username]
+      const best_team = {
+        id:home.best_teams[0].id,
+        player_1:home.best_teams[0].players[0].username,
+        player_2:home.best_teams[0].players[1].username
+      }
+
       // Goals
       const gamelles = goals.filter(goal => (goal.gamelle === 1))
       const own_goal = goals.filter(goal => (goal.own_goal === 1))
@@ -58,6 +67,8 @@ class App extends Component {
         best_team: best_team,
         goals_stat : this.getGoalsStat(gamelles.length, own_goal.length, goal)
       })
+
+      this.setTeamMatchStat(best_team.id)
     })
   }
 
@@ -65,8 +76,8 @@ class App extends Component {
     return (
       [
         {
-            "id": "Goal",
-            "label": "Goal",
+            "id": "Buts",
+            "label": "Buts",
             "value": goal,
             "color": "#ff0000"
         },
@@ -88,6 +99,72 @@ class App extends Component {
 
   handleLogout() {
     this.ApiService.logout()
+  }
+  setTeamMatchStat(team_id) {
+    this.ApiService.getTeam(team_id)
+      .then(result => {
+        this.setState({
+          team_stat: this.getTeamMatchStat(result)
+        })
+      })
+  }
+  getTeamMatchStat(team_stat) {
+    this.getLastMatches(team_stat.matches)
+    return (team_stat.id)
+  }
+  // On récupére les matchs des 7 derniers jours
+  getLastMatches(matches) {
+      const today = this.formatDate();
+      const lastMatches = matches.filter(match => (
+        this.compareDate(today, this.getDayMonthYear(match.end_time))
+      ))
+      console.log(lastMatches)
+  }
+
+  // DATE FUCTIONS
+
+  formatDate() {
+    let d = new Date(),
+    month = d.getMonth() + 1,
+    day = (d.getDate() < 10) ? "0" + d.getDate() : d.getDate(),
+    year = d.getFullYear(),
+    hours = d.getHours(),
+    minutes = d.getMinutes(),
+    seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
+
+    //const today = year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+
+    return {year:year, month:month, day:day, dayName:d.getDay()}
+  }
+
+  getDayMonthYear(date) {
+    // Date must be in formatDate() : year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+
+    const splitted = date.substr(0,10).split("-", 3);
+    return ({
+      year:parseInt(splitted[0]),
+      month:parseInt(splitted[1]),
+      day:parseInt(splitted[2])
+    })
+  }
+
+  compareDate(today, date) {
+    return ((today.year === date.year)
+              ? ((today.month === date.month)
+                  ? ((today.day <= (date.day+7))
+                      ? true
+                      : false
+                    )
+                  : ((today.month === date.month+1)
+                      ? ((30+today.day <= (date.day+7))
+                          ? true
+                          : false
+                        )
+                      : false
+                    )
+                )
+              : false
+    )
   }
 
   render() {
@@ -122,10 +199,21 @@ class App extends Component {
             <br />
             <div className="row">
               <div className="col-md-3">
-                <div className="section flexbox" id="s3">Section 3</div>
+                <div className="section flexbox flex-column" id="s3">
+                  <i className="fas fa-trophy fa-3x"></i>
+                  <h3>Meilleur équipe</h3>
+                  {this.state.best_team
+                    ? (
+                        <h5> {this.state.best_team.player_1} & {this.state.best_team.player_2} </h5>
+                      )
+                    : ( <span></span> )
+                  }
+                </div>
               </div>
               <div className="col-md-9">
-                <div className="section flexbox" id="s4">Section 4</div>
+                <div className="section flexbox" id="s4">
+                <h3>Derniers matchs</h3>
+                </div>
               </div>
             </div>
           </div>
