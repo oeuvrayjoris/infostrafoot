@@ -12,10 +12,18 @@ export default class ApiService {
         this.getPlayers = this.getPlayers.bind(this)
         this.searchPlayer = this.searchPlayer.bind(this)
         this.home = this.home.bind(this)
+        this.getMatches = this.getMatches.bind(this)
+        this.getMatch = this.getMatch.bind(this)
         this.addMatch = this.addMatch.bind(this)
+        this.deleteMatch = this.deleteMatch.bind(this)
+        this.endMatch = this.endMatch.bind(this)
         this.getTeams = this.getTeams.bind(this)
         this.getTeam = this.getTeam.bind(this)
         this.addTeam = this.addTeam.bind(this)
+        this.deleteTeam = this.deleteTeam.bind(this)
+        this.getGoals = this.getGoals.bind(this)
+        this.addGoal = this.addGoal.bind(this)
+        this.deleteGoal = this.deleteGoal.bind(this)
     }
 
     login(credentials) {
@@ -190,7 +198,7 @@ export default class ApiService {
         
         return this.fetch(`${this.domain}/search/players?value=${encodedValue}`, myInit)
             .then(function(datas) {
-                console.log(datas)
+                //console.log(datas)
                 return datas;
             })
             .catch(function(error) {
@@ -230,6 +238,20 @@ export default class ApiService {
             });
     }
 
+    getMatch(match_id) {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/matches/${match_id}`, myInit)
+            .then(function(datas) {
+                console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
     addMatch(id_team1, id_team2) {
         const myInit = {
             method: 'POST',
@@ -239,6 +261,37 @@ export default class ApiService {
             .then(res => {
                 return Promise.resolve(res);
             })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    deleteMatch(match_id) {
+        const myInit = {
+            method: 'DELETE'
+        };
+        return this.fetch(`${this.domain}/matches/${match_id}`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    endMatch(match_id, team_id, end_time) {
+        const myInit = {
+            method: 'PUT',
+            body: JSON.stringify({winner :team_id,end_time:end_time})
+        };
+        return this.fetch(`${this.domain}/matches/${match_id}`, myInit)
+            .then(res => {
+                return Promise.resolve(res);
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     }
 
     // --- TEAMS --- //
@@ -261,7 +314,7 @@ export default class ApiService {
         const myInit = {
             method: 'GET'
         };
-        return this.fetch(`${this.domain}/taems/${id}`, myInit)
+        return this.fetch(`${this.domain}/teams/${id}`, myInit)
             .then(function(datas) {
                 //console.log(datas)
                 return datas;
@@ -278,12 +331,78 @@ export default class ApiService {
         };
         return this.fetch(`${this.domain}/teams`, myInit)
             .then(function(datas) {
-                Promise.resolve(datas); // useless
+                console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    deleteTeam(team_id) {
+        const myInit = {
+            method: 'DELETE'
+        };
+        return this.fetch(`${this.domain}/teams/${team_id}`, myInit)
+            .then(function(datas) {
                 //console.log(datas)
                 return datas;
             })
             .catch(function(error) {
                 console.log(error)
+            });
+    }
+
+    // --- GOALS --- //
+
+    getGoals() {
+        const myInit = {
+            method: 'GET'
+        };
+        return this.fetch(`${this.domain}/goals`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    // Parameters : int player_id, int match_id, boolean (int) gamelle, boolean (int) own_goal, string role
+    addGoal(player_id, match_id, gamelle, own_goal, role) {
+        const myInit = {
+            method: 'POST',
+            body: JSON.stringify({
+                player_id : player_id,
+                match_id : match_id,
+                gamelle : gamelle,
+                own_goal : own_goal,
+                role : role
+            })
+        };
+        return this.fetch(`${this.domain}/goals`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
+    }
+
+    deleteGoal(goal_id) {
+        const myInit = {
+            method: 'DELETE'
+        };
+        return this.fetch(`${this.domain}/goals/${goal_id}`, myInit)
+            .then(function(datas) {
+                //console.log(datas)
+                return datas;
+            })
+            .catch(function(error) {
+                console.log(error)
+                console.log("You should probably wait few seconds and try again")
             });
     }
 }

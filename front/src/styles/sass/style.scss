@@ -77,7 +77,10 @@ a {
     text-transform: uppercase;
     height: 50px;
     padding: 0px 30px 0px 30px;
-    @include box-shadow(0px, 7px, 17px, rgba($color1, .3));
+    @include box-shadow(0px,
+    7px,
+    17px,
+    rgba($color1, .3));
 }
 
 .btn-success {
@@ -90,22 +93,25 @@ a {
     text-transform: uppercase;
     height: 50px;
     padding: 0px 30px 0px 30px;
-    @include box-shadow(0px, 7px, 17px, rgba($color3, .3));
+    @include box-shadow(0px,
+    7px,
+    17px,
+    rgba($color3, .3));
 }
 
 #inscription {
     .form-control {
         border-radius: 4px;
     }
-    
+
     .input-file {
         display: none;
     }
-    
+
     .flexbox {
         padding: 0;
     }
-    
+
     #photoInput {
         width: 100px;
         margin: 0 auto;
@@ -181,7 +187,10 @@ a {
 
         &:focus {
             border-color: $color1;
-            @include box-shadow(0px, 0px, 8px, rgba($color1, .3));
+            @include box-shadow(0px,
+            0px,
+            8px,
+            rgba($color1, .3));
         }
     }
 
@@ -373,6 +382,7 @@ a {
     height: 300px;
     border: 1px solid lighten($color0, 10%);
     border-radius: 4px;
+    margin-bottom: 15px;
 
     .photo2 {
         height: 100px;
@@ -506,7 +516,34 @@ h3 {
 }
 
 #s1 {
-    svg, h3, h5 {
+    svg,
+    h3,
+    h5 {
         color: $color4;
     }
+}
+
+.close {
+    line-height: 1.5;
+}
+
+.score {
+    font-size: 5em;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin-top: 100px;
+}
+
+.width100 {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.runnning {
+    margin-bottom: 0;
+}
+
+.buttons {
+    justify-content: space-between;
 }

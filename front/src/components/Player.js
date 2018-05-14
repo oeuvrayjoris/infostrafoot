@@ -10,7 +10,8 @@ const boxSource = {
 			id: props.id,
 			firstname: props.firstname,
 			lastname: props.lastname,
-            username: props.username
+			username: props.username,
+			display: props.display
 		}
 	},
 }
@@ -20,15 +21,15 @@ class Player extends Component {
 		connectDragSource: PropTypes.func.isRequired,
 		isDragging: PropTypes.bool.isRequired,
 		firstname: PropTypes.string.isRequired,
-        isDropped: PropTypes.bool.isRequired,
+		isDropped: PropTypes.bool.isRequired,
 	}
 
 	render() {
-		const { firstname, lastname, username, isDragging, connectDragSource } = this.props
+		const { firstname, lastname, username, display, isDragging, connectDragSource } = this.props
 		const opacity = isDragging ? 0.4 : 1
 
 		return connectDragSource(
-            <div className="col-md-3">
+            <div className="col-md-3" style={{ display: display }}>
                 <div className="player" style={{ opacity }}>
                     <div className="photo2">
                         <div style={{ backgroundImage: `url(${Background})` }}></div>

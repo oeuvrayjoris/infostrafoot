@@ -14,10 +14,13 @@ import ApiService from '../ApiService'
 const Api = new ApiService();
 
 class Match extends Component {
-    
+
     constructor(props) {
 		super(props)
 		this.state = {
+            credentials: {
+                searchName: ''
+            },
 			teams: [
 				{ id:0, name: 'Equipe 1', players: [] },
 				{ id:1, name: 'Equipe 2', players: [] }
@@ -31,6 +34,10 @@ class Match extends Component {
         this.createTeams = this.createTeams.bind(this)
         this.changeTeamID = this.changeTeamID.bind(this)
         this.createMatch = this.createMatch.bind(this)
+        this.searchPlayer = this.searchPlayer.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.displayPlayers = this.displayPlayers.bind(this)
+        this.showAll = this.showAll.bind(this)
 	}
     
     isDropped(username) {
@@ -42,16 +49,17 @@ class Match extends Component {
     }
 
     setPlayers(res) {
-        var array = res.map(player => ({
+        const players = res.map(player => ({
             id: player.id,
             firstname: player.firstname,
             lastname: player.lastname,
             username: player.username,
+            display: 'block',
             type: ItemTypes.BOX
         }))
 
         this.setState({
-            players : array
+            players : players
         })
     }
 
@@ -75,6 +83,10 @@ class Match extends Component {
         this.createTeams().then(([t1, t2]) => {
             console.log("IDs : " + t1, t2)
             Api.addMatch(t1, t2)
+            .then(match => {
+                console.log("Match id : " + match.id)
+                // Ici, créer MatchRunning ?
+            })
         })
     }
 
@@ -84,8 +96,55 @@ class Match extends Component {
         (this.state.teams[0].players.length === 2 && this.state.teams[1].players.length === 2) 
         ? this.createMatch()
         : console.log("Must add 4 players")
-        // Api.addTeam()
+
         // Redirection vers MatchRunning
+    }
+
+    // Search Functions
+
+    handleChange(e) {
+        const field = e.target.name;
+        const credentials = this.state.credentials;
+        credentials[field] = e.target.value;
+        this.setState({
+          credentials: credentials
+        });
+    }
+
+    searchPlayer(e) {
+        e.preventDefault();
+        Api.searchPlayer(this.state.credentials.searchName)
+            .then((result) => {
+                (result === undefined)
+                ? (console.log("No player found"))
+                : this.displayPlayers(result)
+            })
+    }
+
+    displayPlayers(result) {
+        const players = this.state.players
+
+        console.log(players)
+        console.log(result.players)
+       
+        players.map(player => (
+            result.players.map(p => (
+                (player.username === p.username)
+                ? player.display = 'block'
+                : player.display = 'none'
+            ))
+        ))
+
+        this.setState({players : players})
+    }
+
+    showAll(e) {
+        e.preventDefault();
+        const players = this.state.players
+        // Set all the display back to normal
+        players.map(player => player.display = 'block')
+
+        this.setState({players : players})
     }
 
   render() {
@@ -132,16 +191,34 @@ class Match extends Component {
                 <div className="row">
                     <div className="col-md-3">
                         <form className="input-group search">
-                            <input type="text" className="form-control" placeholder="Rechercher un joueur..." />
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Rechercher un joueur..."
+                                name="searchName"
+                                value={this.state.credentials.searchName}
+                                onChange={e => this.handleChange(e)}
+                            />
                             <span className="input-group-btn">
-                                <button className="btn btn-default" type="button"><i className="fas fa-search"></i></button>
+                                <button
+                                    className="btn btn-default"
+                                    type="button"
+                                    onClick={e => this.searchPlayer(e)}
+                                ><i className="fas fa-search"></i></button>
                             </span>
+                            <div className="flexbox">
+                                <button 
+                                    className="btn btn-success"
+                                    type="button"
+                                    onClick={e => this.showAll(e)}
+                                >Montrer tout</button>
+                            </div>
                         </form>
                     </div>
                     <div className="col-md-9"></div>
                 </div>
                 <div className="row">
-					{players.map(({ id, firstname, lastname, username }, index) =>  {
+					{players.map(({ id, firstname, lastname, username, display }, index) =>  {
                         if(!(this.isDropped(username))) {
                             return (
 						<Player
@@ -149,6 +226,7 @@ class Match extends Component {
 							firstname={firstname}
 							lastname={lastname}
                             username={username}
+                            display={display}
 							isDropped={this.isDropped(username)}
 							key={id}
 						/>
@@ -165,6 +243,8 @@ class Match extends Component {
     handleDrop(index, item) {
         const { username } = item
         const droppedPseudos = username ? { $push: [username] } : {}
+        
+        console.log(this.state.teams)
 
         this.setState(
             update(this.state, {

@@ -9,6 +9,7 @@ import Login from './components/views/Login'
 import SignUp from './components/views/SignUp'
 import Profile from './components/views/Profile'
 import Match from './components/views/Match'
+import MatchRunning from './components/views/MatchRunning'
 import Comparator from './components/views/Comparator'
 import Search from './components/views/Search'
 //Importing styles
@@ -32,6 +33,10 @@ const routes = [
 	{
 		path: '/match',
 		component: Match
+	},
+	{
+		path: '/matchrunning',
+		component: MatchRunning
 	},
 	{
 		path: '/comparator',
