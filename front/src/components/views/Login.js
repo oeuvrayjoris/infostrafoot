@@ -59,15 +59,18 @@ class Login extends Component {
     e.preventDefault();
     
     this.ApiService.login(this.state.credentials)
-    .then(res => {
-      console.log(res)
-      this.props.history.replace('/');
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(res =>{
+        console.log(res)
+         this.props.history.replace('/');
+      })
+      .catch(err =>{
+          console.log(err)
+          err.then(response => {console.log(response)
+          })
+      })
 
-/*
+
+    /*
     const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -78,20 +81,13 @@ class Login extends Component {
         body: JSON.stringify(this.state.credentials)
       }
 
-      console.log({headers, ...options})
-      console.log({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        method : 'POST',
-        body: JSON.stringify(this.state.credentials)
-      })
-
     const url = 'https://www.floriantorres.fr/infostrafootapi/public/auth/login'
 
     fetch(url, {headers, ...options})
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
+    .then(response => response)
+    .then(response => {
+      console.log(response.json())
+    })
 
     this.Auth.login(this.state.credentials)
       .then(res =>{

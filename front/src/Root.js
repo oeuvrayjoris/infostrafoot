@@ -12,6 +12,7 @@ import Match from './components/views/Match'
 import MatchRunning from './components/views/MatchRunning'
 import Comparator from './components/views/Comparator'
 import Search from './components/views/Search'
+import NotFound from './components/views/NotFound'
 //Importing styles
 import './styles/sass/style.scss';
 
@@ -67,6 +68,7 @@ class Root extends Component {
 				  	<Route key={index} path={path} render={(props) => <C {...props} user={this.state.user}/>} 
 				  	/> 
 				  ))}
+				  <Route component={NotFound}/>
 				</Switch>
 		    </BrowserRouter>
 	    )

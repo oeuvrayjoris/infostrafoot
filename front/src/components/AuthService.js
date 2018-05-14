@@ -16,7 +16,6 @@ export default class AuthService {
             body: JSON.stringify(credentials)
         }).then(res => {
             this.setToken(res.access_token) // Setting the token in sessionStorage
-            console.log(res)
             return Promise.resolve(res);
         })
     }
@@ -107,7 +106,6 @@ export default class AuthService {
         })
             .then(this._checkStatus)
             .then(response => response.json())
-            .catch(error => console.log(error))
     }
 
     _checkStatus(response) {

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+
 // Importing Styles
 import '../../styles/sass/style.scss';
 // Importing Components
@@ -13,7 +14,6 @@ import Background from '../../img/novelli.jpg';
 import Pie from '../Pie';
 
 const Auth = new AuthService();
-const Api = new ApiService();
 
 class App extends Component {
 
@@ -25,20 +25,17 @@ class App extends Component {
       best_team : null,
       goals_stat : null
     }
+
+    this.ApiService = new ApiService();
   }
 
-  handleLogout(){
-    Auth.logout()
-    //this.props.history.replace('/');
-    this.setState({
-      user: null
-    }, console.log("Disconnected"))
-    this.checkIfUserAuth()
+  userHasAuthenticated = authenticated => {
+    this.setState({ isAuthenticated: authenticated });
   }
 
   getStats() {
-    const home = Api.home()
-    const goals = Api.getGoals()
+    const home = this.ApiService.home()
+    const goals = this.ApiService.getGoals()
 
     return Promise.all([home, goals])
   }
@@ -89,6 +86,10 @@ class App extends Component {
     )
   }
 
+  handleLogout() {
+    this.ApiService.logout()
+  }
+
   render() {
     return (
       <div className="row" id="main" style={{ height: window.innerHeight}}>
@@ -97,7 +98,7 @@ class App extends Component {
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
-            <Header handleLogout={this.handleLogout.bind(this)} user={this.state.user}/>
+            <Header handleLogout={this.handleLogout.bind(this)}/>
             <h1>Accueil</h1>
             <hr />
             <div className="row">

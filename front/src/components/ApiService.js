@@ -33,9 +33,7 @@ export default class ApiService {
             body: JSON.stringify(credentials)
         }).then(res => {
             this.setToken(res.access_token) // Setting the token in sessionStorage
-            return Promise.resolve(res);
-        }).catch(err => {
-            console.log(err)
+            return res;
         })
     }
 
@@ -45,10 +43,9 @@ export default class ApiService {
             method: 'POST',
             body: JSON.stringify(credentials)
         }).then(res => {
+            console.log(res)
             this.setToken(res.access_token) // Setting the token in sessionStorage
             return Promise.resolve(res);
-        }).catch(err => {
-            console.log(err)
         })
     }
 
@@ -89,8 +86,7 @@ export default class ApiService {
             }).then(res => {
                 // Clear user token and profile data from sessionStorage
                 sessionStorage.removeItem('id_token');
-                console.log(this.getToken())
-                return Promise.resolve(res);
+                console.log(res)
             })
         }
         catch(error) {
@@ -124,19 +120,14 @@ export default class ApiService {
         })
             .then(this._checkStatus)
             .then(response => response.json())
-            .catch(error => console.log(error))
     }
 
     _checkStatus(response) {
-        //console.log(response)
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
             return response
         } else {
-            var error = new Error(response.statusText)
-            error.response = response
-            console.log(error)
-            throw error
+            throw response.json()
         }
     }
 
