@@ -23,7 +23,8 @@ class App extends Component {
       user: null,
       best_scorer : null,
       best_team : null,
-      goals_stat : null
+      goals_stat : null,
+      team_stat : null
     }
   }
 
@@ -50,7 +51,12 @@ class App extends Component {
   setStats(results) {
     results.then(([home, goals]) => {
       // Home
-      const best_team = [home.best_teams[0].players[0].username, home.best_teams[0].players[1].username]
+      const best_team = {
+        id:home.best_teams[0].id,
+        player_1:home.best_teams[0].players[0].username,
+        player_2:home.best_teams[0].players[1].username
+      }
+
       // Goals
       const gamelles = goals.filter(goal => (goal.gamelle === 1))
       const own_goal = goals.filter(goal => (goal.own_goal === 1))
@@ -61,6 +67,8 @@ class App extends Component {
         best_team: best_team,
         goals_stat : this.getGoalsStat(gamelles.length, own_goal.length, goal)
       })
+
+      this.setTeamMatchStat(best_team.id)
     })
   }
 
@@ -87,6 +95,63 @@ class App extends Component {
         }
       ]
     )
+  }
+
+  setTeamMatchStat(team_id) {
+    Api.getTeam(team_id)
+      .then(result => {
+        this.setState({
+          team_stat: this.getTeamMatchStat(result)
+        })
+      })
+  }
+  getTeamMatchStat(team_stat) {
+    this.getLastMatches(team_stat.matches)
+    return (team_stat.id)
+  }
+  getLastMatches(matches) {
+      const today = this.formatDate();
+      console.log(today)
+      matches.map(match => {
+        this.compareDate(today, this.getDayMonthYear(match.end_time))
+      })
+      /*
+      const dd = today.getDate();
+      const mm = today.getMonth()+1; //January is 0!
+      const yyyy = today.getFullYear();
+      const day = today.getDay()
+      */
+  }
+
+  formatDate() {
+    let d = new Date(),
+    month = d.getMonth() + 1,
+    day = (d.getDate() < 10) ? "0" + d.getDate() : d.getDate(),
+    year = d.getFullYear(),
+    hours = d.getHours(),
+    minutes = d.getMinutes(),
+    seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
+
+    //const today = year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+
+    return {year:year, month:month, day:day, dayName:d.getDay()}
+  }
+
+  getDayMonthYear(date) {
+    // Date must be in formatDate() : year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+
+    const splitted = date.substr(0,10).split("-", 3);
+    return ({
+      year:parseInt(splitted[0]),
+      month:parseInt(splitted[1]),
+      day:parseInt(splitted[2])
+    })
+  }
+
+  compareDate(today, date) {
+    (today.year === date.year)
+      ? console.log("OK")
+      : console.log("NOTNOT")
   }
 
   render() {
@@ -121,7 +186,16 @@ class App extends Component {
             <br />
             <div className="row">
               <div className="col-md-3">
-                <div className="section flexbox" id="s3">Section 3</div>
+                <div className="section flexbox flex-column" id="s3">
+                  <i className="fas fa-trophy fa-3x"></i>
+                  <h3>Meilleur équipe</h3>
+                  {this.state.best_team
+                    ? (
+                        <h5> {this.state.best_team.player_1} & {this.state.best_team.player_2} </h5>
+                      )
+                    : ( <span></span> )
+                  }
+                </div>
               </div>
               <div className="col-md-9">
                 <div className="section flexbox" id="s4">Section 4</div>
