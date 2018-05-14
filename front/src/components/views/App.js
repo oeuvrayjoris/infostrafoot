@@ -11,6 +11,7 @@ import AuthService from '../AuthService';
 import ApiService from '../ApiService'
 import Background from '../../img/novelli.jpg';
 import Pie from '../Pie';
+import Bar from '../Bar';
 
 const Auth = new AuthService();
 const Api = new ApiService();
@@ -37,15 +38,17 @@ class App extends Component {
     this.checkIfUserAuth()
   }
 
+  // SET STATS FUNCTIONS
+
+  componentDidMount() {
+    this.setStats(this.getStats())
+  }
+
   getStats() {
     const home = Api.home()
     const goals = Api.getGoals()
 
     return Promise.all([home, goals])
-  }
-
-  componentDidMount() {
-    this.setStats(this.getStats())
   }
 
   setStats(results) {
@@ -76,8 +79,8 @@ class App extends Component {
     return (
       [
         {
-            "id": "Goal",
-            "label": "Goal",
+            "id": "Buts",
+            "label": "Buts",
             "value": goal,
             "color": "#ff0000"
         },
@@ -109,19 +112,16 @@ class App extends Component {
     this.getLastMatches(team_stat.matches)
     return (team_stat.id)
   }
+  // On récupére les matchs des 7 derniers jours
   getLastMatches(matches) {
       const today = this.formatDate();
-      console.log(today)
-      matches.map(match => {
+      const lastMatches = matches.filter(match => (
         this.compareDate(today, this.getDayMonthYear(match.end_time))
-      })
-      /*
-      const dd = today.getDate();
-      const mm = today.getMonth()+1; //January is 0!
-      const yyyy = today.getFullYear();
-      const day = today.getDay()
-      */
+      ))
+      console.log(lastMatches)
   }
+
+  // DATE FUCTIONS
 
   formatDate() {
     let d = new Date(),
@@ -149,9 +149,22 @@ class App extends Component {
   }
 
   compareDate(today, date) {
-    (today.year === date.year)
-      ? console.log("OK")
-      : console.log("NOTNOT")
+    return ((today.year === date.year)
+              ? ((today.month === date.month)
+                  ? ((today.day <= (date.day+7))
+                      ? true
+                      : false
+                    )
+                  : ((today.month === date.month+1)
+                      ? ((30+today.day <= (date.day+7))
+                          ? true
+                          : false
+                        )
+                      : false
+                    )
+                )
+              : false
+    )
   }
 
   render() {
@@ -198,7 +211,9 @@ class App extends Component {
                 </div>
               </div>
               <div className="col-md-9">
-                <div className="section flexbox" id="s4">Section 4</div>
+                <div className="section flexbox" id="s4">
+                <h3>Derniers matchs</h3>
+                </div>
               </div>
             </div>
           </div>
