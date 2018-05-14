@@ -26,6 +26,8 @@ export default class ApiService {
         }).then(res => {
             this.setToken(res.access_token) // Setting the token in sessionStorage
             return Promise.resolve(res);
+        }).catch(err => {
+            console.log(err)
         })
     }
 
@@ -124,7 +126,7 @@ export default class ApiService {
             var error = new Error(response.statusText)
             error.response = response
             console.log(error)
-            //throw error
+            throw error
         }
     }
 
