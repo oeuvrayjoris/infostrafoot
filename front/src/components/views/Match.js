@@ -121,20 +121,21 @@ class Match extends Component {
             })
     }
 
+    // La fonction n'est pas très propre, il ne faut pas modifier le tableau dans le map + il ne faut pas gérer le css dans React
     displayPlayers(result) {
         const players = this.state.players
 
-        console.log(players)
-        console.log(result.players)
+        players.map(player => player.display = 'none')
+
+        //players.some(player => result.players.map(p => p.username).includes(player.username))
        
-        players.map(player => (
-            result.players.map(p => (
+        result.players.map(player => (
+            players.map(p => (
                 (player.username === p.username)
-                ? player.display = 'block'
-                : player.display = 'none'
+                ? /*{...p, isDisplayed:true}*/p.display = 'block'
+                : 0/*{...p, isDisplayed:false}*/
             ))
         ))
-
         this.setState({players : players})
     }
 
@@ -244,7 +245,7 @@ class Match extends Component {
         const { username } = item
         const droppedPseudos = username ? { $push: [username] } : {}
         
-        console.log(this.state.teams)
+        //console.log(this.state.teams)
 
         this.setState(
             update(this.state, {
