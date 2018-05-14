@@ -47,6 +47,8 @@ export default class ApiService {
         }).then(res => {
             this.setToken(res.access_token) // Setting the token in sessionStorage
             return Promise.resolve(res);
+        }).catch(err => {
+            console.log(err)
         })
     }
 

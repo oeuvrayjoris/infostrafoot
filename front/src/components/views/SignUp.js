@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
 import Photo from '../../img/photo_example.gif'
-import AuthService from '../AuthService'
+import ApiService from '../ApiService'
 
 class SignUp extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class SignUp extends Component {
     // Bindings this
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.Auth = new AuthService();
+    this.ApiService = new ApiService();
   }
 
   checkPseudo(username) {
@@ -63,8 +63,19 @@ class SignUp extends Component {
 
   // Handle the submit event
   handleSubmit(e){
+
     e.preventDefault();
     
+    this.ApiService.signup(this.state.credentials)
+    .then(res => {
+      console.log(res)
+      this.props.history.replace('/');
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    
+    /*
     const options = {
         headers: {
           'Accept': 'application/json',
@@ -80,7 +91,6 @@ class SignUp extends Component {
     .then(response => console.log(response))
     .catch(error => console.log(error))
 
-/*
     this.Auth.signup(this.state.credentials)
       .then(res => {
         console.log(res)

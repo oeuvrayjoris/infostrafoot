@@ -61,6 +61,7 @@ class Login extends Component {
     this.ApiService.login(this.state.credentials)
     .then(res => {
       console.log(res)
+      this.props.history.replace('/');
     })
     .catch(err => {
       console.log(err)
