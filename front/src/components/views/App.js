@@ -111,11 +111,50 @@ class App extends Component {
   }
   getTeamMatchStat(team_stat) {
     this.getLastMatches(team_stat.matches)
-    return (team_stat.id)
+    //return (team_stat.id)
+    return (
+        [
+          {
+            "jour": "15-05-2018",
+            "victoire": 3,
+            "défaîte": 0,
+          },
+          {
+            "jour": "16-05-2018",
+            "victoire": 0,
+            "défaîte": 0,
+          },
+          {
+            "jour": "17-05-2018",
+            "victoire": 0,
+            "défaîte": 0,
+          },
+          {
+            "jour": "18-05-2018",
+            "victoire": 2,
+            "défaîte": -2,
+          },
+          {
+            "jour": "19-05-2018",
+            "victoire": 4,
+            "défaîte": 0,
+          },
+          {
+            "jour": "20-05-2018",
+            "victoire": 1,
+            "défaîte": -3,
+          },
+          {
+            "jour": "21-05-2018",
+            "victoire": 0,
+            "défaîte": -5,
+          }
+        ]
+    )
   }
   // On récupére les matchs des 7 derniers jours
   getLastMatches(matches) {
-      const today = this.formatDate();
+      const today = this.getDayMonthYear(this.formatDate());
       const lastMatches = matches.filter(match => (
         this.compareDate(today, this.getDayMonthYear(match.end_time))
       ))
@@ -133,9 +172,9 @@ class App extends Component {
     minutes = d.getMinutes(),
     seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
 
-    //const today = year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+    return year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
 
-    return {year:year, month:month, day:day, dayName:d.getDay()}
+    //return {year:year, month:month, day:day, dayName:d.getDay()}
   }
 
   getDayMonthYear(date) {
@@ -216,7 +255,10 @@ class App extends Component {
               </div>
               <div className="col-md-9">
                 <div className="section flexbox" id="s4">
-                <h3>Derniers matchs</h3>
+                  {this.state.team_stat 
+                    ? ( <Bar repositories={this.state.team_stat} /> )
+                    : ( <span></span> )
+                  }
                 </div>
               </div>
             </div>
