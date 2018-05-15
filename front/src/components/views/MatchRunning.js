@@ -184,6 +184,21 @@ class MatchRunning extends Component {
         return today
     }
 
+    switchRole(team_num) {
+        const players = this.state.teams[team_num].players
+        const players_new = [players[1], players[0]]
+
+        const new_teams = this.state.teams.map((team, index) => 
+            (index === team_num)
+            ? {...team, "players":players_new}
+            : team
+        )
+        
+        this.setState({
+            "teams":new_teams
+        })
+    }
+
   render() {
     const { teams , cancel_disabled, scores, match_ended} = this.state
     
@@ -236,6 +251,11 @@ class MatchRunning extends Component {
                             </div>
                         </div>
                     ))}
+                    <button
+                        className="btn btn-default"
+                        disabled={match_ended}
+                        onClick={e => this.switchRole(0)}
+                    >SWITCH</button>
                 </div>
                 <div className="col-md-4 flexbox flex-column">
                     <button
@@ -295,6 +315,11 @@ class MatchRunning extends Component {
                             </div>
                         </div>
                     ))}
+                    <button
+                        className="btn btn-default"
+                        disabled={match_ended}
+                        onClick={e => this.switchRole(1)}
+                    >SWITCH</button>
                 </div>
             </div>
             <div className="flexbox">

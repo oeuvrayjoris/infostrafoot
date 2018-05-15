@@ -231,7 +231,7 @@ class App extends Component {
                 <div className="section flexbox" id="s2">
                     <div className="flexbox flex-column">
                         <i className="fas fa-futbol fa-3x"></i>
-                        <h3>Buts marqués</h3>
+                        <h3>Buts marqués par l'ensemble des joueurs</h3>
                     </div>
                   {this.state.goals_stat 
                     ? ( <Pie repositories={this.state.goals_stat} /> )
