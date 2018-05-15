@@ -189,7 +189,10 @@ class App extends Component {
               </div>
               <div className="col-md-9">
                 <div className="section flexbox" id="s2">
-                  <h1>Buts marqués</h1>
+                    <div className="flexbox flex-column">
+                        <i className="fas fa-futbol fa-3x"></i>
+                        <h3>Buts marqués</h3>
+                    </div>
                   {this.state.goals_stat 
                     ? ( <Pie repositories={this.state.goals_stat} /> )
                     : ( <span></span> )
