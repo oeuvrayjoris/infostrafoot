@@ -35,6 +35,10 @@ class App extends Component {
     this.setState({ isAuthenticated: authenticated });
   }
 
+  handleLogout() {
+    this.ApiService.logout()
+  }
+
   // SET STATS FUNCTIONS
 
   componentDidMount() {
@@ -68,39 +72,34 @@ class App extends Component {
         goals_stat : this.getGoalsStat(gamelles.length, own_goal.length, goal)
       })
 
+      // Team
       this.setTeamMatchStat(best_team.id)
     })
   }
 
+  // GOALS
   getGoalsStat(gamelles, own_goal, goal) {
     return (
       [
         {
             "id": "Buts",
             "label": "Buts",
-            "value": goal,
-            "color": "#ff0000"
+            "value": goal
         },
         {
             "id": "Gamelles",
             "label": "Gamelles",
-            "value": gamelles,
-            "color": "#00ff00"
+            "value": gamelles
         },
         {
             "id": "Contre Son Camp",
             "label": "Contre Son Camp",
-            "value": own_goal,
-            "color": "#ff00ff"
+            "value": own_goal
         }
       ]
     )
   }
 
-  handleLogout() {
-    this.ApiService.logout()
-    
-  }
   setTeamMatchStat(team_id) {
     this.ApiService.getTeam(team_id)
       .then(result => {
@@ -109,76 +108,58 @@ class App extends Component {
         })
       })
   }
+
+  // Find the matches of the 7 last days then count each victorie and defeat
+  // Returns an array of objects used with Nivo Bar
   getTeamMatchStat(team_stat) {
-    this.getLastMatches(team_stat.matches)
-    //return (team_stat.id)
+    const today = this.getDayMonthYear(this.getTodayDate());
+    const lastMatches = this.getLastMatches(today, team_stat.matches)
+    const lastDays = this.getLastDays(today).map(day => this.formatDate(day))
+    const victories = lastDays.map(day => 
+      lastMatches.victories.filter(match =>
+        (match.end_time.substr(8,2) === day.substr(0,2))
+      ).length
+    )
+    const defeats = lastDays.map(day => 
+      lastMatches.defeats.filter(match =>
+        (match.end_time.substr(8,2) === day.substr(0,2))
+      ).length
+    )
+    
     return (
-        [
-          {
-            "jour": "15-05-2018",
-            "victoire": 3,
-            "défaîte": 0,
-          },
-          {
-            "jour": "16-05-2018",
-            "victoire": 0,
-            "défaîte": 0,
-          },
-          {
-            "jour": "17-05-2018",
-            "victoire": 0,
-            "défaîte": 0,
-          },
-          {
-            "jour": "18-05-2018",
-            "victoire": 2,
-            "défaîte": -2,
-          },
-          {
-            "jour": "19-05-2018",
-            "victoire": 4,
-            "défaîte": 0,
-          },
-          {
-            "jour": "20-05-2018",
-            "victoire": 1,
-            "défaîte": -3,
-          },
-          {
-            "jour": "21-05-2018",
-            "victoire": 0,
-            "défaîte": -5,
-          }
-        ]
+      [0,1,2,3,4,5,6].map(num => (
+        {
+          "jour":lastDays[num],
+          "victoire":victories[num],
+          "défaîte":defeats[num]
+        }
+      ))
     )
   }
-  // On récupére les matchs des 7 derniers jours
-  getLastMatches(matches) {
-      const today = this.getDayMonthYear(this.formatDate());
+  // We store the victories and defeats of the last 7 days
+  getLastMatches(today, matches) {
       const lastMatches = matches.filter(match => (
         this.compareDate(today, this.getDayMonthYear(match.end_time))
       ))
-      console.log(lastMatches)
+      const victories = lastMatches.filter(match => (match.pivot.winner === this.state.best_team.id))
+      const defeats = lastMatches.filter(match => (match.pivot.winner !== this.state.best_team.id))
+
+      return {victories:victories, defeats:defeats}
   }
 
   // DATE FUCTIONS
 
-  formatDate() {
+  getTodayDate() {
     let d = new Date(),
     month = d.getMonth() + 1,
     day = (d.getDate() < 10) ? "0" + d.getDate() : d.getDate(),
-    year = d.getFullYear(),
-    hours = d.getHours(),
-    minutes = d.getMinutes(),
-    seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
+    year = d.getFullYear()
 
-    return year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
-
-    //return {year:year, month:month, day:day, dayName:d.getDay()}
+    return year +  "-" + month + "-" + day
   }
 
   getDayMonthYear(date) {
-    // Date must be in formatDate() : year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+    // Date must be : year +  "-" + month + "-" + day + "whatever"
 
     const splitted = date.substr(0,10).split("-", 3);
     return ({
@@ -205,6 +186,26 @@ class App extends Component {
                 )
               : false
     )
+  }
+
+  formatDate(date) {
+    // Date must be : {year:,month:,day:}
+    const day = (date.day < 10) ? "0" + date.day : date.day
+    const month = (date.month < 10) ? "0" + date.month : date.month
+    const year = date.year
+
+    return day +  "-" + month + "-" + year
+  }
+
+  getLastDays(today) {
+    const days = [6,5,4,3,2,1,0]
+    const lastDays = days.map(day => (
+      (today.day-day < 1)
+        ? {day:31+(today.day-day), month:today.month-1, year:today.year}
+        : {day:today.day-day, month:today.month, year:today.year}
+    ))
+    
+    return lastDays
   }
 
   render() {
