@@ -131,7 +131,7 @@ class App extends Component {
         {
           "jour":lastDays[num],
           "victoire":victories[num],
-          "défaîte":defeats[num]
+          "défaîte":-defeats[num]
         }
       ))
     )
