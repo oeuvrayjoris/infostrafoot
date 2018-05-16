@@ -17,18 +17,13 @@ class Header extends React.Component {
     if (this.ApiService.loggedIn()) {
       this.setState({...this.state, userAuthenticated: true})
     }
-    else {
-      this.setState({...this.state, userAuthenticated: false})
-    }
   }
 
   handleLogout() {
     this.props.handleLogout()
-    this.props.history.replace('/')
   }
 
   render() {
-    console.log(this.state.userAuthenticated)
     return (
         <div>
           {this.state.userAuthenticated === false ? 
@@ -40,6 +35,7 @@ class Header extends React.Component {
             (<div id="header">
                 Bonjour, vous êtes bien connecté ! &nbsp;
                 <a href="#" onClick={this.handleLogout.bind(this)}>Déconnexion</a>
+                {/*<NavLink to="/login" onClick={this.handleLogout.bind(this)}>Déconnexion</NavLink>*/}
             </div>
             )
           }

@@ -272,4 +272,4 @@ class App extends Component {
 
 //export default withAuth(Home);
 
-export default connect(state => state)(App);
+export default App;
