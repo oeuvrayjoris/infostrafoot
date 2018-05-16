@@ -11,7 +11,6 @@ export default ({ repositories }) => (
             "left": 60
         }}
         minY="auto"
-        stacked={true}
         axisBottom={{
             "orient": "bottom",
             "tickSize": 5,
