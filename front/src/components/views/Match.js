@@ -1,15 +1,19 @@
+// Importing libraries
 import React, { Component } from 'react';
-import '../../styles/sass/style.scss';
-import Menu from '../Menu.js';
-import Header from '../Header.js';
-
+import { Link  } from 'react-router-dom'
 import update from 'immutability-helper'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
+// Importing components
+import Menu from '../Menu.js';
+import Header from '../Header.js';
 import Team from '../Team'
 import Player from '../Player'
 import ItemTypes from '../ItemTypes'
 import ApiService from '../ApiService'
+// Importing styles
+import '../../styles/sass/style.scss';
+
 
 const Api = new ApiService();
 
@@ -27,6 +31,7 @@ class Match extends Component {
 			],
 			players: [],
 			droppedPseudos: [],
+            matchId: -1
         }
         
         this.setPlayers = this.setPlayers.bind(this)
@@ -38,16 +43,14 @@ class Match extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.displayPlayers = this.displayPlayers.bind(this)
         this.showAll = this.showAll.bind(this)
+
+        Api.getPlayers().then(result => this.setPlayers(result))
 	}
     
     isDropped(username) {
 		return this.state.droppedPseudos.indexOf(username) > -1
     }
     
-    componentDidMount() {
-        Api.getPlayers().then(result => this.setPlayers(result))
-    }
-
     setPlayers(res) {
         const players = res.map(player => ({
             id: player.id,
@@ -85,7 +88,17 @@ class Match extends Component {
             Api.addMatch(t1, t2)
             .then(match => {
                 console.log("Match id : " + match.id)
+                const newTeams = this.state.teams
+
+                newTeams[0].id = t1
+                newTeams[1].id = t2
+                this.setState({matchId: match.id, teams: newTeams})
+                console.log(this.state.matchId)
                 // Ici, créer MatchRunning ?
+                this.props.history.push({
+                  pathname: '/matchrunning',
+                  state: { matchId: this.state.matchId, teams: this.state.teams}
+                })
             })
         })
     }
@@ -94,9 +107,9 @@ class Match extends Component {
         e.preventDefault();
         
         (this.state.teams[0].players.length === 2 && this.state.teams[1].players.length === 2) 
-        ? this.createMatch()
+        ? ( this.createMatch()/*,*/
+        )
         : console.log("Must add 4 players")
-
         // Redirection vers MatchRunning
     }
 

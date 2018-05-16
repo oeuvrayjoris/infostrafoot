@@ -16,7 +16,7 @@ class MatchRunning extends Component {
     constructor(props) {
 		super(props)
 		this.state = {
-            match_id: 1,
+            /*match_id: 1,
 			teams: [
 				{ id:1, name: 'Equipe 1', players: [
                         {id:1, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
@@ -28,7 +28,9 @@ class MatchRunning extends Component {
                         {id:4, firstname: "Rachid", lastname: "Nasr", username: "Lolilol"}
                     ]
                 }
-            ],
+            ],*/
+            match_id: this.props.location.state.matchId,
+            teams: this.props.location.state.teams,
             last_goal_id : 0,
             cancel_disabled : true,
             scores: [
@@ -155,6 +157,7 @@ class MatchRunning extends Component {
 
     endMatch(e) {
         e.preventDefault()
+        console.log(this.state.match_id)
         
         Api.endMatch(
             this.state.match_id,
