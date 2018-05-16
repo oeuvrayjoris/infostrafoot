@@ -24,7 +24,7 @@ export default ({ repositories }) => (
         axisBottom={{
             "orient": "bottom",
             "tickSize": 5,
-            "tickPadding": 5,
+            "tickPadding": 15,
             "tickRotation": 0,
             "legend": "Derniers matchs de la meilleure équipe sur les 7 derniers jours",
             "legendPosition": "center",

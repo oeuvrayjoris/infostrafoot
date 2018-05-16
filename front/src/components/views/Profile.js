@@ -7,6 +7,7 @@ import AuthService from '../AuthService'
 import withAuth from '../withAuth';
 import ApiService from '../ApiService'
 import Pie from '../Pie';
+import Line from '../Line';
 
 const Auth = new AuthService();
 const Api = new ApiService();
@@ -76,16 +77,21 @@ class Profile extends Component {
             "id": "Victoires",
             "label": "Victoires",
             "value": stats.victories_count,
-            "color": "#ff0000"
         },
         {
             "id": "Défaîtes",
             "label": "Défaîtes",
             "value": stats.defeats_count,
-            "color": "#00ff00"
         }
       ]
     )
+  }
+
+  getRatio() {
+    const victories = this.state.victory_stat[0].value
+    const defeats = this.state.victory_stat[1].value
+    
+    return Math.floor(victories/(victories+defeats)*100) + " %"
   }
 
   getBestRole(stats) {
@@ -123,18 +129,40 @@ class Profile extends Component {
             <div className="row">
               <div className="col-md-3">
                 <div className="section flexbox" id="s1">
-                  Poste préféré : {this.state.best_role}
+                  Poste préféré :  {this.state.best_role ? this.state.best_role : <span>aucun</span>}
+                </div>
+              </div>
+              <div className="col-md-9">
+                <div className="section flexbox" id="s2">
+                  <div className="flexbox flex-column">
+                    {this.state.victory_stat  // NEED TO FIX CSS HERE
+                      ? <h1>{this.getRatio()}<h4>de victoires</h4></h1>
+                      : ( <span></span> )
+                    }
+                  </div>
+                  {this.state.victory_stat
+                      ? <Pie repositories={this.state.victory_stat}/>
+                      : ( <span>Faîtes des matchs pour voir vos statistiques</span> )
+                  }
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="row">
+              <div className="col-md-3">
+                <div className="section flexbox" id="s1">
+                  Temps de jeu total : 2 h
                 </div>
               </div>
               <div className="col-md-9">
                 <div className="section flexbox" id="s2">
                   {this.state.victory_stat
-                    ? ( <Pie repositories={this.state.victory_stat} /> )
-                    : ( <span></span> )
+                      ? <Line repositories={this.state.victory_stat}/>
+                      : ( <span></span> )
                   }
-                </div>
               </div>
             </div>
+          </div>
         </div>
         </div>
       </div>
