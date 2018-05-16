@@ -94,6 +94,7 @@ class PlayerController extends Controller
 			->join('team_player', 'teams.id', '=', 'team_player.team_id')
 			->join('players', 'team_player.player_id', '=', 'players.id')
 			->where('players.id', $player->id)
+			->where('matches.end_time', '!=', '0000-00-00 00:00:00')
 			->select('matches.*')
 			->orderBy('end_time', 'desc')
 			->first();
