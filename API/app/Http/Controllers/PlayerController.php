@@ -89,6 +89,20 @@ class PlayerController extends Controller
 		$goals_as_defender = count($goals->where("role", "defender"));
 		$best_role = ($goals_as_striker || $goals_as_defender) ? ($goals_as_striker >= $goals_as_defender ? "striker" : "defender") : "";
 
+		$last_match = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
+			->join('teams', 'match_team.team_id', '=', 'teams.id')
+			->join('team_player', 'teams.id', '=', 'team_player.team_id')
+			->join('players', 'team_player.player_id', '=', 'players.id')
+			->where('players.id', $player->id)
+			->select('matches.*')
+			->orderBy('end_time', 'desc')
+			->first();
+
+		if ($last_match) {
+			$last_match->goals;
+			$last_match->teams;
+		}
+		
 		return response()->json([
 			"player" => $player,
 			"goals_count" => count($goals),
@@ -100,6 +114,7 @@ class PlayerController extends Controller
 			"best_role" => $best_role,
 			"goals_as_striker" => $goals_as_striker,
 			"goals_as_defender" => $goals_as_defender,
+			"last_match" => $last_match
 		], 200);
 	}
 
