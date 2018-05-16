@@ -19,7 +19,7 @@ class Profile extends Component {
     super(props)
     this.state = {
       infos_player : {
-        id: 38,
+        id: 1,
         mail: '',
         username: '',
         password: '',
@@ -110,8 +110,8 @@ class Profile extends Component {
     const goals = match.goals
     const teams = match.teams
     const myTeamIndex = this.knowMyTeam(teams)
-    //const baseTime = this.getTime(match)
-    const baseTime = {"hour":"17","minutes":"22","seconds":"10"}
+    const baseTime = this.getTime(match)
+    //const baseTime = {"hour":"17","minutes":"22","seconds":"10"}
     const goalIndexes = goals.map((goal, index) => (
       {"team_num":this.getGoalTeam(goal, teams),"index":index,"gamelle":goal.gamelle,"own_goal":goal.own_goal}
     ))
