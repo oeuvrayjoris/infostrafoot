@@ -135,14 +135,9 @@ class Profile extends Component {
       })).reduce((x, y) => x.findIndex(e=>e.x==y.x)<0 ? [...x, y]: x, [])
 
     // On rajoute une donnée pour marquer le début du match
-    dataTeam1.unshift({
-      "x":"00:00",
-      "y":0
-    })
-    dataTeam2.unshift({
-      "x":"00:00",
-      "y":0
-    })
+    const firstObj = {"x":"00:00","y":0}
+    dataTeam1.unshift(firstObj)
+    dataTeam2.unshift(firstObj)
 
     const datas = [
       {

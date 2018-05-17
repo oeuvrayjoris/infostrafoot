@@ -169,18 +169,12 @@ class MatchRunning extends Component {
 
     formatDate() {
         let d = new Date(),
-        month = d.getMonth() + 1,
+        month = (d.getMonth()+ 1 < 10) ? "0" + (d.getMonth()+1) : (d.getMonth()+1),
         day = (d.getDate() < 10) ? "0" + d.getDate() : d.getDate(),
         year = d.getFullYear(),
-        hours = d.getHours(),
+        hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours(),
         minutes = d.getMinutes(),
         seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
-
-        if (hours > 12) {
-            hours -= 12;
-        } else if (hours === 0) {
-            hours = 12;
-        }
 
         const today = year +  "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
 
