@@ -16,7 +16,7 @@ export default ({ repositories }) => (
             "tickSize": 5,
             "tickPadding": 15,
             "tickRotation": 0,
-            "legend": "Temps",
+            "legend": "Historique du dernier match",
             "legendOffset": 36,
             "legendPosition": "center"
         }}

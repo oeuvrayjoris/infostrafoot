@@ -109,29 +109,41 @@ class Profile extends Component {
     const match = stats.last_match
     const goals = match.goals
     const teams = match.teams
+    // On récupére l'index de notre équipe (0 ou 1)
     const myTeamIndex = this.knowMyTeam(teams)
+    // On récupére la date de création du match pour l'utiliser comme temps référence
     const baseTime = this.getTime(match)
-    //const baseTime = {"hour":"17","minutes":"22","seconds":"10"}
+    // On récupére un tableau des buts marqués (quelle équipe, quel numéro de buts, quel type)
     const goalIndexes = goals.map((goal, index) => (
       {"team_num":this.getGoalTeam(goal, teams),"index":index,"gamelle":goal.gamelle,"own_goal":goal.own_goal}
     ))
+    // On récupére un tableau contenant le temps de chaque but
     const goalTime = goals.map(goal => this.getGoalTime(goal, baseTime)).map(time => this.timeToString(time))
+    // On récupére l'historique de l'évolution des scores des deux équipes
     const scores = this.getScores(goalIndexes)
 
-    //const goalHistory = {"index":goalIndexes, "time":goalTime}
-    //const goalTeam1 = goalIndexes.map(goal => {if (goal.team_num === 0) return goal.index})
-    //const goalTeam2 = goalIndexes.map(goal => {if (goal.team_num === 1) return goal.index})
-
+    // On formate les données pour Nivo, le temps en abscisse, le score de l'équipe en ordonnée
+    // On utilise reduce pour supprimer les clés dupliquées (2 buts dans la même seconde), sinon probleme
     const dataTeam1 = goalTime.map((time, index) => ({
-      "x":time,
-      "y":scores[index].score_1
-    }))
+        "x":time,
+        "y":scores[index].score_1
+      })).reduce((x, y) => x.findIndex(e=>e.x==y.x)<0 ? [...x, y]: x, [])
+
     const dataTeam2 = goalTime.map((time, index) => ({
-      "x":time,
-      "y":scores[index].score_2
-    }))
-    console.log(dataTeam1)
-    console.log(dataTeam2)
+        "x":time,
+        "y":scores[index].score_2
+      })).reduce((x, y) => x.findIndex(e=>e.x==y.x)<0 ? [...x, y]: x, [])
+
+    // On rajoute une donnée pour marquer le début du match
+    dataTeam1.unshift({
+      "x":"00:00",
+      "y":0
+    })
+    dataTeam2.unshift({
+      "x":"00:00",
+      "y":0
+    })
+
     const datas = [
       {
         "id" : "Mon équipe",
@@ -279,7 +291,7 @@ class Profile extends Component {
                 <div className="section flexbox" id="s2">
                   {this.state.match_stat
                       ? <Line repositories={this.state.match_stat}/>
-                      : ( <span></span> )
+                      : ( <span>Vous n'avez pas encore fait de match</span> )
                   }
               </div>
             </div>
