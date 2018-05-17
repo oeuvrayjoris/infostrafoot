@@ -54,6 +54,10 @@ class MatchRunning extends Component {
         this.endMatch = this.endMatch.bind(this)
     }
 
+    handleLogout() {
+        this.ApiService.logout()
+    }
+
     // TIMER FUNCTIONS
 
     secondsToTime(secs){    
@@ -207,7 +211,7 @@ class MatchRunning extends Component {
     </div>
     <div className="col-md-10" id="content">
         <div className="container">
-            <Header />
+            <Header handleLogout={this.handleLogout.bind(this)}/>
             <h1>Match en cours</h1>
             <hr />
             <div className="row">

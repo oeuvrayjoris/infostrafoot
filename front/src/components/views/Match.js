@@ -46,6 +46,10 @@ class Match extends Component {
 
         Api.getPlayers().then(result => this.setPlayers(result))
 	}
+
+    handleLogout() {
+        this.ApiService.logout()
+    }
     
     isDropped(username) {
 		return this.state.droppedPseudos.indexOf(username) > -1
@@ -172,7 +176,7 @@ class Match extends Component {
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
-            <Header />
+            <Header handleLogout={this.handleLogout.bind(this)}/>
             <h1>Créer un match</h1>
             <hr />
             <div>

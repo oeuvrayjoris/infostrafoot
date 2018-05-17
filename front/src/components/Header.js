@@ -34,8 +34,8 @@ class Header extends React.Component {
             ) :
             (<div id="header">
                 Bonjour, vous êtes bien connecté ! &nbsp;
-                <a href="#" onClick={this.handleLogout.bind(this)}>Déconnexion</a>
-                {/*<NavLink to="/login" onClick={this.handleLogout.bind(this)}>Déconnexion</NavLink>*/}
+                {/*<a href="#" onClick={this.handleLogout.bind(this)}>Déconnexion</a>*/}
+                <NavLink to="/login" onClick={this.handleLogout.bind(this)}>Déconnexion</NavLink>
             </div>
             )
           }

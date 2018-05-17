@@ -9,10 +9,6 @@ import ApiService from '../ApiService'
 import Pie from '../Pie';
 import Line from '../Line';
 
-const Auth = new AuthService();
-const Api = new ApiService();
-
-
 class Profile extends Component {
 
   constructor(props) {
@@ -32,15 +28,20 @@ class Profile extends Component {
       match_stat : null,
     }
     this.setMyProfil = this.setMyProfil.bind(this)
+    this.ApiService = new ApiService();
+  }
+
+  handleLogout() {
+    this.ApiService.logout()
   }
 
   getStats() {
-    const profil = Api.getMyProfil()
-    const stats = Api.getProfil(this.state.infos_player.id)
+    const profil = this.ApiService.getMyProfil()
+    const stats = this.ApiService.getProfil(this.state.infos_player.id)
 
     return Promise.all([profil, stats])
   }
-  
+
   componentDidMount() {
     this.setMyProfil(this.getStats())  // Calls API and then setState with the result
   }
@@ -231,10 +232,10 @@ class Profile extends Component {
   
 
   render() {
-    Auth.login({
+    /*Auth.login({
       username: 'babou97',
       password: 'babou97'
-    })
+    })*/
     
     return (
       <div className="row" id="main" style={{ height: window.innerHeight}}>
@@ -243,7 +244,7 @@ class Profile extends Component {
         </div>
         <div className="col-md-10" id="content">
           <div className="container">
-            <Header />
+            <Header handleLogout={this.handleLogout.bind(this)}/>
             <h1>Profil</h1>
             <hr />
             <div className="flexbox profil">
