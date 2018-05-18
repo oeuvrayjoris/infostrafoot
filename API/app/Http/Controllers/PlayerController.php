@@ -177,6 +177,8 @@ class PlayerController extends Controller
 		$this->validate($request, [
 			'photo' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
 			'mail' => 'email',
+			'username' => 'required|min:3|max:20',
+			'password' => 'required|min:6|max:32',
 		]);
 
 		// Check if username is available
