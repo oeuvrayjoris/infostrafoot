@@ -108,27 +108,28 @@ class PlayerController extends Controller
 				$team->players;
 			}
 		}
-        
-        $matches = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
+		
+		$matches = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
 			->join('teams', 'match_team.team_id', '=', 'teams.id')
 			->join('team_player', 'teams.id', '=', 'team_player.team_id')
 			->join('players', 'team_player.player_id', '=', 'players.id')
-            ->where('players.id', $player->id)
-            ->select('matches.end_time', 'matches.created_at')
-            ->get();
-        
-        $played_time = new DateInterval('PT0H');
-        foreach($matches as $match) {
-            $datetime1 = new DateTime($match->end_time);
-            $datetime2 = new DateTime($match->created_at);
-            $datetime2->add(new DateInterval('PT2H'));
-            $interval = $datetime1->diff($datetime2);
-            $e = new DateTime('00:00');
-            $f = clone $e;
-            $e->add($played_time);
-            $e->add($interval);
-            $played_time = $f->diff($e);
-        }
+			->where('players.id', $player->id)
+			->where('matches.end_time', '!=', '0000-00-00 00:00:00')
+			->select('matches.end_time', 'matches.created_at')
+			->get();
+		
+		$played_time = new DateInterval('PT0H');
+		foreach($matches as $match) {
+			$datetime1 = new DateTime($match->end_time);
+			$datetime2 = new DateTime($match->created_at);
+			$datetime2->add(new DateInterval('PT2H'));
+			$interval = $datetime1->diff($datetime2);
+			$e = new DateTime('00:00');
+			$f = clone $e;
+			$e->add($played_time);
+			$e->add($interval);
+			$played_time = $f->diff($e);
+		}
 		
 		return response()->json([
 			"player" => $player,
@@ -142,7 +143,7 @@ class PlayerController extends Controller
 			"goals_as_striker" => $goals_as_striker,
 			"goals_as_defender" => $goals_as_defender,
 			"last_match" => $last_match,
-            "played_time" => $played_time->format("00%Y-%M-%D %H:%I:%S")
+			"played_time" => $played_time->format("00%Y-%M-%D %H:%I:%S")
 		], 200);
 	}
 
@@ -283,10 +284,10 @@ class PlayerController extends Controller
 
 	public function getMatchesByPlayer($id) {
 		$matches = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
-		    ->join('teams', 'match_team.team_id', '=', 'teams.id')
-		    ->join('team_player', 'teams.id', '=', 'team_player.team_id')
-		    ->join('players', 'team_player.player_id', '=', 'players.id')
-		    ->where('players.id', $id)->get();
+			->join('teams', 'match_team.team_id', '=', 'teams.id')
+			->join('team_player', 'teams.id', '=', 'team_player.team_id')
+			->join('players', 'team_player.player_id', '=', 'players.id')
+			->where('players.id', $id)->get();
 		return response()->json($matches, 200);
 	}
 }
