@@ -3,7 +3,6 @@ import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
 import Background from '../../img/novelli.jpg';
-import AuthService from '../AuthService'
 import withAuth from '../withAuth';
 import ApiService from '../ApiService'
 import Pie from '../Pie';
@@ -42,6 +41,16 @@ class Profile extends Component {
     return Promise.all([profil, stats])
   }
 
+  componentWillMount() {
+    if (this.ApiService.loggedIn() === true) {
+      const profil = this.ApiService.getMyProfil()
+      const newInfos = this.state.infos_player
+      newInfos.id = profil.id
+      //newInfos.id = 1
+      this.setState({infos_player: newInfos})
+    }
+  }
+
   componentDidMount() {
     this.setMyProfil(this.getStats())  // Calls API and then setState with the result
   }
@@ -52,9 +61,9 @@ class Profile extends Component {
       console.log(profil)
       this.setState({
         infos_player : this.getProfilInfos(profil),
-        victory_stat : this.getVictoryStat(stats),
-        best_role : this.getBestRole(stats),
-        match_stat : this.getGoals(stats)
+        victory_stat : (stats) ? this.getVictoryStats(stats) : null,
+        best_role : (stats) ? this.getBestRole(stats) : null,
+        match_stat : (stats) ? this.getGoals(stats) : null
       })
     })
   }
@@ -74,6 +83,12 @@ class Profile extends Component {
   }
 
   getVictoryStat(stats) {
+    if (stats === undefined) {
+      const stats = {
+        victories_count: 0,
+        defeats_count: 0
+      }
+    }
     return (
       [
         {
@@ -128,12 +143,12 @@ class Profile extends Component {
     const dataTeam1 = goalTime.map((time, index) => ({
         "x":time,
         "y":scores[index].score_1
-      })).reduce((x, y) => x.findIndex(e=>e.x==y.x)<0 ? [...x, y]: x, [])
+      })).reduce((x, y) => x.findIndex(e=>e.x===y.x)<0 ? [...x, y]: x, [])
 
     const dataTeam2 = goalTime.map((time, index) => ({
         "x":time,
         "y":scores[index].score_2
-      })).reduce((x, y) => x.findIndex(e=>e.x==y.x)<0 ? [...x, y]: x, [])
+      })).reduce((x, y) => x.findIndex(e=>e.x===y.x)<0 ? [...x, y]: x, [])
 
     // On rajoute une donnée pour marquer le début du match
     const firstObj = {"x":"00:00","y":0}
@@ -221,8 +236,7 @@ class Profile extends Component {
           ? (score_1 === 0)
             ? score_2++
             : score_1--
-          : score_2++
-          ,
+          : score_2++,
     {
       "score_1" : score_1,
       "score_2" : score_2
@@ -299,5 +313,5 @@ class Profile extends Component {
   }
 };
 
-export default Profile
-//export default withAuth(Profile);
+//export default Profile
+export default withAuth(Profile);

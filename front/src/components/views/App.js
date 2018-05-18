@@ -1,20 +1,14 @@
 // Importing Libraries
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
 
 // Importing Styles
 import '../../styles/sass/style.scss';
 // Importing Components
 import Menu from '../Menu.js';
 import Header from '../Header.js';
-import AuthService from '../AuthService';
 import ApiService from '../ApiService'
-import Background from '../../img/novelli.jpg';
 import Pie from '../Pie';
 import Bar from '../Bar';
-
-const Auth = new AuthService();
 
 class App extends Component {
 

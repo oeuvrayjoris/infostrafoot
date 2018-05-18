@@ -1,9 +1,7 @@
 // Importing Libraries
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
-import history from './history'
 // Importing Components
-import AuthService from './components/AuthService'
 import App from './components/views/App'
 import Login from './components/views/Login'
 import SignUp from './components/views/SignUp'
@@ -11,7 +9,6 @@ import Profile from './components/views/Profile'
 import Match from './components/views/Match'
 import MatchRunning from './components/views/MatchRunning'
 import Comparator from './components/views/Comparator'
-import Search from './components/views/Search'
 import NotFound from './components/views/NotFound'
 //Importing styles
 import './styles/sass/style.scss';
@@ -42,14 +39,8 @@ const routes = [
 	{
 		path: '/comparator',
 		component: Comparator
-	},
-	{
-		path: '/search',
-		component: Search
 	}
 ]
-
-const Auth = new AuthService();
 
 class Root extends Component {
 	constructor(props){

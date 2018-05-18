@@ -16,8 +16,8 @@ class Login extends Component {
           password: '',
         },
         errors: {
-          isUsernameOk: false,
-          isPasswordOk: false
+          isFieldMissing: null,
+          isUserFound: null
         }
     }
 
@@ -103,7 +103,7 @@ class Login extends Component {
   render() {
     return (
 
-      <div className="row" className="connexion">
+      <div className="row connexion">
         <div className="col-md-4 flexbox">
           <a href="/"><img src={logo} className="logo" alt="logo" /></a>
           <form>
@@ -130,10 +130,6 @@ class Login extends Component {
                   value={this.state.credentials.password}
                   onChange={e => this.handleChange(e)}
                 />
-            </div>
-
-            <div className="input-group" id="result">
-                Error! ou Success! message here.
             </div>
 
             <div className="input-group right">

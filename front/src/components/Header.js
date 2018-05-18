@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Redirect  } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import ApiService from './ApiService'
 
 class Header extends React.Component {

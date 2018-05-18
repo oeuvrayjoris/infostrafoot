@@ -39,12 +39,11 @@ export default class ApiService {
 
     signup(credentials) {
         // Get a token from api server using the fetch api
-        return this.fetch(`${this.domain}/player`, {
+        return this.fetch(`${this.domain}/players`, {
             method: 'POST',
             body: JSON.stringify(credentials)
         }).then(res => {
             console.log(res)
-            this.setToken(res.access_token) // Setting the token in sessionStorage
             return Promise.resolve(res);
         })
     }

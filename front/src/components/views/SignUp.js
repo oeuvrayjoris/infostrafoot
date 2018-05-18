@@ -17,9 +17,9 @@ class SignUp extends Component {
         birthdate: ''
       },
       errors: {
-        isPasswordOk: false,
-        isUsernameOk: false,
-        passwordConfirmation: false
+        isPasswordOk: null,
+        isUsernameOk: null,
+        passwordConfirmation: null
       }
     }
 
@@ -29,7 +29,7 @@ class SignUp extends Component {
     this.ApiService = new ApiService();
   }
 
-  checkPseudo(username) {
+  checkUsername(username) {
       setTimeout(() => {
           let result = /^(?=.{3,20}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(username);
           const errors = this.state.errors
@@ -42,7 +42,7 @@ class SignUp extends Component {
 
   checkPassword(password) {
       setTimeout(() => {
-          let result = /^(?=.{3,128}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(password);
+          let result = /^(?=.{6,128}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(password);
           const errors = this.state.errors
           errors.isPasswordOk = result
           this.setState({
@@ -54,6 +54,10 @@ class SignUp extends Component {
   // Handle the changed values on the form
   handleChange = event => {
     const field = event.target.name;
+    if (field === 'username')
+      this.checkUsername(event.target.value)
+    if (field === 'password')
+      this.checkPassword(event.target.value)
     const credentials = this.state.credentials;
     credentials[field] = event.target.value;
     this.setState({
@@ -66,14 +70,16 @@ class SignUp extends Component {
 
     e.preventDefault();
     
-    this.ApiService.signup(this.state.credentials)
-    .then(res => {
-      console.log(res)
-      this.props.history.replace('/');
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    if (this.errors.isUsernameOk === true && this.errors.isPasswordOk === true) {
+      this.ApiService.signup(this.state.credentials)
+      .then(res => {
+        console.log(res)
+        this.props.history.replace('/login');
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
     
     /*
     const options = {
@@ -107,7 +113,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div className="row" className="connexion" id="inscription">
+      <div className="row connexion" id="inscription">
         <div className="col-md-4 flexbox">
           <a href="/" className="logo"><img src={logo} alt="logo" /></a>
           <form>
@@ -182,9 +188,20 @@ class SignUp extends Component {
               onChange={e => this.handleChange(e)}
             />
             </div>
-            <div className="input-group" id="result">
-                Error! ou Success! message here.
-            </div>
+
+            {
+              this.state.errors.isUsernameOk === false && 
+              <div className="input-group" id="result">
+                  Le nom d'utilisateur doit contenir entre 6 et 20 caractères
+              </div>
+            }
+            {
+              this.state.errors.isPasswordOk === false && 
+              <div className="input-group" id="result">
+                 Votre mot de passe doit contenir entre 6 et 32 caractères
+              </div>
+            }
+
             <div className="input-group">
               <input
                 className="btn btn-primary" 

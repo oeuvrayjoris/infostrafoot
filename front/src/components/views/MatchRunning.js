@@ -4,9 +4,6 @@ import Menu from '../Menu.js';
 import Header from '../Header.js';
 import Background from '../../img/novelli.jpg'
 
-import Team from '../Team'
-import Player from '../Player'
-import ItemTypes from '../ItemTypes'
 import ApiService from '../ApiService'
 
 const Api = new ApiService();

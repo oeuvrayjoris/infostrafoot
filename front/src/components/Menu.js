@@ -29,7 +29,6 @@ class Menu extends React.Component {
                   <li><NavLink to="/profile" activeClassName="active"><i className="fas fa-user" /><br />Profil</NavLink></li>
                   <li><NavLink to="/match" activeClassName="active"><i className="fas fa-plus-square" /><br />Créer un match</NavLink></li>
                   <li><NavLink to="/comparator" activeClassName="active"><i className="fas fa-users" /><br />Comparateur</NavLink></li>
-                  <li><NavLink to="/search" activeClassName="active"><i className="fas fa-search" /><br />Rechercher</NavLink></li>
                 </ul>
               </div>
             </div>

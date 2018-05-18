@@ -1,6 +1,5 @@
 // Importing libraries
 import React, { Component } from 'react';
-import { Link  } from 'react-router-dom'
 import update from 'immutability-helper'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -249,6 +248,8 @@ class Match extends Component {
 							key={id}
 						/>
                         )}
+                        else
+                            return null
                     })}
                 </div>
 			</div>

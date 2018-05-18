@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 
 export default ({ repositories }) => (
