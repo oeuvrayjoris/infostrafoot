@@ -104,6 +104,9 @@ class PlayerController extends Controller
 		if ($last_match) {
 			$last_match->goals;
 			$last_match->teams;
+			foreach ($last_match->teams as $team) {
+				$team->players;
+			}
 		}
         
         $matches = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
