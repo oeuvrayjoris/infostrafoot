@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
+import Footer from '../Footer.js';
 import Background from '../../img/novelli.jpg';
 import withAuth from '../withAuth';
 import ApiService from '../ApiService'
@@ -52,7 +53,8 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.setMyProfil(this.getStats())  // Calls API and then setState with the result
+    if (this.ApiService.loggedIn() === true)
+      this.setMyProfil(this.getStats())  // Calls API and then setState with the result
   }
 
   setMyProfil(result) {
@@ -83,12 +85,6 @@ class Profile extends Component {
   }
 
   getVictoryStat(stats) {
-    if (stats === undefined) {
-      const stats = {
-        victories_count: 0,
-        defeats_count: 0
-      }
-    }
     return (
       [
         {
@@ -306,6 +302,7 @@ class Profile extends Component {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
         </div>
       </div>

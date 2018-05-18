@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 // Import components
 import ApiService from '../ApiService'
+import Footer from '../Footer.js';
+import withAuth from '../withAuth.js'
 // Import files
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
@@ -16,8 +18,8 @@ class Login extends Component {
           password: '',
         },
         errors: {
-          isFieldMissing: null,
-          isUserFound: null
+          isFieldMissing: false,
+          isUserNotFound: false
         }
     }
 
@@ -28,13 +30,11 @@ class Login extends Component {
 
   }
 
-  /*
-  // Checks before if are logged in we render the DOM 
-  componentWillMount(){
-      if(this.Auth.loggedIn())
-          this.props.history.replace('/');
+  componentWillMount() {
+    if (this.ApiService.loggedIn()) {
+      this.props.history.replace('/')
+    }
   }
-  */
 
   // Handle the changed values on the form
   handleChange = e => {
@@ -46,17 +46,13 @@ class Login extends Component {
     });
   };
 
-  // With redux
-  /*
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.actions.logInUser(this.state.credentials);
-  }*/
-
-
   // Handle the submit event
   handleSubmit(e){
     e.preventDefault();
+
+    const newErrors = this.state.errors
+    newErrors.isUserNotFound = false
+    newErrors.isFieldMissing = false
     
     this.ApiService.login(this.state.credentials)
       .then(res =>{
@@ -64,10 +60,22 @@ class Login extends Component {
          this.props.history.replace('/');
       })
       .catch(err =>{
-          console.log(err)
-          err.then(response => {console.log(response)
-          })
+        console.log(err)
+        err.then(response => {
+          console.log(response)
+          if (response.password || response.username)
+            newErrors.isFieldMissing = true
+          else if (response[0] !== undefined && response[0] === 'user_not_found')
+            newErrors.isUserNotFound = true
+          this.setState({
+            errors: newErrors
+          });
+        })
       })
+
+    this.setState({
+      errors: newErrors
+    });
 
 
     /*
@@ -141,8 +149,12 @@ class Login extends Component {
                 type="submit"
               />
             </div>
+            {this.state.errors.isFieldMissing === true && <div className="error"><p>Veuillez remplir tous les champs</p></div>}
+            {this.state.errors.isUserNotFound === true && <div className="error"><p>Utilisateur inconnu ou erreur dans le mot de passe</p></div>}
+
             <Link to="/signup" className="lien">Pas encore inscrit ?</Link>
           </form>
+          {/*<Footer />*/}
         </div>
         <div className="col-md-8" id="connexion-img">
         </div>
@@ -151,4 +163,6 @@ class Login extends Component {
   }
 }
 
+
 export default Login;
+//export default withAuth(Login);

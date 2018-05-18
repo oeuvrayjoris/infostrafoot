@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
+import Footer from '../Footer.js';
 import Background from '../../img/novelli.jpg'
 
 import ApiService from '../ApiService'
@@ -323,6 +324,7 @@ class MatchRunning extends Component {
             <div className="flexbox">
                 <button className="btn btn-success" onClick={e => this.endMatch(e)}>Terminer le match</button>
             </div>
+            <Footer />
         </div>
     </div>
 </div>

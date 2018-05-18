@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 // Importing components
 import Menu from '../Menu.js';
 import Header from '../Header.js';
+import Footer from '../Footer.js';
 import Team from '../Team'
 import Player from '../Player'
 import ItemTypes from '../ItemTypes'
@@ -253,6 +254,7 @@ class Match extends Component {
                     })}
                 </div>
 			</div>
+            <Footer />
         </div>
         </div>
       </div>

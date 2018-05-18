@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
+import Footer from '../Footer.js';
 
 class Comparator extends Component {
 
@@ -17,7 +18,8 @@ class Comparator extends Component {
             <Header />
             <h1>Comparateur</h1>
             <hr />
-        </div>
+            <Footer />
+          </div>
         </div>
       </div>
     );

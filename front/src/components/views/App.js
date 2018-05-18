@@ -6,6 +6,7 @@ import '../../styles/sass/style.scss';
 // Importing Components
 import Menu from '../Menu.js';
 import Header from '../Header.js';
+import Footer from '../Footer.js';
 import ApiService from '../ApiService'
 import Pie from '../Pie';
 import Bar from '../Bar';
@@ -257,6 +258,7 @@ class App extends Component {
                 </div>
               </div>
             </div>
+              <Footer />
           </div>
         </div>
       </div>

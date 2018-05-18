@@ -3,6 +3,7 @@ import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
 import Photo from '../../img/photo_example.gif'
 import ApiService from '../ApiService'
+import Footer from '../Footer.js';
 
 class SignUp extends Component {
   constructor(props) {
@@ -27,6 +28,13 @@ class SignUp extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.ApiService = new ApiService();
+  }
+
+
+  componentWillMount() {
+    if (this.ApiService.loggedIn()) {
+      this.props.history.replace('/')
+    }
   }
 
   checkUsername(username) {
@@ -213,6 +221,7 @@ class SignUp extends Component {
             </div>
             </form>
         </div>
+          {/*<Footer />*/}
         <div className="col-md-8" id="connexion-img">
         </div>
       </div>
