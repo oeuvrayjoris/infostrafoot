@@ -4,6 +4,7 @@ import { DropTarget } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import style from '../styles/sass/style.scss'
 import Background from '../img/novelli.jpg'
+import Sword from '../img/sword.png'
 
 const boxTarget = {
     drop(props, monitor) {
@@ -27,7 +28,7 @@ class Team extends Component {
 	render() {
 		const { name, players, canDrop, isOver, id, connectDropTarget } = this.props
 		const isActive = canDrop && isOver
-
+        
 		let backgroundColor = '#fff'
 		if (isActive) {
 			backgroundColor = style.color3
@@ -44,7 +45,9 @@ class Team extends Component {
                 <h3>{name}</h3>
                 {players.map(({ id, firstname, lastname, username }, index) => (
                     <div className="row flexbox role" key={id}>
-                        <i className="fas fa-shield-alt fa-2x"></i>
+                        <div className="role-icon">
+                            <i className="fas fa-shield-alt fa-2x"></i>
+                        </div>
                         <div className="col-md-3">
                             <div className="photo3">
                                 <div style={{ backgroundImage: `url(${Background})` }}></div>

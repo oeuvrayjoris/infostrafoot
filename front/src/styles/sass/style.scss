@@ -34,7 +34,7 @@
 
 body {
     font-family: Roboto;
-    background: #f5f6fa;
+    background: red;
 }
 
 .flexbox {
@@ -304,7 +304,8 @@ a {
 
     .section {
         background: #fff;
-        height: 300px;
+        min-height: 300px;
+        max-height: 600px;
         border: 1px solid lighten($color0, 10%);
         border-radius: 4px;
     }
@@ -523,6 +524,32 @@ h3 {
     }
 }
 
+#s2 {
+    svg,
+    h3,
+    h5 {
+        color: $color1;
+    }
+}
+
+#s3 {
+    svg,
+    h3,
+    h5 {
+        color: $color3;
+    }
+}
+
+#s4 {
+    svg,
+    h3,
+    h5 {
+        color: $color2;
+    }
+}
+
+
+
 .close {
     line-height: 1.5;
 }
@@ -546,4 +573,22 @@ h3 {
 
 .buttons {
     justify-content: space-between;
+}
+
+
+#footer {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.blue {
+  color: $color1;
+}
+
+#sword {
+    width: 30px;
+}
+
+.role-icon {
+    margin-left: 15px;
 }
