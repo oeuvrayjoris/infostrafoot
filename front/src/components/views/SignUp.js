@@ -191,7 +191,7 @@ class SignUp extends Component {
             <input
               name="birthdate"
               className="form-control"
-              placeholder='Date de naissance'
+              placeholder='1999-12-25'
               value={this.state.credentials.birthdate}
               onChange={e => this.handleChange(e)}
             />

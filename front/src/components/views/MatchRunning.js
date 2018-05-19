@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import '../../styles/sass/style.scss';
 import Menu from '../Menu.js';
 import Header from '../Header.js';
@@ -167,6 +168,7 @@ class MatchRunning extends Component {
                 ? this.state.teams[0].id
                 : this.state.teams[1].id, 
             this.formatDate())
+        this.setState({match_ended: true})
     }
 
     formatDate() {
@@ -324,6 +326,11 @@ class MatchRunning extends Component {
             <div className="flexbox">
                 <button className="btn btn-success" onClick={e => this.endMatch(e)}>Terminer le match</button>
             </div>
+                {match_ended === true && 
+                    <div>
+                        <h1>Match terminé !</h1>
+                        <Link to="/match">Refaire un match</Link>
+                    </div>}
             <Footer />
         </div>
     </div>

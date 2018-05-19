@@ -2,6 +2,7 @@ import React from "react";
 import Header from '../Header.js';
 import Footer from '../Footer.js';
 import Menu from '../Menu.js';
+import { Link } from 'react-router-dom'
 
 export default () =>
 
@@ -13,6 +14,7 @@ export default () =>
 			<div className="container">
 			<Header />
 				<h3>Oups ! Cette page n'existe pas !</h3>
+				<Link to="/">Retourner à la page d'accueil</Link>
 			<hr />
 			<Footer />
 			</div>
