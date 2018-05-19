@@ -206,9 +206,10 @@ class Match extends Component {
                       >Créer un match</button>
                 </div>
                 <hr />
-                <div className="row">
-                    <div className="col-md-3">
-                        <form className="input-group search">
+
+                <div className="row search">
+                    <div className="col-md-3">                        
+                        <form className="input-group">
                             <input
                                 type="text"
                                 className="form-control"
@@ -224,16 +225,15 @@ class Match extends Component {
                                     onClick={e => this.searchPlayer(e)}
                                 ><i className="fas fa-search"></i></button>
                             </span>
-                            <div className="flexbox">
-                                <button 
-                                    className="btn btn-success"
-                                    type="button"
-                                    onClick={e => this.showAll(e)}
-                                >Montrer tout</button>
-                            </div>
                         </form>
                     </div>
-                    <div className="col-md-9"></div>
+                    <div className="col-md-9">
+                        <button 
+                            className="btn btn-default right"
+                            type="button"
+                            onClick={e => this.showAll(e)}
+                        >Montrer tout</button>
+                    </div>
                 </div>
                 <div className="row">
 					{players.map(({ id, firstname, lastname, username, display }, index) =>  {

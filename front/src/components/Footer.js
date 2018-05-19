@@ -9,8 +9,8 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div>
-        <span> Infostrafoot © 2018 Tous droits réservés </span>  
+      <div id="footer">
+        <p>Infostrafoot © <span className="blue">2018</span> | Tous droits réservés.</p>  
       </div>
     );
   }
