@@ -39,15 +39,22 @@ class Team extends Component {
         let idName = 'team1'
         if(id === 2)
             idName = 'team2'
-        
+  
 		return connectDropTarget(
             <div className="col-md-4 flexbox flex-column" id={idName}>
                 <h3>{name}</h3>
                 {players.map(({ id, firstname, lastname, username }, index) => (
                     <div className="row flexbox role" key={id}>
                         <div className="role-icon">
-                            <i className="fas fa-shield-alt fa-2x"></i>
-                            <img src={Sword} alt="sword" className="sword" />
+                            {
+                                (idName === 'team1')
+                                ?((index === 0)
+                                    ? <img src={Sword} alt="sword" className="sword" />
+                                    : <i className="fas fa-shield-alt fa-2x"></i>)
+                                : ((index === 0)
+                                    ? <i className="fas fa-shield-alt fa-2x"></i>
+                                    : <img src={Sword} alt="sword" className="sword" />)
+                            }
                         </div>
                         <div className="col-md-3">
                             <div className="photo3">

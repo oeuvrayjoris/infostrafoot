@@ -5,6 +5,7 @@ import Menu from '../Menu.js';
 import Header from '../Header.js';
 import Footer from '../Footer.js';
 import Background from '../../img/novelli.jpg'
+import Sword from '../../img/sword.png'
 
 import ApiService from '../ApiService'
 
@@ -220,7 +221,9 @@ class MatchRunning extends Component {
                     {teams[0].players.map(({ id, firstname, lastname, username }, index) => (
                         <div className="width100">
                             <div className="row flexbox role runnning" key={id}>
-                                <i className="fas fa-shield-alt fa-2x"></i>
+                                {(index === 0)
+                                    ? <img src={Sword} alt="sword" className="sword" />
+                                    : <i className="fas fa-shield-alt fa-2x"></i>}
                                 <div className="col-md-3">
                                     <div className="photo3">
                                         <div style={{ backgroundImage: `url(${Background})` }}></div>
@@ -284,7 +287,9 @@ class MatchRunning extends Component {
                     {teams[1].players.map(({ id, firstname, lastname, username }, index) => (
                         <div className="width100">
                             <div className="row flexbox role" key={id}>
-                                <i className="fas fa-shield-alt fa-2x"></i>
+                                {(index === 0)
+                                    ? <i className="fas fa-shield-alt fa-2x"></i>
+                                    : <img src={Sword} alt="sword" className="sword" />}
                                 <div className="col-md-3">
                                     <div className="photo3">
                                         <div style={{ backgroundImage: `url(${Background})` }}></div>
