@@ -78,7 +78,7 @@ class SignUp extends Component {
 
     e.preventDefault();
     
-    if (this.errors.isUsernameOk === true && this.errors.isPasswordOk === true) {
+    if (this.state.errors.isUsernameOk === true && this.state.errors.isPasswordOk === true) {
       this.ApiService.signup(this.state.credentials)
       .then(res => {
         console.log(res)
@@ -138,7 +138,7 @@ class SignUp extends Component {
                 type="file"
                 name="photo"
                 className="input-file"
-                onChange={e => this.handleChange(e.target.files)}
+                onChange={e => this.handleChange(e)}
             />
             </div>
           <div className="input-group">
