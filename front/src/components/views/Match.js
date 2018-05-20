@@ -14,9 +14,11 @@ import ApiService from '../ApiService'
 // Importing styles
 import '../../styles/sass/style.scss';
 
-
 const Api = new ApiService();
 
+/**
+	* Match page. This is where we can create a match by dropping players into teams
+*/
 class Match extends Component {
 
     constructor(props) {
@@ -47,14 +49,28 @@ class Match extends Component {
         Api.getPlayers().then(result => this.setPlayers(result))
 	}
 
+    /**
+	 * Calls the Api logout route
+	 */
     handleLogout() {
         this.ApiService.logout()
     }
     
+    /**
+	 * Tells if a player is dropped on a team or not
+     * 
+     * @param username the username of the player we want to check-in
+     * @returns a boolean telling whether or not the player is dropped
+	 */
     isDropped(username) {
 		return this.state.droppedPseudos.indexOf(username) > -1
     }
     
+    /**
+	 * Set the state by creating players objects
+     * 
+     * @param res the response of the API call
+	 */
     setPlayers(res) {
         const players = res.map(player => ({
             id: player.id,
@@ -70,12 +86,22 @@ class Match extends Component {
         })
     }
 
+    /**
+	 * Change team Id
+     * 
+     * @param num,id the number of the team (1 or 2) and the id of the team concerned
+	 */
     changeTeamID(num, id) { // Unused function
         const { teams } = this.state
         teams[num].id = id
         this.setState({teams:teams})
     }
 
+    /**
+	 * Create teams when all players are dropped in the teams by calling the Api with the state
+     * 
+     * @returns a Promise containing both teams
+	 */
     createTeams() {
         const p1 = Api.addTeam(this.state.teams[0].players[0].id, this.state.teams[0].players[1].id)
         const p2 = Api.addTeam(this.state.teams[1].players[0].id, this.state.teams[1].players[1].id)
@@ -86,19 +112,19 @@ class Match extends Component {
             })
     }
 
+    /**
+	 * Create a new match by creating teams and then pushing match infos into matchrunning state
+     * 
+     * @returns a Promise containing both teams
+	 */
     createMatch() {
         this.createTeams().then(([t1, t2]) => {
-            console.log("IDs : " + t1, t2)
             Api.addMatch(t1, t2)
             .then(match => {
-                console.log("Match id : " + match.id)
                 const newTeams = this.state.teams
-
                 newTeams[0].id = t1
                 newTeams[1].id = t2
                 this.setState({matchId: match.id, teams: newTeams})
-                console.log(this.state.matchId)
-                // Ici, créer MatchRunning ?
                 this.props.history.push({
                   pathname: '/matchrunning',
                   state: { matchId: this.state.matchId, teams: this.state.teams}
@@ -107,18 +133,26 @@ class Match extends Component {
         })
     }
 
+    /**
+    * Handle the submit event when pressing the create match button. Check if we can create a match or not
+    * 
+    * @param e the event that happened
+    */
     handleSubmit(e){
         e.preventDefault();
         
         (this.state.teams[0].players.length === 2 && this.state.teams[1].players.length === 2) 
-        ? ( this.createMatch()/*,*/
-        )
+        ? this.createMatch()
         : console.log("Must add 4 players")
-        // Redirection vers MatchRunning
     }
 
     // Search Functions
 
+    /**
+	* Handle the changed values on the search bar to display the letters the player is typing
+    * 
+    * @param e the event that happened
+	*/
     handleChange(e) {
         const field = e.target.name;
         const credentials = this.state.credentials;
@@ -128,6 +162,11 @@ class Match extends Component {
         });
     }
 
+    /**
+	* Calls the Api to search for players and then display the players we found
+    * 
+    * @param e the event that happened
+	*/
     searchPlayer(e) {
         e.preventDefault();
         Api.searchPlayer(this.state.credentials.searchName)
@@ -139,6 +178,11 @@ class Match extends Component {
     }
 
     // La fonction n'est pas très propre, il ne faut pas modifier le tableau dans le map + il ne faut pas gérer le css dans React
+    /**
+	* Display the players we searched for
+    * 
+    * @param result the response of the promise
+	*/
     displayPlayers(result) {
         const players = this.state.players
 
@@ -156,6 +200,11 @@ class Match extends Component {
         this.setState({players : players})
     }
 
+    /**
+	* Display all players by pressing the Show All button
+    * 
+    * @param e the event that happened
+	*/
     showAll(e) {
         e.preventDefault();
         const players = this.state.players
