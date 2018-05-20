@@ -266,19 +266,20 @@ class Match extends Component {
         const droppedPseudos = username ? { $push: [username] } : {}
         
         //console.log(this.state.teams)
-
-        this.setState(
-            update(this.state, {
-                teams: {
-                    [index]: {
-                        players: {
-                            $push: [item],
+        if (this.state.teams[index].players.length < 2) {
+            this.setState(
+                update(this.state, {
+                    teams: {
+                        [index]: {
+                            players: {
+                                $push: [item],
+                            },
                         },
                     },
-                },
-                droppedPseudos,
-            }),
-        )
+                    droppedPseudos,
+                }),
+            )
+        }
     }
 };
 
