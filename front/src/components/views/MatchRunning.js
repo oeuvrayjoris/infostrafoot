@@ -34,7 +34,8 @@ class MatchRunning extends Component {
             ],
             time: {},
             seconds: 0,
-            match_ended : false
+            match_ended : false,
+            match_ended_confirm : false
         }
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
@@ -196,7 +197,7 @@ class MatchRunning extends Component {
                 ? this.state.teams[0].id
                 : this.state.teams[1].id, 
             this.formatDate())
-        this.setState({match_ended: true})
+        this.setState({match_ended: true, match_ended_confirm:true})
     }
 
     /**
@@ -238,7 +239,7 @@ class MatchRunning extends Component {
     }
 
   render() {
-    const { teams , cancel_disabled, scores, match_ended} = this.state
+    const { teams , cancel_disabled, scores, match_ended, match_ended_confirm} = this.state
     
     return (
 
@@ -367,7 +368,7 @@ class MatchRunning extends Component {
             <div className="flexbox">
                 <button className="btn btn-success" onClick={e => this.endMatch(e)}>Terminer le match</button>
             </div>
-                {match_ended === true && 
+                {match_ended_confirm === true && 
                     <div>
                         <h1>Match terminé !</h1>
                         <Link to="/match">Refaire un match</Link>
