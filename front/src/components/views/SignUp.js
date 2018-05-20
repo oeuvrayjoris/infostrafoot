@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
 import Photo from '../../img/photo_example.gif'
@@ -147,7 +148,7 @@ class SignUp extends Component {
     return (
       <div className="row connexion" id="inscription">
         <div className="col-md-4 flexbox">
-          <a href="/" className="logo"><img src={logo} alt="logo" /></a>
+          <Link exact to="/" activeClassName="active"><img src={logo} className="logo" alt="logo" /></Link>
           <form>
             <div className="input-group" id="photoInput">
             <label htmlFor="file">

@@ -1,6 +1,7 @@
 // Import libraries
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 // Import components
 import ApiService from '../ApiService'
 import Footer from '../Footer.js';
@@ -128,7 +129,7 @@ class Login extends Component {
 
       <div className="row connexion">
         <div className="col-md-4 flexbox">
-          <a href="/"><img src={logo} className="logo" alt="logo" /></a>
+        <Link exact to="/" activeClassName="active"><img src={logo} className="logo" alt="logo" /></Link>
           <form>
             <div className="input-group">
                 <span className="input-group-addon" id="basic-addon1"><i className="fas fa-user"></i></span>
