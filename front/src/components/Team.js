@@ -47,6 +47,7 @@ class Team extends Component {
                     <div className="row flexbox role" key={id}>
                         <div className="role-icon">
                             <i className="fas fa-shield-alt fa-2x"></i>
+                            <img src={Sword} alt="sword" className="sword" />
                         </div>
                         <div className="col-md-3">
                             <div className="photo3">
