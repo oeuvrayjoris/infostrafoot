@@ -1,6 +1,5 @@
 // Importing Libraries
 import React, { Component } from 'react';
-
 // Importing Styles
 import '../../styles/sass/style.scss';
 // Importing Components
@@ -11,6 +10,9 @@ import ApiService from '../ApiService'
 import Pie from '../Pie';
 import Bar from '../Bar';
 
+/**
+	 * App page. This is the home page wher we land. It shows global statistics (best player, best team ...)
+*/
 class App extends Component {
 
   constructor(props){
@@ -26,20 +28,37 @@ class App extends Component {
     this.ApiService = new ApiService();
   }
 
+  /**
+	 * Set the state telling if player is authenticated or not
+   * 
+   * @param authenticated a boolean telling if the player is authenticated or not
+	 */
   userHasAuthenticated = authenticated => {
     this.setState({ isAuthenticated: authenticated });
   }
 
+  /**
+	 * Calls the Api logout route
+	 */
   handleLogout() {
     this.ApiService.logout()
   }
 
   // SET STATS FUNCTIONS
 
+  /**
+	 * Called immediatly after a component is mounted
+   * Set the state with app stats
+	 */
   componentDidMount() {
     this.setStats(this.getStats())
   }
 
+  /**
+	 * Get the global stats by using the API
+   * 
+   * @returns a Promise containing the home stats and all the goals
+	 */
   getStats() {
     const home = this.ApiService.home()
     const goals = this.ApiService.getGoals()
@@ -47,6 +66,11 @@ class App extends Component {
     return Promise.all([home, goals])
   }
 
+  /**
+	 * Set the state with all needed stats
+   * 
+   * @param results the promises of the API calls
+	 */
   setStats(results) {
     results.then(([home, goals]) => {
       // Home
@@ -72,7 +96,12 @@ class App extends Component {
     })
   }
 
-  // GOALS
+  /**
+	 * Get the goals types counted and formated for NIVO Pie
+   * 
+   * @param gamelles,own_goal,goal the number of gamelles, own goals and goals
+   * @returns a JSON object formated for NIVO Pie
+	 */
   getGoalsStat(gamelles, own_goal, goal) {
     return (
       [
@@ -95,6 +124,11 @@ class App extends Component {
     )
   }
 
+  /**
+	 * Set the team_stat state of the best team by cusing the API
+   * 
+   * @param team_id the id of the team we want to get the stats from
+	 */
   setTeamMatchStat(team_id) {
     this.ApiService.getTeam(team_id)
       .then(result => {
@@ -104,8 +138,12 @@ class App extends Component {
       })
   }
 
-  // Find the matches of the 7 last days then count each victorie and defeat
-  // Returns an array of objects used with Nivo Bar
+  /**
+	 * Find the matches of the 7 last days then count each victorie and defeat
+   * 
+   * @param team_stat the team stats
+   * @returns Returns an array of objects used with Nivo Bar
+	 */
   getTeamMatchStat(team_stat) {
     const today = this.getDayMonthYear(this.getTodayDate());
     const lastMatches = this.getLastMatches(today, team_stat.matches)
@@ -131,7 +169,13 @@ class App extends Component {
       ))
     )
   }
-  // We store the victories and defeats of the last 7 days
+
+  /**
+	 * We store the victories and defeats of the last 7 days
+   * 
+   * @param today,matches today's date and all the matches of the best team
+   * @returns a JSON object containing the count of victories and defeats of the best team
+	 */
   getLastMatches(today, matches) {
       const lastMatches = matches.filter(match => (
         this.compareDate(today, this.getDayMonthYear(match.end_time))
@@ -144,6 +188,11 @@ class App extends Component {
 
   // DATE FUCTIONS
 
+  /**
+	 * Get today's date
+   * 
+   * @returns a string containing today's date ("2018-05-21")
+	 */
   getTodayDate() {
     let d = new Date(),
     month = d.getMonth() + 1,
@@ -153,6 +202,12 @@ class App extends Component {
     return year +  "-" + month + "-" + day
   }
 
+  /**
+	 * Get the formated JSON version of a date
+   * 
+   * @param date the date we want to convert
+   * @returns a JSON object containing the year, the month and the day (integers)
+	 */
   getDayMonthYear(date) {
     // Date must be : year +  "-" + month + "-" + day + "whatever"
 
@@ -164,6 +219,12 @@ class App extends Component {
     })
   }
 
+  /**
+	 * Tells if a date is on the same week as today's date
+   * 
+   * @param today,date today's date and the date we want to compare
+   * @returns true if the date is on the same week, false otherwise
+	 */
   compareDate(today, date) {
     return ((today.year === date.year)
               ? ((today.month === date.month)
@@ -183,6 +244,12 @@ class App extends Component {
     )
   }
 
+  /**
+	 * Converts a JSON date object into a string
+   * 
+   * @param date the date we want to convert
+   * @returns the date in string format ("21-05-2018")
+	 */
   formatDate(date) {
     // Date must be : {year:,month:,day:}
     const day = (date.day < 10) ? "0" + date.day : date.day
@@ -192,6 +259,12 @@ class App extends Component {
     return day +  "-" + month + "-" + year
   }
 
+  /**
+	 * Get an array of JSON objects of the 7 last dates counting today
+   * 
+   * @param today today's date
+   * @returns an array of JSON objects of the 7 last dates counting today
+	 */
   getLastDays(today) {
     const days = [6,5,4,3,2,1,0]
     const lastDays = days.map(day => (
