@@ -48,6 +48,7 @@ class PlayerController extends Controller
 			$team->players;
 		}
 
+		// Get number of matches played by the player
 		$played_matches_count = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
 			->join('teams', 'match_team.team_id', '=', 'teams.id')
 			->join('team_player', 'teams.id', '=', 'team_player.team_id')
@@ -58,6 +59,7 @@ class PlayerController extends Controller
 			->get()
 			->count();
 
+		// Get number of victories
 		$victories_count = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
 			->join('teams', 'match_team.team_id', '=', 'teams.id')
 			->join('team_player', 'teams.id', '=', 'team_player.team_id')
@@ -71,6 +73,7 @@ class PlayerController extends Controller
 			->get()
 			->count();
 
+		// Get the 3 player's team (with most victories)
 		$best_teams = Team::join('match_team', 'teams.id', '=', 'match_team.team_id')
 			->join('team_player', 'team_player.team_id', '=', 'teams.id')
 			->where([
@@ -87,10 +90,12 @@ class PlayerController extends Controller
 			$team->players;
 		}
 
+		// Get the role of the player where he scores the most
 		$goals_as_striker = count($goals->where("role", "striker"));
 		$goals_as_defender = count($goals->where("role", "defender"));
 		$best_role = ($goals_as_striker || $goals_as_defender) ? ($goals_as_striker >= $goals_as_defender ? "striker" : "defender") : "";
 
+		// Get the last match of the player
 		$last_match = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
 			->join('teams', 'match_team.team_id', '=', 'teams.id')
 			->join('team_player', 'teams.id', '=', 'team_player.team_id')
@@ -109,6 +114,7 @@ class PlayerController extends Controller
 			}
 		}
 		
+		// Calculate the total time played by a player
 		$matches = Match::join('match_team', 'matches.id', '=', 'match_team.match_id')
 			->join('teams', 'match_team.team_id', '=', 'teams.id')
 			->join('team_player', 'teams.id', '=', 'team_player.team_id')
@@ -209,10 +215,9 @@ class PlayerController extends Controller
 	
 	/* Update a player by id */
 	public function updatePlayer(Request $request, $id) {
-		// On récupère le joueur correspondant à l'id en paramètre
 		$player = Player::find($id);
 
-		// On vérifie que l'utilisateur modifie sa propre page
+		// Check if the player updates his own profile
 		if ($player != Auth::user()) {
 			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour effectuer cette modification."], 401);
 		}
@@ -257,18 +262,14 @@ class PlayerController extends Controller
 
 	/* Delete Player */
 	public function deletePlayer($id) {
-		// On récupère le joueur correspondant à l'id en paramètre 
 		$player = Player::find($id);
 
-		// On vérifie que l'utilisateur supprime sa propre page (sinon : message d'erreur)
+		// Check if the player deletes his own profile or if he is admin
 		if ($player != Auth::user() && Auth::user()->role != "admin") {
 			return response()->json(['status' => 'fail', 'message' => "Vous n'avez pas les droits pour supprimer cet utilisateur."], 401);
 		}
 
-		// Suppression du joueur
 		$player->delete();
-
-		// On renvoie un message de validation 
 		return response()->json(['status' => 'success', 'message' => "Le profil a bien été supprimé."], 200);
 	}
 

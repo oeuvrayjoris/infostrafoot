@@ -58,7 +58,7 @@ class TeamController extends Controller
 			], 404);
 		}
 
-		// Get or Create Team : 
+		// Get or Create Team
 		$teams = Team::all();
 		$team_exists = false;
 		foreach ($teams as $team) {
@@ -82,17 +82,13 @@ class TeamController extends Controller
 
     /* Update a team (PUT) by id */
 	public function updateTeam(Request $request, $id) {
-		// On récupère la team correspondant à l'id en paramètre
 		$team = Team::find($id);
 
-		// On met à jour ses infos
+		// Update informations
 		if ($request->input('name')) 
 			$team->name = $request->input('name');
 		
-		// On enregistre
 		$team->save();
-
-		// On retourne l'équipe modifiée
 		return response()->json($team, 200);
 	}
 

@@ -82,7 +82,7 @@ class MatchController extends Controller
  				], 404);
 		}
 		if ($request->input('winner')){
-			// Check si la team existe et si elle fait partie du match
+			// Check if team exists and if it is part of the match
 			$id_winner = $request->winner;
 			if (!Team::find($id_winner)){
 				return response()->json([
