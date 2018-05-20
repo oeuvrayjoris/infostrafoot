@@ -18,7 +18,7 @@ class Profile extends Component {
     super(props)
     this.state = {
       infos_player : {
-        id: 1,
+        id: null,
         mail: '',
         username: '',
         password: '',
@@ -51,11 +51,12 @@ class Profile extends Component {
       const profil = this.ApiService.getMyProfil()
       Promise.all([profil])
       .then(([profil]) => {
-        const newInfos = this.state.infos_player
-        newInfos.id = profil.id
+        const newInfos = this.getProfilInfos(profil)/*this.state.infos_player
+        newInfos.id = profil.id*/
         console.log(newInfos.id)
         //newInfos.id = 1
         this.setState({infos_player: newInfos})
+        this.setMyProfil(this.getStats())
       })
     }
   }
@@ -65,7 +66,7 @@ class Profile extends Component {
 	 */
   componentDidMount() {
     if (this.ApiService.loggedIn() === true) {
-      this.setMyProfil(this.getStats())  // Calls API and then setState with the result
+      //this.setMyProfil(this.getStats())  // Calls API and then setState with the result
     }      
   }
 
@@ -87,10 +88,10 @@ class Profile extends Component {
   setMyProfil(result) {
     result.then(([stats]) => {
       this.setState({
-        victory_stat : (stats) ? this.getVictoryStat(stats) : null,
-        best_role : (stats) ? this.getBestRole(stats) : null,
-        match_stat : (stats) ? this.getGoals(stats) : null,
-        playtime : (stats) ? this.getPlayTime(stats) : null
+        victory_stat : (stats.played_matches_count) ? this.getVictoryStat(stats) : null,
+        best_role : (stats.played_matches_count) ? this.getBestRole(stats) : null,
+        match_stat : (stats.last_match) ? this.getGoals(stats) : null,
+        playtime : (stats.played_matches_count) ? this.getPlayTime(stats) : null
       })
     })
   }
@@ -171,6 +172,7 @@ class Profile extends Component {
    * @returns JSON object formated for NIVO Line
 	 */
   getGoals(stats) {
+    console.log(stats)
     // We store the latest match, its goals and its teams
     const match = stats.last_match
     const goals = match.goals
