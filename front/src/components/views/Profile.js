@@ -26,6 +26,7 @@ class Profile extends Component {
       victory_stat : null,
       best_role : null,
       match_stat : null,
+      playtime : null
     }
     this.setMyProfil = this.setMyProfil.bind(this)
     this.ApiService = new ApiService();
@@ -53,8 +54,9 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    if (this.ApiService.loggedIn() === true)
+    if (this.ApiService.loggedIn() === true) {
       this.setMyProfil(this.getStats())  // Calls API and then setState with the result
+    }      
   }
 
   setMyProfil(result) {
@@ -65,7 +67,8 @@ class Profile extends Component {
         infos_player : this.getProfilInfos(profil),
         victory_stat : (stats) ? this.getVictoryStats(stats) : null,
         best_role : (stats) ? this.getBestRole(stats) : null,
-        match_stat : (stats) ? this.getGoals(stats) : null
+        match_stat : (stats) ? this.getGoals(stats) : null,
+        playtime : (stats) ? this.getPlayTime(stats) : null
       })
     })
   }
@@ -239,6 +242,16 @@ class Profile extends Component {
     }))
     return scores
   }
+
+  getPlayTime(stats) {
+    const time = this.getTime(stats.played_time)
+    console.log(stats)
+    return (time.hour > 0)
+      ? time.hour + " h " + time.minutes + " m " + time.seconds + " s"
+      : (time.minutes > 0)
+        ? time.minutes + " m " + time.seconds + " s"
+        : time.seconds + " s"
+  }
   
 
   render() {
@@ -246,7 +259,7 @@ class Profile extends Component {
       username: 'babou97',
       password: 'babou97'
     })*/
-    
+
     return (
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">
@@ -290,7 +303,9 @@ class Profile extends Component {
           <div className="row">
               <div className="col-md-3">
                 <div className="section flexbox" id="s1">
-                  Temps de jeu total : 2 h
+                  <div className="flexbox flex-column">
+                    Vous avez joué : {(this.state.playtime) ? this.state.playtime : "0 seconde"}
+                  </div>
                 </div>
               </div>
               <div className="col-md-9">
