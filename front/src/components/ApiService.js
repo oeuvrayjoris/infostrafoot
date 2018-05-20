@@ -158,10 +158,6 @@ export default class ApiService {
             method: 'GET'
         };
         return this.fetch(`${this.domain}/players/${id}`, myInit)
-            .then(function(datas) {
-                //console.log(datas)
-                return datas;
-            })
             .catch(function(error) {
                 console.log(error)
             });

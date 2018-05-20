@@ -6,29 +6,18 @@ import Header from '../Header.js';
 import Footer from '../Footer.js';
 import Background from '../../img/novelli.jpg'
 import Sword from '../../img/sword.png'
-
 import ApiService from '../ApiService'
 
 const Api = new ApiService();
 
+/**
+	* MatchRunning page. This is where we can play a match after creating it
+*/
 class MatchRunning extends Component {
     
     constructor(props) {
 		super(props)
 		this.state = {
-            /*match_id: 1,
-			teams: [
-				{ id:1, name: 'Equipe 1', players: [
-                        {id:1, firstname: "Zinédine", lastname: "Zidane", username: "Zizou"},
-                        {id:2, firstname: "David", lastname: "Nasr", username: "Lolilol"}
-                    ]
-                },
-				{ id:2, name: 'Equipe 2', players: [
-                        {id:3, firstname: "Joris", lastname: "Oeuvray", username: "LeGamin"},
-                        {id:4, firstname: "Rachid", lastname: "Nasr", username: "Lolilol"}
-                    ]
-                }
-            ],*/
             match_id: this.props.location.state.matchId,
             teams: this.props.location.state.teams,
             last_goal_id : 0,
@@ -54,12 +43,21 @@ class MatchRunning extends Component {
         this.endMatch = this.endMatch.bind(this)
     }
 
+    /**
+	 * Calls the Api logout route
+	 */
     handleLogout() {
         this.ApiService.logout()
     }
 
     // TIMER FUNCTIONS
 
+    /**
+	 * Transform seconds to an object containing the minutes and the seconds
+     * 
+     * @param secs the number of seconds
+     * @returns an object containing "m" the minutes and "s" the seconds
+	 */
     secondsToTime(secs){    
         let divisor_for_minutes = secs % (60 * 60);
         let minutes = Math.floor(divisor_for_minutes / 60);
@@ -74,22 +72,37 @@ class MatchRunning extends Component {
         return obj;
     }
     
+    /**
+	* Called immediatly after a component is mounted
+    * Starts the timer
+	*/
     componentDidMount() {
         let seconds = this.secondsToTime(this.state.seconds);
         this.setState({ time: seconds });
         this.startTimer()
     }
 
+        
+    /**
+	* Called immediatly before a component is destroyed
+    * Clear the timer
+	*/
     componentWillUnmount() {
         clearInterval(this.timer);
     }
     
+    /**
+	* Starts the timer. Update it each seconds
+	*/
     startTimer() {
         if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000); // Called each seconds
         }
     }
     
+    /**
+	* More like countUp. Add 1 second to the state.seconds
+	*/
     countDown() {
         if (!this.state.match_ended) {
             // Add one second, set state so a re-render happens.
@@ -103,6 +116,14 @@ class MatchRunning extends Component {
     
     // GOALS MANAGEMENT FUNCTIONS
 
+    /**
+    * Add a goal by calling the API with the right parameters and changing the state.
+    * Handles the score changes according to the type of goal.
+    * Handles the match ending if one score reachs 10.
+    * Update the state
+    *
+    * @param e,team_num,player_num,gamelle,own_goal,role All the parameters telling which player scored and which type of goal it is
+	*/
     addGoal(e, team_num, player_num, gamelle, own_goal, role) {
         e.preventDefault();
         const promise = Api.addGoal(this.state.teams[team_num].players[player_num].id, this.state.match_id, gamelle, own_goal, role)
@@ -143,8 +164,10 @@ class MatchRunning extends Component {
             })
     }
 
+    /**
+    * Update the state. Delete the last goal with an API. Get the previous score
+	*/
     cancelAction() {
-        console.log(this.state.last_goal_id)
         const scores = this.state.scores
 
         Api.deleteGoal(this.state.last_goal_id)
@@ -159,9 +182,13 @@ class MatchRunning extends Component {
             })
     }
 
+    /**
+    * Handle the end match button. Calls the API to update the match by telling which team is the winner and giving the end_time of the match
+    * 
+    * @param e the event
+	*/
     endMatch(e) {
         e.preventDefault()
-        console.log(this.state.match_id)
         
         Api.endMatch(
             this.state.match_id,
@@ -172,6 +199,12 @@ class MatchRunning extends Component {
         this.setState({match_ended: true})
     }
 
+    /**
+    * Get today's date and converts it into a string ("2018-05-21 08:30:00"). Used for end_match time
+    * 
+    * @param e the event
+    * @returns a string of today's date
+	*/
     formatDate() {
         let d = new Date(),
         month = (d.getMonth()+ 1 < 10) ? "0" + (d.getMonth()+1) : (d.getMonth()+1),
@@ -186,6 +219,9 @@ class MatchRunning extends Component {
         return today
     }
 
+    /**
+    * Update the state by changing the role of the players
+	*/
     switchRole(team_num) {
         const players = this.state.teams[team_num].players
         const players_new = [players[1], players[0]]
