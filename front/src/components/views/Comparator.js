@@ -8,7 +8,6 @@ class Comparator extends Component {
 
   render() {
     return (
-
       <div className="row" id="main" style={{ height: window.innerHeight}}>
         <div className="col-md-2 height100">
            <Menu />

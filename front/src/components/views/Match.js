@@ -146,7 +146,7 @@ class Match extends Component {
         : console.log("Must add 4 players")
     }
 
-    // Search Functions
+    // SEARCH FUNCTIONS
 
     /**
 	* Handle the changed values on the search bar to display the letters the player is typing

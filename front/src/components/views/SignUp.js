@@ -113,35 +113,6 @@ class SignUp extends Component {
         console.log(err)
       })
     }
-    
-    /*
-    const options = {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method : 'POST',
-        body: JSON.stringify(this.state.credentials)
-
-    }
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/player'
-    fetch(url, options)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
-
-    this.Auth.signup(this.state.credentials)
-      .then(res => {
-        console.log(res)
-      })
-      .then(res =>{
-        this.props.history.replace('/');
-      })
-      .catch(err =>{
-        console.log(err)
-        alert(err);
-          // Afficher ce qui va pas quand ca sera géré en back
-      })*/
   }
 
   render() {

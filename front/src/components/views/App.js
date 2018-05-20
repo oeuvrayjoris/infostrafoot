@@ -227,20 +227,20 @@ class App extends Component {
 	 */
   compareDate(today, date) {
     return ((today.year === date.year)
-              ? ((today.month === date.month)
-                  ? ((today.day <= (date.day+7))
-                      ? true
-                      : false
-                    )
-                  : ((today.month === date.month+1)
-                      ? ((30+today.day <= (date.day+7))
-                          ? true
-                          : false
-                        )
-                      : false
-                    )
-                )
-              : false
+      ? ((today.month === date.month)
+        ? ((today.day <= (date.day+7))
+          ? true
+          : false
+          )
+        : ((today.month === date.month+1)
+          ? ((30+today.day <= (date.day+7))
+            ? true
+            : false
+          )
+          : false
+        )
+      )
+      : false
     )
   }
 

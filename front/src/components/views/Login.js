@@ -1,7 +1,6 @@
 // Import libraries
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
 // Import components
 import ApiService from '../ApiService'
 import Footer from '../Footer.js';
@@ -31,7 +30,6 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.ApiService = new ApiService();
-
   }
 
   /**
@@ -92,36 +90,6 @@ class Login extends Component {
     this.setState({
       errors: newErrors
     });
-
-
-    /*
-    const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-
-    const options = {
-        method : 'POST',
-        body: JSON.stringify(this.state.credentials)
-      }
-
-    const url = 'https://www.floriantorres.fr/infostrafootapi/public/auth/login'
-
-    fetch(url, {headers, ...options})
-    .then(response => response)
-    .then(response => {
-      console.log(response.json())
-    })
-
-    this.Auth.login(this.state.credentials)
-      .then(res =>{
-        console.log(res)
-         //this.props.history.replace('/');
-      })
-      .catch(err =>{
-          alert(err);
-      })
-      */
   }
   
   render() {
