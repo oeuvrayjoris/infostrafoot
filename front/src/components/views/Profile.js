@@ -9,6 +9,9 @@ import ApiService from '../ApiService'
 import Pie from '../Pie';
 import Line from '../Line';
 
+/**
+	 * Profile page. Works only if player is connected. Then, it renders player's infos & stats
+*/
 class Profile extends Component {
 
   constructor(props) {
@@ -32,16 +35,17 @@ class Profile extends Component {
     this.ApiService = new ApiService();
   }
 
+  /**
+	 * Logout the player if he is connected and we hit the logout button
+	 */
   handleLogout() {
     this.ApiService.logout()
   }
 
-  getStats() {
-    const stats = this.ApiService.getProfil(this.state.infos_player.id)
-
-    return Promise.all([stats])
-  }
-
+  /**
+	 * Called immediatly before mounting occurs.
+   * Set the state with player's info (id)
+	 */
   componentWillMount() {
     if (this.ApiService.loggedIn() === true) {
       const profil = this.ApiService.getMyProfil()
@@ -55,16 +59,33 @@ class Profile extends Component {
       })
     }
   }
-
+  /**
+	 * Called immediatly after a component is mounted
+   * Set the state with player's stats
+	 */
   componentDidMount() {
     if (this.ApiService.loggedIn() === true) {
       this.setMyProfil(this.getStats())  // Calls API and then setState with the result
     }      
   }
 
+  /**
+	 * Get player's stats from the API service
+   * 
+   * @returns Promise of the stats
+	 */
+  getStats() {
+    const stats = this.ApiService.getProfil(this.state.infos_player.id)
+
+    return Promise.all([stats])
+  }
+
+  /**
+	 * Set the state by calling all the getFunctions with the promise we catched
+   * 
+	 */
   setMyProfil(result) {
     result.then(([stats]) => {
-      console.log(stats)
       this.setState({
         victory_stat : (stats) ? this.getVictoryStat(stats) : null,
         best_role : (stats) ? this.getBestRole(stats) : null,
@@ -74,37 +95,54 @@ class Profile extends Component {
     })
   }
 
+  /**
+	 * Get player's infos (id, username, name, etc...)
+   * 
+   * @param profil a promise returned by the API
+   * @returns JSON object containing all the player's infos
+	 */
   getProfilInfos(profil) {
     return (
       {
-          id: profil.id,
-          mail: profil.mail,
-          username: profil.username,
-          password: profil.password,
-          firstname: profil.firstname,
-          lastname: profil.lastname,
-          birthdate: profil.birthdate
+        id: profil.id,
+        mail: profil.mail,
+        username: profil.username,
+        password: profil.password,
+        firstname: profil.firstname,
+        lastname: profil.lastname,
+        birthdate: profil.birthdate
       }
     )
   }
 
+  /**
+	 * Get player's victory stat (number of defeats and victories)
+   * 
+   * @param stats a promise containing all player's stats returned by the API
+   * @returns JSON object formated for NIVO Pie
+	 */
   getVictoryStat(stats) {
     return (
       [
         {
-            "id": "Victoires",
-            "label": "Victoires",
-            "value": stats.victories_count,
+          "id": "Victoires",
+          "label": "Victoires",
+          "value": stats.victories_count,
         },
         {
-            "id": "Défaîtes",
-            "label": "Défaîtes",
-            "value": stats.defeats_count,
+          "id": "Défaîtes",
+          "label": "Défaîtes",
+          "value": stats.defeats_count,
         }
       ]
     )
   }
 
+  /**
+	 * Get the win / lose ratio
+   * 
+   * @returns A string containing the w/l ratio (ex: "87 %")
+	 */
   getRatio() {
     const victories = this.state.victory_stat[0].value
     const defeats = this.state.victory_stat[1].value
@@ -112,6 +150,12 @@ class Profile extends Component {
     return Math.floor(victories/(victories+defeats)*100) + " %"
   }
 
+  /**
+	 * Get the player's best role
+   * 
+   * @param stats a promise containing all player's stats returned by the API
+   * @returns A string saying the player's best role (striker or defender)
+	 */
   getBestRole(stats) {
     return (
       (stats.best_role === "striker")
@@ -120,26 +164,32 @@ class Profile extends Component {
     )
   }
 
+  /**
+	 * Get the goals of player's latest match to print the history of the match
+   * 
+   * @param stats a promise containing all player's stats returned by the API
+   * @returns JSON object formated for NIVO Line
+	 */
   getGoals(stats) {
-    // On récupére le dernier match joué, ses goals et ses équipes
+    // We store the latest match, its goals and its teams
     const match = stats.last_match
     const goals = match.goals
     const teams = match.teams
-    // On récupére l'index de notre équipe (0 ou 1)
+    // We store the index of the player's team (0 or 1)
     const myTeamIndex = this.knowMyTeam(teams)
-    // On récupére la date de création du match pour l'utiliser comme temps référence
+    // We store the creation date of the match to use it as a baseTime
     const baseTime = this.getTime(match, false)
-    // On récupére un tableau des buts marqués (quelle équipe, quel numéro de buts, quel type)
+    // We store an array of goals (which team, which number of goal, which type)
     const goalIndexes = goals.map((goal, index) => (
       {"team_num":this.getGoalTeam(goal, teams),"index":index,"gamelle":goal.gamelle,"own_goal":goal.own_goal}
     ))
-    // On récupére un tableau contenant le temps de chaque but
-    const goalTime = goals.map(goal => this.getGoalTime(goal, baseTime)).map(time => this.timeToString(time))
-    // On récupére l'historique de l'évolution des scores des deux équipes
+    // We store an array containing all the times where a goal happened
+    const goalTime = goals.map(goal => this.getGoalTime(goal, baseTime)).map(time => this.timeToString(time))t
+    // We store the evolution of the scores of both teams
     const scores = this.getScores(goalIndexes)
 
-    // On formate les données pour Nivo, le temps en abscisse, le score de l'équipe en ordonnée
-    // On utilise reduce pour supprimer les clés dupliquées (2 buts dans la même seconde), sinon probleme
+    // We formate the datas for Nivo, time in abscisse, score in ordinates
+    // We use reduce to delete the duplicated keys (2 goals in the same second), otherwise we have a bug due to Nivo
     const dataTeam1 = goalTime.map((time, index) => ({
         "x":time,
         "y":scores[index].score_1
@@ -150,7 +200,7 @@ class Profile extends Component {
         "y":scores[index].score_2
       })).reduce((x, y) => x.findIndex(e=>e.x===y.x)<0 ? [...x, y]: x, [])
 
-    // On rajoute une donnée pour marquer le début du match
+    // We add a data to set the beggining of the game
     const firstObj = {"x":"00:00","y":0}
     dataTeam1.unshift(firstObj)
     dataTeam2.unshift(firstObj)
@@ -168,24 +218,39 @@ class Profile extends Component {
     return datas
   }
 
-  // Renvoie l'index de la team dans teams
+  /**
+	 * Get the index of player's team (0 or 1)
+   * 
+   * @param teams a JSON object containing both teams
+   * @returns the index of player's team (0 or 1)
+	 */
   knowMyTeam(teams) {
-    // J'utilise le if else car le ternaire ne fonctionne pas ici, je ne sais pas pourquoi
+    // We check if player's id is in the first team, otherwise it means he is in the second team
+    // I'm using if else because ternary doesn't work here, I don't know why
     if (teams[0].players[0].id === this.state.infos_player.id || teams[0].players[1].id === this.state.infos_player.id)
       return 0
     else return 1
   }
 
-  // Pour savoir le goal appartient à quelle équipe
+  /**
+	 * To know the goal is from which team
+   * 
+   * @param goal,matchTeams the goal and the teams
+   * @returns the index of goal's team (0 or 1)
+	 */
   getGoalTeam(goal, matchTeams) {
-    // Pareil ici le ternaire ne fonctionne pas, je ne sais pas pourquoi
+    // Same as the function before
     if (matchTeams[0].players[0].id === goal.player_id || matchTeams[0].players[1].id === goal.player_id)
     return 0
     else return 1
   }
 
-  // Pour connaitre l'horraire du début du match qui sera la référence (on met false en 2eme parametre)
-  // Ou pour récupérer le temps de jeu (on met true en 2eme parametre)
+  /**
+	 * This function formate a date string into a JSON object containing the time
+   * 
+   * @param object,played_time The object or string we want to formate. A boolean saying if it's the played_time or not
+   * @returns a JSON object containing the hours, the minutes and the seconds
+	 */
   getTime(object, played_time) {
     const time = (played_time) ? object.substr(11).split(":", 3) : object.created_at.substr(11).split(":", 3);
     const hour = time[0]
@@ -195,7 +260,12 @@ class Profile extends Component {
     return {"hour":hour,"minutes":minutes,"seconds":seconds}
   }
 
-  // Pour connaitre le temps du but dans le match
+  /**
+	 * To know the time when the goal was scorred according to the baseTime
+   * 
+   * @param goal,baseTime The goal and the baseTime
+   * @returns a JSON object containing the hours, the minutes and the seconds
+	 */
   getGoalTime(goal, baseTime) {
     const goalTime = this.getTime(goal, false)
     const _hour = goalTime.hour - baseTime.hour
@@ -209,7 +279,12 @@ class Profile extends Component {
     return {"hour":hour,"minutes":minutes,"seconds":seconds}
   }
 
-  // Transform time object to string
+  /**
+	 * Transform a JSON time object into a string ("00:00:00")
+   * 
+   * @param time a JSON object containing the hours, the minutes and the seconds
+   * @returns a string containing the time ("00:00:00")
+	 */
   timeToString(time) {
     const hour = (time.hour < 10) ? "0"+time.hour : time.hour
     const minutes = (time.minutes < 10) ? "0"+time.minutes : time.minutes
@@ -218,7 +293,12 @@ class Profile extends Component {
     //return hour+":"+minutes+":"+seconds
   }
 
-  // Renvoie un tableau contenant l'historique des scores
+  /**
+	 * Get an array containing teams scores during each goal moment of the match
+   * 
+   * @param goals a JSON object containing all the goals of the match
+   * @returns a JSON object containing the scores of both teams
+	 */
   getScores(goals) {
     let score_1 = 0
     let score_2 = 0
@@ -245,22 +325,23 @@ class Profile extends Component {
     return scores
   }
 
+  /**
+	 * Get the time the player played
+   * 
+   * @param stats a Promise containing player's stat
+   * @returns a string containing played time (0h 0m 0s)
+	 */
   getPlayTime(stats) {
     const time = this.getTime(stats.played_time, true)
-    console.log(stats)
     return (time.hour > 0)
-      ? time.hour + " h " + time.minutes + " m " + time.seconds + " s"
+      ? time.hour + "h " + time.minutes + "m " + time.seconds + "s"
       : (time.minutes > 0)
-        ? time.minutes + " m " + time.seconds + " s"
-        : time.seconds + " s"
+        ? time.minutes + "m " + time.seconds + "s"
+        : time.seconds + "s"
   }
   
 
   render() {
-    /*Auth.login({
-      username: 'babou97',
-      password: 'babou97'
-    })*/
 
     return (
       <div className="row" id="main" style={{ height: window.innerHeight}}>
