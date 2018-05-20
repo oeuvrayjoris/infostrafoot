@@ -9,6 +9,9 @@ import withAuth from '../withAuth.js'
 import logo from '../../img/logo.png';
 import '../../styles/sass/style.scss';
 
+/**
+	 * Login page. Contains a form where player can register to be logged-in with his account
+*/
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -30,13 +33,21 @@ class Login extends Component {
 
   }
 
+  /**
+	 * Called immediatly before mounting occurs.
+   * Replace '/' in history
+	 */
   componentWillMount() {
     if (this.ApiService.loggedIn()) {
       this.props.history.replace('/')
     }
   }
 
-  // Handle the changed values on the form
+  /**
+	 * Handle the changed values on the form
+   * 
+   * @param event the event that happened
+	 */
   handleChange = e => {
     const field = e.target.name;
     const credentials = this.state.credentials;
@@ -46,7 +57,11 @@ class Login extends Component {
     });
   };
 
-  // Handle the submit event
+  /**
+	 * Handle the submit event
+   * 
+   * @param event the event that happened
+	 */
   handleSubmit(e){
     e.preventDefault();
 

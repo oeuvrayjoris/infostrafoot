@@ -6,7 +6,7 @@ import ApiService from '../ApiService'
 import Footer from '../Footer.js';
 
 /**
-	 * SignUp page. Contains a form where player can registrate to be added to the data base
+	 * SignUp page. Contains a form where player can register to be added to the data base
 */
 class SignUp extends Component {
   constructor(props) {

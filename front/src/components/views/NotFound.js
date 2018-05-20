@@ -4,8 +4,10 @@ import Footer from '../Footer.js';
 import Menu from '../Menu.js';
 import { Link } from 'react-router-dom'
 
+/**
+	* NotFound page, called when we are in a wrong URL
+*/
 export default () =>
-
 	<div className="row" id="main" style={{ height: window.innerHeight}}>
 		<div className="col-md-2 height100">
 			<Menu />
