@@ -5,6 +5,9 @@ import Photo from '../../img/photo_example.gif'
 import ApiService from '../ApiService'
 import Footer from '../Footer.js';
 
+/**
+	 * SignUp page. Contains a form where player can registrate to be added to the data base
+*/
 class SignUp extends Component {
   constructor(props) {
     super(props)
@@ -30,13 +33,21 @@ class SignUp extends Component {
     this.ApiService = new ApiService();
   }
 
-
+  /**
+	 * Called immediatly before mounting occurs.
+   * Replace '/' in history
+	 */
   componentWillMount() {
     if (this.ApiService.loggedIn()) {
       this.props.history.replace('/')
     }
   }
 
+  /**
+	 * Check if username is in the correct format
+   * 
+   * @param username the username string of the form
+	 */
   checkUsername(username) {
       setTimeout(() => {
           let result = /^(?=.{3,20}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(username);
@@ -48,6 +59,11 @@ class SignUp extends Component {
       }, 800)
   }
 
+  /**
+	 * Check if password is in the correct format
+   * 
+   * @param password the password string of the form
+	 */
   checkPassword(password) {
       setTimeout(() => {
           let result = /^(?=.{6,128}$)(?!.*[_.]{2})[a-zA-Z0-9._]/.test(password);
@@ -59,7 +75,11 @@ class SignUp extends Component {
       },800)
   }
 
-  // Handle the changed values on the form
+  /**
+	 * Handle the changed values on the form
+   * 
+   * @param event the event that happened
+	 */
   handleChange = event => {
     const field = event.target.name;
     if (field === 'username')
@@ -73,7 +93,11 @@ class SignUp extends Component {
     });
   };
 
-  // Handle the submit event
+  /**
+	 * Handle the submit event
+   * 
+   * @param event the event that happened
+	 */
   handleSubmit(e){
 
     e.preventDefault();

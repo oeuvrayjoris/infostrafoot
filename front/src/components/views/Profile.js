@@ -184,7 +184,7 @@ class Profile extends Component {
       {"team_num":this.getGoalTeam(goal, teams),"index":index,"gamelle":goal.gamelle,"own_goal":goal.own_goal}
     ))
     // We store an array containing all the times where a goal happened
-    const goalTime = goals.map(goal => this.getGoalTime(goal, baseTime)).map(time => this.timeToString(time))t
+    const goalTime = goals.map(goal => this.getGoalTime(goal, baseTime)).map(time => this.timeToString(time))
     // We store the evolution of the scores of both teams
     const scores = this.getScores(goalIndexes)
 
