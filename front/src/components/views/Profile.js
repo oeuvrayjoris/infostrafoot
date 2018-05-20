@@ -37,19 +37,22 @@ class Profile extends Component {
   }
 
   getStats() {
-    const profil = this.ApiService.getMyProfil()
     const stats = this.ApiService.getProfil(this.state.infos_player.id)
 
-    return Promise.all([profil, stats])
+    return Promise.all([stats])
   }
 
   componentWillMount() {
     if (this.ApiService.loggedIn() === true) {
       const profil = this.ApiService.getMyProfil()
-      const newInfos = this.state.infos_player
-      newInfos.id = profil.id
-      //newInfos.id = 1
-      this.setState({infos_player: newInfos})
+      Promise.all([profil])
+      .then(([profil]) => {
+        const newInfos = this.state.infos_player
+        newInfos.id = profil.id
+        console.log(newInfos.id)
+        //newInfos.id = 1
+        this.setState({infos_player: newInfos})
+      })
     }
   }
 
@@ -60,12 +63,10 @@ class Profile extends Component {
   }
 
   setMyProfil(result) {
-    result.then(([profil, stats]) => {
+    result.then(([stats]) => {
       console.log(stats)
-      console.log(profil)
       this.setState({
-        infos_player : this.getProfilInfos(profil),
-        victory_stat : (stats) ? this.getVictoryStats(stats) : null,
+        victory_stat : (stats) ? this.getVictoryStat(stats) : null,
         best_role : (stats) ? this.getBestRole(stats) : null,
         match_stat : (stats) ? this.getGoals(stats) : null,
         playtime : (stats) ? this.getPlayTime(stats) : null
@@ -127,7 +128,7 @@ class Profile extends Component {
     // On récupére l'index de notre équipe (0 ou 1)
     const myTeamIndex = this.knowMyTeam(teams)
     // On récupére la date de création du match pour l'utiliser comme temps référence
-    const baseTime = this.getTime(match)
+    const baseTime = this.getTime(match, false)
     // On récupére un tableau des buts marqués (quelle équipe, quel numéro de buts, quel type)
     const goalIndexes = goals.map((goal, index) => (
       {"team_num":this.getGoalTeam(goal, teams),"index":index,"gamelle":goal.gamelle,"own_goal":goal.own_goal}
@@ -183,9 +184,10 @@ class Profile extends Component {
     else return 1
   }
 
-  // Pour connaitre l'horraire du début du match qui sera la référence
-  getTime(object) {
-    const time = object.created_at.substr(11).split(":", 3);
+  // Pour connaitre l'horraire du début du match qui sera la référence (on met false en 2eme parametre)
+  // Ou pour récupérer le temps de jeu (on met true en 2eme parametre)
+  getTime(object, played_time) {
+    const time = (played_time) ? object.substr(11).split(":", 3) : object.created_at.substr(11).split(":", 3);
     const hour = time[0]
     const minutes = time[1]
     const seconds = time[2]
@@ -195,7 +197,7 @@ class Profile extends Component {
 
   // Pour connaitre le temps du but dans le match
   getGoalTime(goal, baseTime) {
-    const goalTime = this.getTime(goal)
+    const goalTime = this.getTime(goal, false)
     const _hour = goalTime.hour - baseTime.hour
     const _minutes = goalTime.minutes - baseTime.minutes
     const _seconds = goalTime.seconds - baseTime.seconds
@@ -244,7 +246,7 @@ class Profile extends Component {
   }
 
   getPlayTime(stats) {
-    const time = this.getTime(stats.played_time)
+    const time = this.getTime(stats.played_time, true)
     console.log(stats)
     return (time.hour > 0)
       ? time.hour + " h " + time.minutes + " m " + time.seconds + " s"
